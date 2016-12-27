@@ -1,0 +1,24 @@
+language: vim
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y vim
+
+before_script:
+  - git clone https://github.com/junegunn/vader.vim.git
+
+script: |
+  vim -Nu <(cat << VIMRC
+  filetype off
+  set rtp+=vader.vim
+  set rtp+=.
+  set rtp+=after
+  filetype plugin indent on
+  syntax enable
+  let mapleader = "\<Space>"
+  VIMRC) -c 'Vader! tests/*'

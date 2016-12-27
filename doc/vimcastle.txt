@@ -1,0 +1,23 @@
+*vimcastle.txt*  A game of adventure and wonder!
+
+Author:  Christian Rondeau <http://christianrondeau.net/>
+
+======================================
+
+INTRODUCTION
+*vimcastle*
+
+Discover and conquer the lands, dongeons and mysteries of Vim Castle!
+
+COMMANDS           *vimcastle-commands*
+
+                   *vimcastle-Vimcastle*
+Starts the game
+
+ABOUT              *vimcastle-about*
+
+Download the latest version or report a bug on GitHub:
+
+http://github.com/christianrondeau/vimcastle
+
+vim:tw=38:et:ft=help:norl:
