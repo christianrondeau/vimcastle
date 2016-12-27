@@ -1,30 +1,13 @@
 let s:state = {}
 
-function! vimcastle#initplayer() abort
-	let s:state.player = {
-      \ 'name': {
-        \ 'long': 'Player',
-        \ 'short': 'You'
-        \ },
-      \ 'health': {
-        \ 'current': 100,
-        \ 'max': 100,
-        \ }
-      \ }
-	let s:state.enemy = {
-      \ 'name': {
-        \ 'long': 'Enemy',
-        \ 'short': 'Enemy'
-        \ },
-      \ 'health': {
-        \ 'current': 100,
-        \ 'max': 100,
-        \ }
-      \ }
+function! vimcastle#initstate() abort
+	let s:state.player = vimcastle#character#create('Player', 'You', 100)
+	let s:state.enemy = vimcastle#character#create('Enemy', 'Enem.', 12)
 endfunction
 
 function! vimcastle#initmappings() abort
 	nnoremap <buffer> 1 :call vimcastle#hit()<cr>
+	nnoremap <buffer> q :bd<cr>
 endfunction
 
 function! vimcastle#hit() abort
@@ -34,7 +17,7 @@ endfunction
 
 function! vimcastle#start() abort
 	call vimcastle#ui#init()
-	call vimcastle#initplayer()
+	call vimcastle#initstate()
 	call vimcastle#initmappings()
 	call vimcastle#ui#draw(s:state)
 endfunction

@@ -79,7 +79,11 @@ endfunction
 
 function! s:getbar(val, max, char) abort
 	let barwidth = s:w / 2 - 8
-	let filled = a:val * barwidth / a:max
+	if(a:val > 0 && a:max > 0)
+		let filled = a:val * barwidth / a:max
+	else
+		let filled = 0
+	endif
 	let bar = "[" . repeat(a:char, filled) . repeat(" ", barwidth - filled) . "]"
 	return bar
 endfunction
