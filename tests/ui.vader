@@ -1,0 +1,34 @@
+Execute (test setup):
+  call vimcastle#ui#setscreenwidth(30)
+  let state = {
+    \ 'player' : {
+      \ 'name': {
+        \ 'long': 'Player',
+        \ 'short': 'You'
+        \ },
+      \ 'health': {
+        \ 'current': 153,
+        \ 'max': 153,
+        \ }
+      \ },
+    \ 'enemy' : {
+      \ 'name': {
+        \ 'long': 'Enemy',
+        \ 'short': 'Enem.'
+        \ },
+      \ 'health': {
+        \ 'current': 476,
+        \ 'max': 810,
+        \ }
+      \ }
+    \ }
+  call vimcastle#ui#draw(state)
+
+Expect (fight screen):
+  ----------- Fight! -----------
+  
+   You                    Enem.
+   [-------] 153  476 [----   ]
+  
+  1) Attack
+  
