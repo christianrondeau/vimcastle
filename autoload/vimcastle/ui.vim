@@ -36,6 +36,9 @@ function! vimcastle#ui#configuregamebuffer() abort
 		setlocal noshowmatch
 		setlocal nolist
 		setlocal wrap
+		setlocal colorcolumn=
+		setlocal statusline=
+		setlocal nocursorline
 endfunction
 
 function! vimcastle#ui#draw(state) abort
