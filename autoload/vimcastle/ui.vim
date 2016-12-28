@@ -1,16 +1,29 @@
+" Initialization {{{
+
 let s:w = -1
-let s:winnr = -1
+let s:laststate = {}
 
 function! vimcastle#ui#init() abort
-	call vimcastle#ui#opengamebuffer()
+	call s:opengamebuffer()
 	call vimcastle#ui#setscreenwidth(winwidth(0))
+endfunction
+
+function! vimcastle#ui#updatescreenwidth() abort
+	call vimcastle#ui#setscreenwidth(winwidth(0))
+	call vimcastle#ui#redraw()
 endfunction
 
 function! vimcastle#ui#setscreenwidth(width) abort
 	let s:w = a:width
 endfunction
 
-function! vimcastle#ui#opengamebuffer() abort
+" }}}
+
+" Buffer setup {{{
+
+let s:winnr = -1
+
+function! s:opengamebuffer() abort
 	let s:winnr = bufwinnr('^game.vimcastle$')
 	if (s:winnr >= 0)
 		execute winnr . 'wincmd w'
@@ -22,12 +35,12 @@ function! vimcastle#ui#opengamebuffer() abort
 		let s:winnr = winnr()
 		setlocal buftype=nofile
 		setlocal bufhidden=wipe
-		call vimcastle#ui#configuregamebuffer()
+		call s:configuregamebuffer()
 		setlocal nomodifiable
 	endif
 endfunction
 
-function! vimcastle#ui#configuregamebuffer() abort
+function! s:configuregamebuffer() abort
 		setlocal filetype=vimcastle
 		setlocal foldcolumn=0
 		setlocal noswapfile
@@ -39,16 +52,29 @@ function! vimcastle#ui#configuregamebuffer() abort
 		setlocal colorcolumn=
 		setlocal statusline=
 		setlocal nocursorline
+		augroup Vimcastle
+		autocmd!
+		autocmd VimResized * call vimcastle#ui#updatescreenwidth()
+	augroup END
+endfunction
+
+" }}}
+
+" Drawing {{{
+
+function! vimcastle#ui#redraw() abort
+	call vimcastle#ui#draw(s:laststate)
 endfunction
 
 function! vimcastle#ui#draw(state) abort
+	let s:laststate = a:state
 	setlocal modifiable
 	normal! ggdG
 
 	call s:drawtitle("Fight!")
 	call s:drawsides(a:state.player.name.short,a:state.enemy.name.short)
 	call s:drawbars(a:state.player.health, a:state.enemy.health, '-')
-	call s:drawactions()
+	call s:drawactions(a:state.actions)
 
 	normal! gg
 	setlocal nomodifiable
@@ -91,7 +117,14 @@ function! s:getbar(val, max, char) abort
 	return bar
 endfunction
 
-function! s:drawactions() abort
-	normal! i1) Attack
-	normal! o
+function! s:drawactions(actions) abort
+	let i = 0
+	while(i < len(a:actions))
+		let action = a:actions[i]
+		execute "normal! i" . (i+1) . ") " . action.name
+		normal! o
+		let i += 1
+	endwhile
 endfunction
+
+" }}}

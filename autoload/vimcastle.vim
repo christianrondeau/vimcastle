@@ -1,5 +1,9 @@
 function! s:initmappings() abort
-	nnoremap <buffer> 1 :call vimcastle#action('1')<cr>
+	let i = 0
+	while(i <= 9)
+		execute "nnoremap <buffer> " . i . " :call vimcastle#action('" . i . "')<cr>"
+		let i += 1
+	endwhile
 	nnoremap <buffer> q :bd<cr>
 endfunction
 
@@ -11,6 +15,6 @@ endfunction
 function! vimcastle#start() abort
 	call vimcastle#state#init()
 	call vimcastle#ui#init()
-	call vimcastle#ui#draw(vimcastle#state#get())
 	call s:initmappings()
+	call vimcastle#ui#draw(vimcastle#state#get())
 endfunction
