@@ -17,7 +17,9 @@ function! vimcastle#state#get() abort
 endfunction
 
 function! vimcastle#state#action(index) abort
-	call s:state.actions[a:index-1].fn()
+	if(a:index > 0 && a:index <= len(s:state.actions))
+		call s:state.actions[a:index-1].fn()
+	endif
 endfunction
 
 function! s:hit() abort
