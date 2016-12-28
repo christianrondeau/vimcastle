@@ -54,7 +54,7 @@ function! s:configuregamebuffer() abort
 		setlocal nocursorline
 		augroup Vimcastle
 		autocmd!
-		autocmd VimResized * call vimcastle#ui#updatescreenwidth()
+		autocmd VimResized <buffer> call vimcastle#ui#updatescreenwidth()
 	augroup END
 endfunction
 
