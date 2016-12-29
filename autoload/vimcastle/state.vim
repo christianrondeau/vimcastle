@@ -19,10 +19,13 @@ endfunction
 function! vimcastle#state#action(key) abort
 	if(a:key > 0 && a:key <= len(s:state.actions))
 		call s:state.actions[a:key-1].fn()
+		return 1
 	endif
 	if(a:key == "q")
 		bdelete
+		return 0
 	endif
+	return 0
 endfunction
 
 function! s:hit() abort

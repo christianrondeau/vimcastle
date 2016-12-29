@@ -1,13 +1,18 @@
 function! s:initmappings() abort
-	for c in range(char2nr('0'), char2nr('9')) + range(char2nr('a'), char2nr('z'))
-		let char = nr2char(c)
-		execute "nnoremap <buffer> " . char . " :call vimcastle#action('" . char . "')<CR>"
+	let keys = 
+				\ range(char2nr('0'), char2nr('9')) +
+				\ range(char2nr('a'), char2nr('z')) +
+				\ range(char2nr('A'), char2nr('Z'))
+	for key in keys
+		let char = nr2char(key)
+		execute "nnoremap <silent> <buffer> " . char . " :call vimcastle#action('" . char . "')<CR>"
 	endfor
 endfunction
 
 function! vimcastle#action(key) abort
-	call vimcastle#state#action(a:key)
-	call vimcastle#ui#draw(vimcastle#state#get())
+	if(vimcastle#state#action(a:key))
+		call vimcastle#ui#draw(vimcastle#state#get())
+	endif
 endfunction
 
 function! vimcastle#start() abort
