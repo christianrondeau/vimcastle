@@ -1,32 +1,27 @@
 " Initialization {{{
 
+let s:winnr = -1
 let s:screen = {}
 let s:laststate = {}
 
 function! vimcastle#ui#init() abort
 	call s:opengamebuffer()
-	call vimcastle#ui#setscreenwidth(winwidth(0))
+	call vimcastle#ui#updatescreen()
 endfunction
 
-function! vimcastle#ui#updatescreenwidth() abort
-	call vimcastle#ui#setscreenwidth(winwidth(0))
-	call vimcastle#ui#redraw()
-endfunction
-
-function! vimcastle#ui#setscreenwidth(width) abort
-	let s:screen.width = a:width
+function! vimcastle#ui#updatescreen() abort
+	let s:screen.width = winwidth(0)
+	let s:screen.height = winheight(0)
 endfunction
 
 " }}}
 
 " Buffer setup {{{
 
-let s:winnr = -1
-
 function! s:opengamebuffer() abort
 	let s:winnr = bufwinnr('^game.vimcastle$')
 	if (s:winnr >= 0)
-		execute winnr . 'wincmd w'
+		execute s:winnr . 'wincmd w'
 		setlocal modifiable
 		normal! ggdG
 		setlocal nomodifiable
@@ -54,8 +49,12 @@ function! s:configuregamebuffer() abort
 		setlocal nocursorline
 		augroup Vimcastle
 		autocmd!
-		autocmd VimResized <buffer> call vimcastle#ui#updatescreenwidth()
+		autocmd VimResized <buffer> call vimcastle#ui#updatescreen()
 	augroup END
+endfunction
+
+function! s:isingamebuffer() abort
+	return winnr() == s:winnr
 endfunction
 
 " }}}
@@ -68,6 +67,7 @@ endfunction
 
 function! vimcastle#ui#draw(state) abort
 	let s:laststate = a:state
+	if(!s:isingamebuffer()) | return | endif
 
 	setlocal modifiable
 	normal! ggdG

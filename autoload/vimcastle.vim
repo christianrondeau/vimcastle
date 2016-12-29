@@ -1,10 +1,8 @@
 function! s:initmappings() abort
-	let i = 0
-	while(i <= 9)
-		execute "nnoremap <buffer> " . i . " :call vimcastle#action('" . i . "')<cr>"
-		let i += 1
-	endwhile
-	nnoremap <buffer> q :bd<cr>
+	for c in range(char2nr('0'), char2nr('9')) + range(char2nr('a'), char2nr('z'))
+		let char = nr2char(c)
+		execute "nnoremap <buffer> " . char . " :call vimcastle#action('" . char . "')<CR>"
+	endfor
 endfunction
 
 function! vimcastle#action(key) abort

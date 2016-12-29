@@ -16,9 +16,12 @@ function! vimcastle#state#get() abort
 	return s:state
 endfunction
 
-function! vimcastle#state#action(index) abort
-	if(a:index > 0 && a:index <= len(s:state.actions))
-		call s:state.actions[a:index-1].fn()
+function! vimcastle#state#action(key) abort
+	if(a:key > 0 && a:key <= len(s:state.actions))
+		call s:state.actions[a:key-1].fn()
+	endif
+	if(a:key == "q")
+		bdelete
 	endif
 endfunction
 
