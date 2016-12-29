@@ -21,4 +21,4 @@ script: |
   filetype plugin indent on
   syntax enable
   let mapleader = "\<Space>"
-  VIMRC) -c 'Vader! tests/*'
+  VIMRC) -c 'Vader! tests/**'
