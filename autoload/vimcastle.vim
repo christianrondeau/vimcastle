@@ -21,3 +21,8 @@ function! vimcastle#start() abort
 	call s:initmappings()
 	call vimcastle#ui#draw(vimcastle#state#get())
 endfunction
+
+function! vimcastle#quit() abort
+		call vimcastle#state#clear()
+		call vimcastle#ui#quit()
+endfunction
