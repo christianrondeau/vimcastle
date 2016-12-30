@@ -22,6 +22,11 @@ function! vimcastle#start() abort
 	call vimcastle#ui#draw(vimcastle#state#get())
 endfunction
 
+function! vimcastle#enter(name) abort
+	call vimcastle#state#enter(a:name)
+	call vimcastle#ui#draw(vimcastle#state#get())
+endfunction
+
 function! vimcastle#quit() abort
 		call vimcastle#state#clear()
 		call vimcastle#ui#quit()

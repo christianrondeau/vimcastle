@@ -4,13 +4,12 @@ function! vimcastle#state#init() abort
 	call vimcastle#state#clear()
 	let s:state.player = vimcastle#character#create('Player', 'You', 100)
 	let s:state.enemy = vimcastle#character#create('Enemy', 'Enemy', 12)
+	call vimcastle#state#enter('intro')
+endfunction
 
-	let s:state.actions = [
-		\{
-		\  'name': 'Attack with <rust. short sword>',
-		\  'fn': function('s:hit')
-		\}
-		\]
+function! vimcastle#state#enter(name) abort
+	let s:state.screen = a:name
+	execute 'call vimcastle#state#' . a:name . '#enter(s:state)'
 endfunction
 
 function! vimcastle#state#clear() abort
@@ -22,17 +21,10 @@ function! vimcastle#state#get() abort
 endfunction
 
 function! vimcastle#state#action(key) abort
-	if(a:key > 0 && a:key <= len(s:state.actions))
-		call s:state.actions[a:key-1].fn()
-		return 1
-	endif
 	if(a:key == "q")
 		call vimcastle#quit()
 		return 0
 	endif
-	return 0
-endfunction
-
-function! s:hit() abort
-	let s:state.enemy.health.current -= 1
+	execute 'let result = vimcastle#state#' . s:state.screen . '#action(s:state, a:key)'
+	return result
 endfunction

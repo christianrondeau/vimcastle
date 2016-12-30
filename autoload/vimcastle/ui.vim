@@ -5,8 +5,21 @@ let s:laststate = {}
 let s:bufname = 'game.vimcastle'
 
 function! vimcastle#ui#init() abort
+	call vimcastle#ui#clear()
 	call s:opengamebuffer()
 	call vimcastle#ui#updatescreen()
+endfunction
+
+function! vimcastle#ui#clear() abort
+	let s:screen = {}
+	let s:laststate = {}
+endfunction
+
+function! vimcastle#ui#quit() abort
+	call vimcastle#ui#clear()
+	if(s:isingamebuffer())
+		bdelete
+	endif
 endfunction
 
 function! vimcastle#ui#updatescreen() abort
@@ -70,9 +83,9 @@ function! vimcastle#ui#draw(state) abort
 	if(!s:isingamebuffer()) | return | endif
 
 	setlocal modifiable
-	normal! ggdG
+	%d
 
-	call vimcastle#ui#fight#draw(s:screen, a:state)
+	execute 'call vimcastle#ui#' . a:state.screen . '#draw(s:screen, a:state)'
 
 	normal! gg
 	setlocal nomodifiable
