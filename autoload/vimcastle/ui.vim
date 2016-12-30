@@ -1,8 +1,8 @@
 " Initialization {{{
 
-let s:winnr = -1
 let s:screen = {}
 let s:laststate = {}
+let s:bufname = 'game.vimcastle'
 
 function! vimcastle#ui#init() abort
 	call s:opengamebuffer()
@@ -19,15 +19,15 @@ endfunction
 " Buffer setup {{{
 
 function! s:opengamebuffer() abort
-	let s:winnr = bufwinnr('^game.vimcastle$')
-	if (s:winnr >= 0)
-		execute s:winnr . 'wincmd w'
+	let l:winnr = bufwinnr('^' . s:bufname . '$')
+	if (l:winnr >= 0)
+		execute l:winnr . 'wincmd w'
 		setlocal modifiable
 		normal! ggdG
 		setlocal nomodifiable
 	else
-		execute 'new game.vimcastle'
-		let s:winnr = winnr()
+		execute 'new ' . s:bufname
+		let l:winnr = winnr()
 		setlocal buftype=nofile
 		setlocal bufhidden=wipe
 		call s:configuregamebuffer()
@@ -54,7 +54,7 @@ function! s:configuregamebuffer() abort
 endfunction
 
 function! s:isingamebuffer() abort
-	return winnr() == s:winnr
+	return bufname('') == s:bufname
 endfunction
 
 " }}}

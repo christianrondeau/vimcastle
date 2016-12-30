@@ -17,6 +17,7 @@ function! vimcastle#state#get() abort
 endfunction
 
 function! vimcastle#state#action(key) abort
+	echom "action " . a:key
 	if(a:key > 0 && a:key <= len(s:state.actions))
 		call s:state.actions[a:key-1].fn()
 		return 1
