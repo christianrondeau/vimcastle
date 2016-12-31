@@ -1,0 +1,16 @@
+Execute (setup):
+  let screen = {}
+
+Execute (centered title):
+  let screen.width = 30
+  call vimcastle#ui#common#drawtitle(screen, 'Test')
+
+Expect (centered title):
+  ------------ Test ------------
+
+Execute (title too large):
+  let screen.width = 10
+  call vimcastle#ui#common#drawtitle(screen, 'This title is long!')
+
+Expect (title too large):
+  This title

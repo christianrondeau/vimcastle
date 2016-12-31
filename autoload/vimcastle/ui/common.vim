@@ -4,6 +4,9 @@ endfunction
 
 function! s:getcentered(width, title, pad) abort
 	let titlew = strlen(a:title) + 2
+	if(a:width <= titlew)
+		return a:title[0:a:width-1]
+	endif
 	let leftw = (a:width / 2) - (titlew / 2)
 	let rightw = a:width - leftw - titlew
 	let line = repeat(a:pad, leftw) . ' ' . a:title . ' ' . repeat(a:pad, rightw)
