@@ -1,9 +1,16 @@
 function! vimcastle#ui#fight#draw(screen, state) abort
 	call vimcastle#ui#common#drawtitle(a:screen, "Fight!")
 	call append(line('$'), '')
+
 	call s:drawsides(a:screen, a:state.player.name.short,a:state.enemy.name.short)
 	call s:drawbars(a:screen, a:state.player.health, a:state.enemy.health, '-')
 	call append(line('$'), '')
+
+	if(len(a:state.log))
+		call s:drawlog(a:state.log)
+		call append(line('$'), '')
+	endif
+
 	call s:drawactions(a:state.actions)
 endfunction
 
@@ -31,6 +38,15 @@ function! s:getbar(barwidth, val, max, char) abort
 	endif
 	let bar = "[" . repeat(a:char, filled) . repeat(" ", a:barwidth - filled) . "]"
 	return bar
+endfunction
+
+function! s:drawlog(log) abort
+	let i = 0
+	while(i < len(a:log))
+		let entry = a:log[i]
+		call append(line('$'), entry)
+		let i += 1
+	endwhile
 endfunction
 
 function! s:drawactions(actions) abort

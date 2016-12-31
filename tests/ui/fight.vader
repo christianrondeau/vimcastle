@@ -9,6 +9,7 @@ Execute (test setup):
     \    'name': 'Attack with <f. staff>'
     \  }]
     \}
+  let state.log = []
   let state.enemy.health.current = 476
   call vimcastle#ui#fight#draw(screen, state)
 
@@ -17,5 +18,21 @@ Expect (fight screen):
   
    You                    Enem.
    [-------] 153  476 [----   ]
+  
+  1) Attack with <f. staff>
+
+Execute (log):
+  let state.enemy.health.current = 12
+  let state.log = ['You poke the enemy!', 'The enemy laughs.']
+  call vimcastle#ui#fight#draw(screen, state)
+
+Expect (fight screen):
+  ----------- Fight! -----------
+  
+   You                    Enem.
+   [-------] 153   12 [       ]
+  
+  You poke the enemy!
+  The enemy laughs.
   
   1) Attack with <f. staff>

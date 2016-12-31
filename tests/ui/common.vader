@@ -14,3 +14,17 @@ Execute (title too large):
 
 Expect (title too large):
   This title
+
+Given (empty):
+
+Execute (screen center):
+  let screen.width = 30
+  let screen.height = 5
+  call vimcastle#ui#common#drawscreencenter(screen, ['abc', 'def', 'ghi'])
+
+Expect (screen center):
+  
+               abc
+               def
+               ghi
+  
