@@ -1,16 +1,15 @@
 function! vimcastle#ui#fight#draw(screen, state) abort
 	call vimcastle#ui#common#drawtitle(a:screen, "Fight!")
+	call append(line('$'), '')
 	call s:drawsides(a:screen, a:state.player.name.short,a:state.enemy.name.short)
 	call s:drawbars(a:screen, a:state.player.health, a:state.enemy.health, '-')
+	call append(line('$'), '')
 	call s:drawactions(a:state.actions)
 endfunction
 
 function! s:drawsides(screen, left, right) abort
-	let pad = a:screen.width - strlen(a:left) - strlen(a:right) - 3
-	execute "normal! i " . a:left
-	execute "normal! " . pad . "A "
-	execute "normal! A " . a:right
-	normal! o
+	let pad = a:screen.width - strlen(a:left) - strlen(a:right) - 2
+	call append(line('$'), ' ' . a:left . repeat(' ', pad) . a:right)
 endfunction
 
 function! s:drawbars(screen, lefthealth, righthealth, char) abort
@@ -22,7 +21,6 @@ function! s:drawbars(screen, lefthealth, righthealth, char) abort
 		\ a:righthealth.current . " " . 
 		\ s:getbar(barwidth, a:righthealth.current, a:righthealth.max, a:char)
 		\ )
-	normal! o
 endfunction
 
 function! s:getbar(barwidth, val, max, char) abort
@@ -39,8 +37,7 @@ function! s:drawactions(actions) abort
 	let i = 0
 	while(i < len(a:actions))
 		let action = a:actions[i]
-		execute "normal! i" . (i+1) . ") " . action.name
-		normal! o
+		call append(line('$'), (i+1) . ') ' . action.name)
 		let i += 1
 	endwhile
 endfunction

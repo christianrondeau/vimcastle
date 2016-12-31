@@ -62,7 +62,7 @@ endfunction
 
 function! s:drawframe(screen, img)
 	redraw!
-	sleep 500m
-	%delete
+	sleep 200m
+	silent %delete
 	call vimcastle#ui#common#drawscreencenter(a:screen, a:img)
 endfunction

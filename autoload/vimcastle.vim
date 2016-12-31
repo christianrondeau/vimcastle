@@ -8,9 +8,11 @@ function! s:initmappings() abort
 		execute "nnoremap <silent> <buffer> " . key . " :call vimcastle#action('" . key . "')<CR>"
 	endfor
 
-		nnoremap <silent> <buffer> <CR> :call vimcastle#action('CR')<CR>
-		nnoremap <silent> <buffer> <ESC> :call vimcastle#action('ESC')<CR>
-		nnoremap <silent> <buffer> <TAB> :call vimcastle#action('TAB')<CR>
+	nnoremap <silent> <buffer> <CR> :call vimcastle#action('CR')<CR>
+	nnoremap <silent> <buffer> <ESC> :call vimcastle#action('ESC')<CR>
+	nnoremap <silent> <buffer> <TAB> :call vimcastle#action('TAB')<CR>
+
+	nnoremap <silent> <buffer> <LeftMouse> <NOP>
 endfunction
 
 function! vimcastle#action(key) abort

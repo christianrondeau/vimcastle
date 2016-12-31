@@ -1,5 +1,3 @@
-" Initialization {{{
-
 let s:screen = {}
 let s:laststate = {}
 let s:bufname = 'game.vimcastle'
@@ -27,16 +25,29 @@ function! vimcastle#ui#updatescreen() abort
 	let s:screen.height = winheight(0)
 endfunction
 
-" }}}
+function! vimcastle#ui#redraw() abort
+	call vimcastle#ui#draw(s:laststate)
+endfunction
 
-" Buffer setup {{{
+function! vimcastle#ui#draw(state) abort
+	let s:laststate = a:state
+	if(!s:isingamebuffer()) | return | endif
+
+	setlocal modifiable
+	silent %delete
+
+	execute 'call vimcastle#ui#' . a:state.screen . '#draw(s:screen, a:state)'
+
+	normal! gg
+	setlocal nomodifiable
+endfunction
 
 function! s:opengamebuffer() abort
 	let l:winnr = bufwinnr('^' . s:bufname . '$')
 	if (l:winnr >= 0)
 		execute l:winnr . 'wincmd w'
 		setlocal modifiable
-		normal! ggdG
+		silent %delete
 		setlocal nomodifiable
 	else
 		execute 'new ' . s:bufname
@@ -70,25 +81,3 @@ function! s:isingamebuffer() abort
 	return bufname('') == s:bufname
 endfunction
 
-" }}}
-
-" Drawing {{{
-
-function! vimcastle#ui#redraw() abort
-	call vimcastle#ui#draw(s:laststate)
-endfunction
-
-function! vimcastle#ui#draw(state) abort
-	let s:laststate = a:state
-	if(!s:isingamebuffer()) | return | endif
-
-	setlocal modifiable
-	%d
-
-	execute 'call vimcastle#ui#' . a:state.screen . '#draw(s:screen, a:state)'
-
-	normal! gg
-	setlocal nomodifiable
-endfunction
-
-" }}}
