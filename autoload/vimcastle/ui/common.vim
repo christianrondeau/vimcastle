@@ -10,3 +10,21 @@ function! s:getcentered(width, title, pad) abort
 	let line = repeat(leftw, a:pad) . ' ' . a:title . ' ' . repeat(rightw, a:pad)
 	return line
 endfunction
+
+function! vimcastle#ui#common#drawscreencenter(screen, img) abort
+	let w = strlen(a:img[0])
+	let h = len(a:img)
+	let y = (a:screen.height - h) / 2
+	let x = (a:screen.width - w) / 2
+	let xpad = repeat(' ', x)
+	let i = 0
+	while(i < len(a:img))
+		call append(i, xpad . a:img[i])
+		let i += 1
+	endwhile
+	while(y > 0)
+		call append(0, '')
+		let y -= 1
+	endwhile
+endfunction
+

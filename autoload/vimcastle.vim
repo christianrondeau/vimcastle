@@ -4,9 +4,13 @@ function! s:initmappings() abort
 				\ range(char2nr('a'), char2nr('z')) +
 				\ range(char2nr('A'), char2nr('Z'))
 	for key in keys
-		let char = nr2char(key)
-		execute "nnoremap <silent> <buffer> " . char . " :call vimcastle#action('" . char . "')<CR>"
+		let key = nr2char(key)
+		execute "nnoremap <silent> <buffer> " . key . " :call vimcastle#action('" . key . "')<CR>"
 	endfor
+
+		nnoremap <silent> <buffer> <CR> :call vimcastle#action('CR')<CR>
+		nnoremap <silent> <buffer> <ESC> :call vimcastle#action('ESC')<CR>
+		nnoremap <silent> <buffer> <TAB> :call vimcastle#action('TAB')<CR>
 endfunction
 
 function! vimcastle#action(key) abort

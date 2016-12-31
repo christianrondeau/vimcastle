@@ -1,31 +1,68 @@
 function! vimcastle#ui#intro#draw(screen, state) abort
-	let frame = [
-		\ ' __   ______    __ ',
-		\ ' \ \ /  / | \  /  |',
-		\ '  \ v  /| |  \/   |',
-		\ '   \  / | ||\__/| |',
-		\ '    \/  |//     |/ ',
-		\ '                   ',
-		\ '  C  A  S  T  L  E '
-		\]
-	call s:drawcenter(a:screen, frame)
+	call s:drawframe(a:screen, [
+		\ '__   ___',
+		\ '\ \ /  /',
+		\ ' \ v  / ',
+		\ '  \  /  ',
+		\ '   \/   ',
+		\ '        ',
+		\ '        ',
+		\ '        ',
+		\ '        '
+		\])
+
+	call s:drawframe(a:screen, [
+		\ '__   _____  ',
+		\ '\ \ /  / |  ',
+		\ ' \ v  /| |  ',
+		\ '  \  / | |  ',
+		\ '   \/  |/   ',
+		\ '            ',
+		\ '            ',
+		\ '            ',
+		\ '            '
+		\])
+
+	call s:drawframe(a:screen, [
+		\ '__   ______    __ ',
+		\ '\ \ /  / | \  /  |',
+		\ ' \ v  /| |  \/   |',
+		\ '  \  / | ||\__/| |',
+		\ '   \/  |//     |/ ',
+		\ '                  ',
+		\ '                  ',
+		\ '                  ',
+		\ '                  '
+		\])
+
+	call s:drawframe(a:screen, [
+		\ '__   ______    __ ',
+		\ '\ \ /  / | \  /  |',
+		\ ' \ v  /| |  \/   |',
+		\ '  \  / | ||\__/| |',
+		\ '   \/  |//     |/ ',
+		\ '                  ',
+		\ ' C  A  S  T  L  E ',
+		\ '                  ',
+		\ '                  ',
+		\])
+
+	call s:drawframe(a:screen, [
+		\ '__   ______    __ ',
+		\ '\ \ /  / | \  /  |',
+		\ ' \ v  /| |  \/   |',
+		\ '  \  / | ||\__/| |',
+		\ '   \/  |//     |/ ',
+		\ '                  ',
+		\ ' C  A  S  T  L  E ',
+		\ '                  ',
+		\ '      <start>     '
+		\])
 endfunction
 
-function! s:drawcenter(screen, img)
-	let w = strlen(a:img[0])
-	let h = len(a:img)
-	let y = (a:screen.height / 2) - (h / 2)
-	let x = (a:screen.width - w) / 2
-	let xpad = repeat(' ', x)
-	let i = 0
-	while(i < len(a:img))
-		call append(i, xpad . a:img[i])
-		let i += 1
-	endwhile
-	while(y > 0)
-		call append(0, '')
-		let y -= 1
-	endwhile
-
+function! s:drawframe(screen, img)
+	redraw!
+	sleep 500m
+	%delete
+	call vimcastle#ui#common#drawscreencenter(a:screen, a:img)
 endfunction
-
