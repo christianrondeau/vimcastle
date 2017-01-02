@@ -20,20 +20,14 @@ function! s:hit(state) abort
 	let dmg = s:random(3) + 1
 	let a:state.enemy.health.current -= dmg
 	call add(a:state.log, 'You hit ' . a:state.enemy.name.long . ' for ' . dmg . ' damage!')
+	if(a:state.enemy.health.current <= 0)
+		call vimcastle#state#enter('win')
+	endif
 
 	let dmg = s:random(3) + 1
 	let a:state.player.health.current -= dmg
 	call add(a:state.log, a:state.enemy.name.long . ' hits you for ' . dmg . ' damage!')
-endfunction
-
-function! s:hitone(state, character) abort
-	let dmg = s:random(3) + 1
-	let a:state.enemy.health.current -= dmg
-	call add(a:state.log, 'You hit ' . a:state.enemy.name.long . ' for ' . dmg . ' damage!')
-endfunction
-
-let s:rndseed = localtime() % 0x10000
-function! s:random(n) abort
-	let s:rndseed = (s:rndseed * 31421 + 6927) % 0x10000
-	return s:rndseed * a:n / 0x10000
+	if(a:state.player.health.current <= 0)
+		call vimcastle#state#enter('lose')
+	endif
 endfunction
