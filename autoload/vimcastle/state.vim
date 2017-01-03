@@ -6,7 +6,8 @@ function! vimcastle#state#init() abort
 		\ 'newgame': function('s:newgame'),
 		\ 'action': function('s:action')
 		\}
-	call vimcastle#state#enter('intro')
+	call s:state.enter('intro')
+	return s:state
 endfunction
 
 function! vimcastle#state#get() abort
@@ -27,7 +28,7 @@ function! s:action(key) abort
 endfunction
 
 function! s:newgame() abort
-	let s:state.player = vimcastle#character#create('Player', 'You', 100)
+	let s:state.player = vimcastle#character#create('Player', 'You', 20)
 endfunction
 
 function! s:enter(name) abort

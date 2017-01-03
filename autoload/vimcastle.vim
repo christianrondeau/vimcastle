@@ -16,16 +16,17 @@ function! s:initmappings() abort
 endfunction
 
 function! vimcastle#action(key) abort
-	if(vimcastle#state#action(a:key))
-		call vimcastle#ui#draw(vimcastle#state#get())
+	let state = vimcastle#state#get()
+	if(state.action(a:key))
+		call vimcastle#ui#draw(state)
 	endif
 endfunction
 
 function! vimcastle#start() abort
-	call vimcastle#state#init()
+	let state = vimcastle#state#init()
 	call vimcastle#ui#init()
 	call s:initmappings()
-	call vimcastle#ui#draw(vimcastle#state#get())
+	call vimcastle#ui#draw(state)
 endfunction
 
 function! vimcastle#enter(name) abort
