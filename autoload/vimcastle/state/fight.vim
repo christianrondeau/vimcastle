@@ -17,14 +17,14 @@ function! vimcastle#state#fight#action(state, key) abort
 endfunction
 
 function! s:hit(state) abort
-	let dmg = s:random(3) + 1
+	let dmg = vimcastle#utils#rnd(3) + 1
 	let a:state.enemy.health.current -= dmg
 	call add(a:state.log, 'You hit ' . a:state.enemy.name.long . ' for ' . dmg . ' damage!')
 	if(a:state.enemy.health.current <= 0)
 		call vimcastle#state#enter('win')
 	endif
 
-	let dmg = s:random(3) + 1
+	let dmg = vimcastle#utils#rnd(3) + 1
 	let a:state.player.health.current -= dmg
 	call add(a:state.log, a:state.enemy.name.long . ' hits you for ' . dmg . ' damage!')
 	if(a:state.player.health.current <= 0)

@@ -23,21 +23,11 @@ function! s:drawbars(screen, lefthealth, righthealth, char) abort
 	let barwidth = a:screen.width / 2 - 8
 	call s:drawsides(
 		\ a:screen,
-		\ s:getbar(barwidth, a:lefthealth.current, a:lefthealth.max, a:char) .
+		\ vimcastle#ui#common#getbar(barwidth, a:lefthealth.current, a:lefthealth.max, a:char) .
 		\ " " . a:lefthealth.current,
 		\ a:righthealth.current . " " . 
-		\ s:getbar(barwidth, a:righthealth.current, a:righthealth.max, a:char)
+		\ vimcastle#ui#common#getbar(barwidth, a:righthealth.current, a:righthealth.max, a:char)
 		\ )
-endfunction
-
-function! s:getbar(barwidth, val, max, char) abort
-	if(a:val > 0 && a:max > 0)
-		let filled = a:val * a:barwidth / a:max
-	else
-		let filled = 0
-	endif
-	let bar = "[" . repeat(a:char, filled) . repeat(" ", a:barwidth - filled) . "]"
-	return bar
 endfunction
 
 function! s:drawlog(log) abort

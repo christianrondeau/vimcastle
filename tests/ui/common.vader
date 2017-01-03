@@ -28,3 +28,14 @@ Expect (screen center):
                def
                ghi
   
+Given (empty):
+
+Execute (bars):
+  call setline(1, vimcastle#ui#common#getbar(6, 100, 100, '-'))
+  call append(1, vimcastle#ui#common#getbar(4, -5, 17, '-'))
+  call append(2, vimcastle#ui#common#getbar(8, 7, 14, '+'))
+
+Expect (bars):
+  [------]
+  [    ]
+  [++++    ]
