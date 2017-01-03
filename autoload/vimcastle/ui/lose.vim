@@ -1,5 +1,7 @@
 function! vimcastle#ui#lose#draw(screen, state) abort
-	call setline(1, 'You lose!')
-	call append(1, '')
-	call append(2, '<Start over>')
+	call vimcastle#ui#common#drawscreencenter(a:screen, [
+		\'G A M E    O V E R',
+		\'                  ',
+		\'   <Start over>   ',
+		\])
 endfunction
