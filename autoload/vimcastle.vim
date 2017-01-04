@@ -11,8 +11,6 @@ function! s:initmappings() abort
 	nnoremap <silent> <buffer> <CR> :call vimcastle#action('CR')<CR>
 	nnoremap <silent> <buffer> <ESC> :call vimcastle#action('ESC')<CR>
 	nnoremap <silent> <buffer> <TAB> :call vimcastle#action('TAB')<CR>
-
-	nnoremap <silent> <buffer> <LeftMouse> <NOP>
 endfunction
 
 function! vimcastle#action(key) abort
@@ -36,6 +34,7 @@ function! vimcastle#enter(name) abort
 endfunction
 
 function! vimcastle#quit() abort
-		call vimcastle#state#clear()
-		call vimcastle#ui#quit()
+	let state = vimcastle#state#get()
+	call state.clear()
+	call vimcastle#ui#quit()
 endfunction
