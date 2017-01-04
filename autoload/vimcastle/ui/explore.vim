@@ -7,13 +7,12 @@ function! vimcastle#ui#explore#draw(screen, state) abort
 
 	if(exists('a:state.enemy'))
 		call append(line('$'), 'You wander aimlessly when you encounter <' . a:state.enemy.name.long . '>!')
-		call append(line('$'), '')
-		call append(line('$'), '<Fight!>')
 	else
 		call append(line('$'), 'You wander aimlessly...')
-		call append(line('$'), '')
-		call append(line('$'), '<Continue>')
 	endif
+	call append(line('$'), '')
+
+	call vimcastle#ui#common#drawactions(a:state.actions)
 endfunction
 
 function! s:drawright(screen, right) abort

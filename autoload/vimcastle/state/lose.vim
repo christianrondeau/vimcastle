@@ -1,7 +1,12 @@
 function! vimcastle#state#lose#enter(state) abort
+	let a:state.actions = {
+		\'any': {
+		\  'name': 'Restart',
+		\  'fn': function('s:action_restart')
+		\}
+		\}
 endfunction
 
-function! vimcastle#state#lose#action(state, key) abort
+function! s:action_restart(state) abort
 	call a:state.reset()
-	return 1
 endfunction

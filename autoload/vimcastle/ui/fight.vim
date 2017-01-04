@@ -11,7 +11,7 @@ function! vimcastle#ui#fight#draw(screen, state) abort
 		call append(line('$'), '')
 	endif
 
-	call s:drawactions(a:state.actions)
+	call vimcastle#ui#common#drawactions(a:state.actions)
 endfunction
 
 function! s:drawsides(screen, left, right) abort
@@ -39,11 +39,3 @@ function! s:drawlog(log) abort
 	endwhile
 endfunction
 
-function! s:drawactions(actions) abort
-	let i = 0
-	while(i < len(a:actions))
-		let action = a:actions[i]
-		call append(line('$'), (i+1) . ') ' . action.name)
-		let i += 1
-	endwhile
-endfunction

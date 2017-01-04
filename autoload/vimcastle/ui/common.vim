@@ -39,3 +39,13 @@ function! vimcastle#ui#common#getbar(barwidth, val, max, char) abort
 	let bar = "[" . repeat(a:char, filled) . repeat(" ", a:barwidth - filled) . "]"
 	return bar
 endfunction
+
+function! vimcastle#ui#common#drawactions(actions) abort
+	let actions = items(a:actions)
+	let i = 0
+	while(i < len(actions))
+		let action = actions[i]
+		call append(line('$'), action[0] . ') ' . action[1].name)
+		let i += 1
+	endwhile
+endfunction

@@ -27,12 +27,6 @@ function! vimcastle#start() abort
 	call vimcastle#ui#draw(state)
 endfunction
 
-function! vimcastle#enter(name) abort
-	let state = vimcastle#state#get()
-	call state.enter(a:name)
-	call vimcastle#ui#draw(state)
-endfunction
-
 function! vimcastle#quit() abort
 	let state = vimcastle#state#get()
 	call state.clear()

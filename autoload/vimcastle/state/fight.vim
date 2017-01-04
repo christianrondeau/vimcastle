@@ -1,22 +1,15 @@
 function! vimcastle#state#fight#enter(state) abort
-	let a:state.actions = [
-		\{
+	let a:state.actions = {
+		\'a': {
 		\  'name': 'Attack with <rust. short sword>',
-		\  'fn': function('s:hit')
+		\  'fn': function('s:action_hit')
 		\}
-		\]
+		\}
+endfunction
+
+function! s:action_hit(state) abort
 	let a:state.log = []
-endfunction
 
-function! vimcastle#state#fight#action(state, key) abort
-	if(a:key > 0 && a:key <= len(a:state.actions))
-		let a:state.log = []
-		call a:state.actions[a:key-1].fn(a:state)
-		return 1
-	endif
-endfunction
-
-function! s:hit(state) abort
 	let dmg = vimcastle#utils#rnd(3) + 1
 	let a:state.enemy.health.current -= dmg
 	call add(a:state.log, 'You hit ' . a:state.enemy.name.long . ' for ' . dmg . ' damage!')
