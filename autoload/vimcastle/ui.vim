@@ -50,10 +50,10 @@ function! s:opengamebuffer() abort
 		silent %delete
 		setlocal nomodifiable
 	else
-		execute 'new ' . s:bufname
+		execute 'edit ' . s:bufname
+
 		let l:winnr = winnr()
 		setlocal buftype=nofile
-		setlocal bufhidden=wipe
 		call s:configuregamebuffer()
 		setlocal nomodifiable
 	endif
