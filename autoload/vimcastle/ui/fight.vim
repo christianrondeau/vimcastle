@@ -7,7 +7,7 @@ function! vimcastle#ui#fight#draw(screen, state) abort
 	call append(line('$'), '')
 
 	if(len(a:state.log))
-		call s:drawlog(a:state.log)
+		call vimcastle#ui#common#drawlog(a:state.log)
 		call append(line('$'), '')
 	endif
 
@@ -29,13 +29,3 @@ function! s:drawbars(screen, lefthealth, righthealth, char) abort
 		\ vimcastle#ui#common#getbar(barwidth, a:righthealth.current, a:righthealth.max, a:char)
 		\ )
 endfunction
-
-function! s:drawlog(log) abort
-	let i = 0
-	while(i < len(a:log))
-		let entry = a:log[i]
-		call append(line('$'), entry)
-		let i += 1
-	endwhile
-endfunction
-

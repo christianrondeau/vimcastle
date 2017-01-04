@@ -5,10 +5,8 @@ function! vimcastle#ui#explore#draw(screen, state) abort
 	call s:drawbar(a:screen, a:state.player.health)
 	call append(line('$'), '')
 
-	if(exists('a:state.enemy'))
-		call append(line('$'), 'You wander aimlessly when you encounter <' . a:state.enemy.name.long . '>!')
-	else
-		call append(line('$'), 'You wander aimlessly...')
+	if(len(a:state.log))
+		call vimcastle#ui#common#drawlog(a:state.log)
 	endif
 	call append(line('$'), '')
 

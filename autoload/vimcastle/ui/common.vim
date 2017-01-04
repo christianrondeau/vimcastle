@@ -40,6 +40,15 @@ function! vimcastle#ui#common#getbar(barwidth, val, max, char) abort
 	return bar
 endfunction
 
+function! vimcastle#ui#common#drawlog(log) abort
+	let i = 0
+	while(i < len(a:log))
+		let entry = a:log[i]
+		call append(line('$'), entry)
+		let i += 1
+	endwhile
+endfunction
+
 function! vimcastle#ui#common#drawactions(actions) abort
 	let actions = items(a:actions)
 	let i = 0

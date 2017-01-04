@@ -1,4 +1,4 @@
-function! vimcastle#state#lose#enter(state) abort
+function! vimcastle#state#gameover#enter(state) abort
 	let a:state.actions = {
 		\'any': {
 		\  'name': 'Restart',

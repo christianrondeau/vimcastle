@@ -21,6 +21,6 @@ function! s:action_hit(state) abort
 	let a:state.player.health.current -= dmg
 	call add(a:state.log, a:state.enemy.name.long . ' hits you for ' . dmg . ' damage!')
 	if(a:state.player.health.current <= 0)
-		call a:state.enter('lose')
+		call a:state.enter('gameover')
 	endif
 endfunction
