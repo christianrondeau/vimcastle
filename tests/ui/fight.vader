@@ -5,9 +5,11 @@ Execute (test setup):
   let state = {
     \  'player': vimcastle#character#create('Player', 'You', 153),
     \  'enemy': vimcastle#character#create('Enemy', 'Enem.', 810),
-    \  'actions': [{
-    \    'name': 'Attack with <f. staff>'
-    \  }]
+    \  'actions': {
+    \    'a': {
+    \      'name': 'Attack with <f. staff>'
+    \    }
+    \  }
     \}
   let state.log = []
   let state.enemy.health.current = 476
@@ -19,7 +21,7 @@ Expect (fight screen):
    You                    Enem.
    [-------] 153  476 [----   ]
   
-  1) Attack with <f. staff>
+  a) Attack with <f. staff>
 
 Execute (log):
   let state.enemy.health.current = 12
@@ -35,4 +37,4 @@ Expect (fight screen):
   You poke the enemy!
   The enemy laughs.
   
-  1) Attack with <f. staff>
+  a) Attack with <f. staff>

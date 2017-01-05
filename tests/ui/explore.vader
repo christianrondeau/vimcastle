@@ -4,7 +4,9 @@ Execute (test setup):
     \}
   let state = {
     \  'player': vimcastle#character#create('Player', 'You', 153),
-    \  'enemy': vimcastle#character#create('Enemy', 'Enem.', 810)
+    \  'enemy': vimcastle#character#create('Enemy', 'Enem.', 810),
+    \  'log': ['Stuff happens!'],
+    \  'actions': { 'x': { 'name': 'Action' } },
     \}
   call vimcastle#ui#explore#draw(screen, state)
 
@@ -13,6 +15,6 @@ Expect (explore screen):
   
                    153 [-------]
   
-  You wander aimlessly when you encounter <Enemy>!
+  Stuff happens!
   
-  <Fight!>
+  x) Action
