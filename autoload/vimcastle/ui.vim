@@ -35,7 +35,7 @@ endfunction
 
 function! vimcastle#ui#draw(state) abort
 	let s:laststate = a:state
-	if(!s:isingamebuffer()) | echom 'Wrong buffer!' | return | endif
+	if(!s:isingamebuffer()) | return | endif
 
 	setlocal modifiable
 	silent %delete

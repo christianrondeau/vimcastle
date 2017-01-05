@@ -16,13 +16,17 @@ function! vimcastle#state#get() abort
 	return s:state
 endfunction
 
-function! s:reset() abort
+function! s:clean() abort
 	if(exists('s:state.enemy'))
 		unlet s:state.enemy
 	endif
 	if(exists('s:state.player'))
 		unlet s:state.player
 	endif
+endfunction
+
+function! s:reset() abort
+	call s:clean()
 	call s:state.enter('intro')
 endfunction
 
@@ -44,7 +48,9 @@ function! s:action(key) abort
 endfunction
 
 function! s:newgame() abort
+	call s:clean()
 	let s:state.player = vimcastle#character#create('Player', 'You', 60)
+	call s:state.enter('explore')
 endfunction
 
 function! s:enter(name) abort
