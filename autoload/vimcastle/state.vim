@@ -44,7 +44,7 @@ function! s:action(key) abort
 endfunction
 
 function! s:newgame() abort
-	let s:state.player = vimcastle#character#create('Player', 'You', 8)
+	let s:state.player = vimcastle#character#create('Player', 'You', 60)
 endfunction
 
 function! s:enter(name) abort

@@ -10,7 +10,9 @@ endfunction
 
 function! vimcastle#ui#clear() abort
 	let s:screen = {}
-	let s:laststate = {}
+	if(exists("s:laststate"))
+		unlet s:laststate
+	endif
 endfunction
 
 function! vimcastle#ui#quit() abort
@@ -26,7 +28,9 @@ function! vimcastle#ui#updatescreen() abort
 endfunction
 
 function! vimcastle#ui#redraw() abort
-	call vimcastle#ui#draw(s:laststate)
+	if(exists("s:laststate"))
+		call vimcastle#ui#draw(s:laststate)
+	endif
 endfunction
 
 function! vimcastle#ui#draw(state) abort
@@ -71,10 +75,21 @@ function! s:configuregamebuffer() abort
 		setlocal colorcolumn=
 		setlocal statusline=
 		setlocal nocursorline
-		augroup Vimcastle
-		autocmd!
-		autocmd VimResized <buffer> call vimcastle#ui#updatescreen()
-	augroup END
+
+		" These settings are permanent
+		" setlocal noshowcmd
+		" setlocal nohlsearch
+		" highlight NonText guifg=bg
+		" highlight EndOfBuffer ctermfg=bg ctermbg=bg
+
+		augroup Vimcastle_ui
+			autocmd!
+			autocmd VimResized <buffer> call vimcastle#ui#updatescreen() | call vimcastle#ui#redraw()
+
+			" Prevent mappings like `cs` to interfere with game controls
+			autocmd BufEnter <buffer> let g:vimcastle_bak_timeoutlen = &timeoutlen | set timeoutlen=1
+			autocmd BufLeave <buffer> let &timeoutlen = g:vimcastle_bak_timeoutlen | unlet g:vimcastle_bak_timeoutlen
+		augroup END
 endfunction
 
 function! s:isingamebuffer() abort
