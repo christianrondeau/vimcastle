@@ -77,19 +77,30 @@ function! s:configuregamebuffer() abort
 		setlocal nocursorline
 
 		" These settings are permanent
-		" setlocal noshowcmd
-		" setlocal nohlsearch
 		" highlight NonText guifg=bg
 		" highlight EndOfBuffer ctermfg=bg ctermbg=bg
+
+		call s:global2buf('timeoutlen', '1')
+		call s:global2buf('showcmd', '0')
+		call s:global2buf('hlsearch', '0')
 
 		augroup Vimcastle_ui
 			autocmd!
 			autocmd VimResized <buffer> call vimcastle#ui#updatescreen() | call vimcastle#ui#redraw()
-
-			" Prevent mappings like `cs` to interfere with game controls
-			autocmd BufEnter <buffer> let g:vimcastle_bak_timeoutlen = &timeoutlen | set timeoutlen=1
-			autocmd BufLeave <buffer> let &timeoutlen = g:vimcastle_bak_timeoutlen | unlet g:vimcastle_bak_timeoutlen
 		augroup END
+endfunction
+
+function! s:global2buf(name, value) abort
+	let dobackupandapply = 'if(!exists("g:vimcastle_bak_' . a:name . '")) | let g:vimcastle_bak_' . a:name . ' = &' . a:name . ' | endif | let &' . a:name . '=' . a:value
+	let dorestore = 'if(exists("g:vimcastle_bak_' . a:name . '")) | let &' . a:name . ' = g:vimcastle_bak_' . a:name . ' | unlet g:vimcastle_bak_' . a:name . ' | endif'
+
+	execute "augroup Vimcastle_ui_" . a:name
+	autocmd!
+	execute 'autocmd BufEnter <buffer> ' . dobackupandapply
+	execute 'autocmd BufLeave,BufDelete <buffer> ' . dorestore
+	execute "augroup END"
+
+	execute dobackupandapply
 endfunction
 
 function! s:isingamebuffer() abort
