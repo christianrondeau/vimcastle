@@ -1,0 +1,34 @@
+Execute (setup state):
+  let state = vimcastle#state#create()
+
+Execute (enter):
+  call state.enter('test')
+
+Then (screen is updated):
+  AssertEqual 'test', state.screen, 'screen is updated'
+  AssertEqual 'Test Action', state.actions.items[0].label, 'state impl is called'
+
+Execute (action):
+  let result = state.action('1')
+
+Then (the action is called):
+  Assert result
+  AssertEqual 'test log 1', state.log[0]
+
+Execute (default action):
+  let result = state.action('x')
+
+Then (the default action is called):
+  Assert result
+  AssertEqual 'test log any', state.log[0]
+
+Execute (reset):
+  let state.player = {}
+  let state.enemy = {}
+  call state.reset()
+
+Then (the state is clean):
+  Assert !has_key(state, 'player'), 'player is cleared'
+  Assert !has_key(state, 'enemy'), 'enemy is cleared'
+  Assert !len(state.log), 'log is empty'
+  Assert !len(state.actions.items), 'actions are empty'

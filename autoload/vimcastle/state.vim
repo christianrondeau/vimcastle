@@ -1,60 +1,37 @@
-let s:state = {}
+let s:StateClass = {}
 
-function! vimcastle#state#init() abort
-	let s:state = {
-		\ 'enter': function('s:enter'),
-		\ 'newgame': function('s:newgame'),
-		\ 'action': function('s:action'),
-		\ 'clear': function('s:clear'),
-		\ 'reset': function('s:reset')
-		\}
-	call s:reset()
-	return s:state
+function! vimcastle#state#create() abort
+	let instance = copy(s:StateClass)
+	let instance.actions = vimcastle#actions#create()
+	call instance.reset()
+	return instance
 endfunction
 
-function! vimcastle#state#get() abort
-	return s:state
+function! s:StateClass.enter(name) dict abort
+	call self.actions.clear()
+	let self.log = []
+	let self.screen = a:name
+	execute 'call vimcastle#state#' . a:name . '#enter(self)'
 endfunction
 
-function! s:clean() abort
-	if(exists('s:state.enemy'))
-		unlet s:state.enemy
-	endif
-	if(exists('s:state.player'))
-		unlet s:state.player
-	endif
-	let s:state.actions = vimcastle#actions#create()
-endfunction
-
-function! s:reset() abort
-	call s:clean()
-	call s:state.enter('intro')
-endfunction
-
-function! s:action(key) abort
+function! s:StateClass.action(key) dict abort
 	if(a:key == "q")
 		call vimcastle#quit()
 		return 0
-	elseif(s:state.actions.invokeByKey(a:key, s:state))
+	elseif(self.actions.invokeByKey(a:key, self))
 		return 1
 	else
-		return s:state.actions.invokeDefault(s:state)
+		return self.actions.invokeDefault(self)
 	endif
 endfunction
 
-function! s:newgame() abort
-	call s:clean()
-	let s:state.player = vimcastle#character#create('Player', 'You', 60)
-	call s:state.enter('explore')
-endfunction
-
-function! s:enter(name) abort
-	call s:state.actions.clear()
-	let s:state.log = []
-	let s:state.screen = a:name
-	execute 'call vimcastle#state#' . a:name . '#enter(s:state)'
-endfunction
-
-function! s:clear() abort
-	unlet s:state
+function! s:StateClass.reset() dict abort
+	if(exists('self.enemy'))
+		unlet self.enemy
+	endif
+	if(exists('self.player'))
+		unlet self.player
+	endif
+	let self.log = []
+	call self.actions.clear()
 endfunction

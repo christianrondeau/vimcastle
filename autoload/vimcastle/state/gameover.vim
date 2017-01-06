@@ -4,4 +4,5 @@ endfunction
 
 function! s:action_restart(state) abort
 	call a:state.reset()
+	call a:state.enter('intro')
 endfunction

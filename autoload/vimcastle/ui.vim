@@ -1,5 +1,4 @@
 let s:screen = {}
-let s:laststate = {}
 let s:bufname = 'game.vimcastle'
 
 function! vimcastle#ui#init() abort
@@ -27,15 +26,8 @@ function! vimcastle#ui#updatescreen() abort
 	let s:screen.height = winheight(0)
 endfunction
 
-function! vimcastle#ui#redraw() abort
-	if(exists("s:laststate"))
-		call vimcastle#ui#draw(s:laststate)
-	endif
-endfunction
-
 function! vimcastle#ui#draw(state) abort
-	let s:laststate = a:state
-	if(!s:isingamebuffer()) | return | endif
+	if(!s:isingamebuffer() || !exists('a:state.screen')) | return | endif
 
 	setlocal modifiable
 	silent %delete
@@ -83,11 +75,6 @@ function! s:configuregamebuffer() abort
 		call s:global2buf('timeoutlen', '1')
 		call s:global2buf('showcmd', '0')
 		call s:global2buf('hlsearch', '0')
-
-		augroup Vimcastle_ui
-			autocmd!
-			autocmd VimResized <buffer> call vimcastle#ui#updatescreen() | call vimcastle#ui#redraw()
-		augroup END
 endfunction
 
 function! s:global2buf(name, value) abort
