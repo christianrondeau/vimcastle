@@ -50,11 +50,10 @@ function! vimcastle#ui#common#drawlog(log) abort
 endfunction
 
 function! vimcastle#ui#common#drawactions(actions) abort
-	let actions = items(a:actions)
 	let i = 0
-	while(i < len(actions))
-		let action = actions[i]
-		call append(line('$'), action[0] . ') ' . action[1].name)
+	while(i < len(a:actions.items))
+		let action = a:actions.items[i]
+		call append(line('$'), action.key . ') ' . action.label)
 		let i += 1
 	endwhile
 endfunction

@@ -12,23 +12,15 @@ endfunction
 
 function! s:event_nothing(state)
 	let a:state.log = ['You wander aimlessly...']
-	let a:state.actions = {
-		\'c': {
-		\  'name': 'Continue',
-		\  'fn': function('s:action_continue')
-		\}
-		\}
+	call a:state.actions.clear()
+	call a:state.actions.add('c', 'Continue', function('s:action_continue'))
 endfunction
 
 function! s:event_fight(state)
 	let a:state.enemy = vimcastle#character#random()
 	let a:state.log = ['You wander aimlessly when you encounter <' . a:state.enemy.name.long . '>!']
-	let a:state.actions = {
-		\'f': {
-		\  'name': 'Fight!',
-		\  'fn': function('s:action_fight')
-		\}
-		\}
+	call a:state.actions.clear()
+	call a:state.actions.add('f', 'Fight!', function('s:action_fight'))
 endfunction
 
 let s:events = [

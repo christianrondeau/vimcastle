@@ -1,13 +1,12 @@
 Execute (test setup):
-  let screen = {
-    \  'width': 30
-    \}
-  let state = {
-    \  'player': vimcastle#character#create('Player', 'You', 153),
-    \  'enemy': vimcastle#character#create('Enemy', 'Enem.', 810),
-    \  'log': ['Stuff happens!'],
-    \  'actions': { 'x': { 'name': 'Action' } },
-    \}
+  let screen = { 'width': 30 }
+  let state = {}
+  let state.player = vimcastle#character#create('Player', 'You', 153)
+  let state.actions = vimcastle#actions#create()
+  call state.actions.addNoop('x',  'Action')
+  let state.log = ['Stuff happens!']
+
+Execute (draw):
   call vimcastle#ui#explore#draw(screen, state)
 
 Expect (explore screen):

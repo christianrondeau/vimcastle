@@ -23,6 +23,7 @@ function! s:clean() abort
 	if(exists('s:state.player'))
 		unlet s:state.player
 	endif
+	let s:state.actions = vimcastle#actions#create()
 endfunction
 
 function! s:reset() abort
@@ -34,16 +35,10 @@ function! s:action(key) abort
 	if(a:key == "q")
 		call vimcastle#quit()
 		return 0
-	elseif(exists('s:state.actions'))
-		if(has_key(s:state.actions, a:key))
-			call s:state.actions[a:key].fn(s:state)
-			return 1
-		elseif(has_key(s:state.actions, 'any'))
-			call s:state.actions['any'].fn(s:state)
-			return 1
-		else
-			return 0
-		endif
+	elseif(s:state.actions.invokeByKey(a:key, s:state))
+		return 1
+	else
+		return s:state.actions.invokeDefault(s:state)
 	endif
 endfunction
 
@@ -54,7 +49,7 @@ function! s:newgame() abort
 endfunction
 
 function! s:enter(name) abort
-	let s:state.actions = []
+	call s:state.actions.clear()
 	let s:state.log = []
 	let s:state.screen = a:name
 	execute 'call vimcastle#state#' . a:name . '#enter(s:state)'

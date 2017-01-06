@@ -1,10 +1,5 @@
 function! vimcastle#state#fight#enter(state) abort
-	let a:state.actions = {
-		\'a': {
-		\  'name': 'Attack with <rust. short sword>',
-		\  'fn': function('s:action_hit')
-		\}
-		\}
+	call a:state.actions.add('a', 'Attack with <rust. short sword>', function('s:action_hit'))
 endfunction
 
 function! s:action_hit(state) abort
