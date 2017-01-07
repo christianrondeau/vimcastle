@@ -5,6 +5,7 @@ endfunction
 function! s:begin(state) abort
 	let a:state.env = s:env_plains()
 	let a:state.player = vimcastle#character#create('Player', 'You', 60)
+	let a:state.player.weapon = s:weapon_rustedshortsword()
 	let a:state.enter('explore')
 	call s:event_begin(a:state)
 endfunction
@@ -43,11 +44,29 @@ function! s:env_plains()
 endfunction
 
 function! s:enemy_ogre()
-	return vimcastle#character#create('Ogre', 'Ogre', 50)
+	let enemy = vimcastle#character#create('Ogre', 'Ogre', 50)
+	let enemy.weapon = s:weapon_rustedshortsword()
+	return enemy
 endfunction
 
 function! s:enemy_rat()
-	return vimcastle#character#create('Rat', 'Rat', 8)
+	let enemy = vimcastle#character#create('Rat', 'Rat', 8)
+	let enemy.weapon = s:weapon_ratclaw()
+	return enemy
+endfunction
+
+function! s:weapon_rustedshortsword()
+	return {
+		\'name': { 'short': 'rust. short sword' },
+		\'dmg': { 'min': 1, 'max': 2 },
+		\}
+endfunction
+
+function! s:weapon_ratclaw()
+	return {
+		\'name': { 'short': 'rust. short sword' },
+		\'dmg': { 'min': 1, 'max': 2 },
+		\}
 endfunction
 
 function! s:action_continue(state)
