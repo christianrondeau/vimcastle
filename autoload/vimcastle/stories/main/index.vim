@@ -16,8 +16,10 @@ function! s:event_begin(state)
 	call a:state.actions.add('c', 'Start walking forward', function('s:action_continue'))
 endfunction
 
+let s:event_nothing_logs = ['You wander aimlessly...', 'You walk around...', 'You see... nothing.', 'Nope. Nothing.']
 function! s:event_nothing(state)
-	let a:state.log = ['You wander aimlessly...']
+	let log = s:event_nothing_logs[vimcastle#utils#rnd(len(s:event_nothing_logs))]
+	let a:state.log = [log]
 	call a:state.actions.clear()
 	call a:state.actions.add('c', 'Continue', function('s:action_continue'))
 endfunction
