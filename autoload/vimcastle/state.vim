@@ -3,6 +3,7 @@ let s:StateClass = {}
 function! vimcastle#state#create() abort
 	let instance = copy(s:StateClass)
 	let instance.actions = vimcastle#actions#create()
+	let instance.story = vimcastle#story#create()
 	call instance.reset()
 	return instance
 endfunction
