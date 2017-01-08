@@ -1,3 +1,5 @@
+let s:_ = vimcastle#utils#get()
+
 function! vimcastle#stories#main#index#setup(story) abort
 	let a:story.begin = function('s:begin')
 endfunction
@@ -18,14 +20,14 @@ endfunction
 
 let s:event_nothing_logs = ['You wander aimlessly...', 'You walk around...', 'You see... nothing.', 'Nope. Nothing.']
 function! s:event_nothing(state)
-	let log = s:event_nothing_logs[vimcastle#utils#rnd(len(s:event_nothing_logs))]
+	let log = s:_.oneof(s:event_nothing_logs)
 	let a:state.log = [log]
 	call a:state.actions.clear()
 	call a:state.actions.add('c', 'Continue', function('s:action_continue'))
 endfunction
 
 function! s:event_fight(state)
-	let a:state.enemy = a:state.env.enemies[vimcastle#utils#rnd(len(a:state.env.enemies))]()
+	let a:state.enemy = s:_.oneof(a:state.env.enemies)()
 	let a:state.log = ['You wander aimlessly when you encounter <' . a:state.enemy.name.long . '>!']
 	call a:state.actions.clear()
 	call a:state.actions.add('f', 'Fight!', function('s:action_fight'))
@@ -99,7 +101,7 @@ function! s:weapon_ratclaw()
 endfunction
 
 function! s:action_continue(state)
-	call a:state.env.events[vimcastle#utils#rnd(len(a:state.env.events))](a:state)
+	let result = s:_.oneof(a:state.env.events)(a:state)
 endfunction
 
 function! s:action_fight(state)
