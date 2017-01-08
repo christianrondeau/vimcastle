@@ -28,7 +28,7 @@ function! s:compute_hit(attacker, victim) abort
 	let weapon = a:attacker.weapon
 	let dmgmin = weapon.dmg.min
 	let dmgmax = weapon.dmg.max
-	let dmg = vimcastle#utils#rnd(dmgmax - dmgmin + 1) + dmgmax
+	let dmg = vimcastle#utils#rnd(dmgmax - dmgmin + 1) + dmgmin
 	let a:victim.health.current -= dmg
 	if(a:victim.health.current < 0)
 		let a:victim.health.current = 0

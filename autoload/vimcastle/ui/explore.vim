@@ -1,5 +1,5 @@
 function! vimcastle#ui#explore#draw(screen, state) abort
-	call vimcastle#ui#common#drawtitle(a:screen, "Plains")
+	call vimcastle#ui#common#drawtitle(a:screen, a:state.env.label)
 	call append(line('$'), '')
 
 	call s:drawbar(a:screen, a:state.player.health)
