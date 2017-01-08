@@ -26,6 +26,15 @@ function! s:event_nothing(state)
 	call a:state.actions.add('c', 'Continue', function('s:action_continue'))
 endfunction
 
+let s:event_heal_logs = ['You see a pond of fresh water. You drink for it and feel refreshed.', 'You see an abandoned house. You rest in it for a little bit.', 'You see a camp, and decide to rest for a few minutes.']
+function! s:event_heal(state)
+	let log = s:_.oneof(s:event_heal_logs)
+	let a:state.log = [log, 'Your health is now full!']
+	let a:state.player.health.current = a:state.player.health.max
+	call a:state.actions.clear()
+	call a:state.actions.add('c', 'Continue', function('s:action_continue'))
+endfunction
+
 function! s:event_fight(state)
 	let a:state.enemy = s:_.oneof(a:state.env.enemies)()
 	let a:state.log = ['You wander aimlessly when you encounter <' . a:state.enemy.name.long . '>!']
@@ -45,6 +54,7 @@ function! s:env_plains()
 	let env.label = 'Plains'
 	let env.events = [
 	\  function('s:event_nothing'),
+	\  function('s:event_heal'),
 	\  function('s:event_fight'),
 	\  function('s:event_forestentrance'),
 	\]
