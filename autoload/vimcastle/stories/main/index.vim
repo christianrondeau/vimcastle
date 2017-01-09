@@ -1,6 +1,9 @@
 let s:_ = vimcastle#utils#get()
 
 function! vimcastle#stories#main#index#setup(story) abort
+	let a:story.weapons = {}
+	call vimcastle#stories#shared#weapons(a:story:weapons)
+
 	let a:story.begin = function('s:begin')
 endfunction
 
@@ -77,38 +80,7 @@ function! s:env_forest()
 	return env
 endfunction
 
-function! s:enemy_ogre()
-	let enemy = vimcastle#character#create('Ogre', 'Ogre', 50)
-	let enemy.weapon = s:weapon_club()
-	return enemy
-endfunction
 
-function! s:enemy_rat()
-	let enemy = vimcastle#character#create('Rat', 'Rat', 8)
-	let enemy.weapon = s:weapon_ratclaw()
-	return enemy
-endfunction
-
-function! s:weapon_club()
-	return {
-		\'name': { 'short': 'club' },
-		\'dmg': { 'min': 1, 'max': 2 },
-		\}
-endfunction
-
-function! s:weapon_rustedshortsword()
-	return {
-		\'name': { 'short': 'rust. short sword' },
-		\'dmg': { 'min': 2, 'max': 5 },
-		\}
-endfunction
-
-function! s:weapon_ratclaw()
-	return {
-		\'name': { 'short': 'rust. short sword' },
-		\'dmg': { 'min': 1, 'max': 2 },
-		\}
-endfunction
 
 function! s:action_continue(state)
 	let result = s:_.oneof(a:state.env.events)(a:state)
