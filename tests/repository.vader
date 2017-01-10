@@ -1,0 +1,26 @@
+Execute (setup actions):
+  let repo = vimcastle#repository#create()
+  call repo.add('key1', 1, 'value1')
+  call repo.add('key2', 1, 'value2')
+
+Then (get by key):
+  AssertEqual 'value1', repo.get('key1')
+  AssertEqual 'value2', repo.get('key2')
+  AssertEqual 0, repo.get('missing')
+
+Execute (add cases with different probabilities):
+  let _ = vimcastle#utils#get()
+  let repo = vimcastle#repository#create()
+  call repo.add('key1', 3, 'value1')
+  call repo.add('key2', 5, 'value2')
+  call repo.add('key3', 1, 'value3')
+
+Then (can randomly get items based on probabilities):
+  call _.setnextrnd(0)
+  AssertEqual 'value1', repo.rnd()
+  call _.setnextrnd(1)
+  AssertEqual 'value1', repo.rnd()
+  call _.setnextrnd(3)
+  AssertEqual 'value2', repo.rnd()
+  call _.setnextrnd(9)
+  AssertEqual 'value3', repo.rnd()
