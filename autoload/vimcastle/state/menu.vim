@@ -8,8 +8,9 @@ endfunction
 
 function! s:action_newgame(state) abort
 	call a:state.reset()
-	call vimcastle#stories#main#index#setup(a:state.story)
-	call a:state.story.begin(a:state)
+	call vimcastle#stories#main#index#begin(a:state)
+	call a:state.enter('explore')
+	call a:state.scene.enter(a:state)
 endfunction
 
 function! s:action_help(state) abort

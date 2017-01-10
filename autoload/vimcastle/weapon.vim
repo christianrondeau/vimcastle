@@ -1,16 +1,11 @@
 let s:WeaponClass = {}
 
-function! vimcastle#weapon#create() abort
-	let instance = copy(s:WeaponClass)
-	return instance
-endfunction
-
-function! vimcastle#weapon#equippable(shortname, dmgmin, dmgmax)
-	let weapon = #vimcastle#weapon#create()
-	weapon.name = { 'short': shortname }
-	weapon.dmg = { 'min': 1, 'max': 2 }
+function! vimcastle#weapon#create(shortname, dmgmin, dmgmax) abort
+	let weapon = copy(s:WeaponClass)
+	let weapon.name = { 'short': a:shortname }
+	let weapon.dmg = { 'min': a:dmgmin, 'max': a:dmgmax }
 	return weapon
 endfunction
 
-function! s:WeaponClass.add() dict abort
+function! s:WeaponClass.computehitdmg() dict abort
 endfunction
