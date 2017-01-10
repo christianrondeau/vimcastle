@@ -1,10 +1,10 @@
 let s:_ = vimcastle#utils#get()
 
 function! vimcastle#stories#main#plains#events#register(scene) abort
-	call scene.events.add('nothing', 20, function('s:event_nothing'))
-	call scene.events.add('heal', 4, function('s:event_heal'))
-	call scene.events.add('encounter', 10, function('s:event_encounter'))
-	call scene.events.add('forestentrance', 2, function('s:event_forestentrance'))
+	call a:scene.events.add('nothing', 20, function('s:event_nothing'))
+	call a:scene.events.add('heal', 4, function('s:event_heal'))
+	call a:scene.events.add('encounter', 10, function('s:event_encounter'))
+	call a:scene.events.add('forestentrance', 2, function('s:event_forestentrance'))
 endfunction
 
 let s:event_nothing_logs = ['You wander aimlessly...', 'You walk around...', 'You see... nothing.', 'Nope. Nothing.']
@@ -25,7 +25,7 @@ function! s:event_heal(state)
 endfunction
 
 function! s:event_encounter(state)
-	let a:state.enemy = s:_.oneof(a:state.env.monsters)()
+	let a:state.enemy = a:state.scene.monsters.rnd()()
 	let a:state.log = ['You wander aimlessly when you encounter <' . a:state.enemy.name.long . '>!']
 	call a:state.actions.clear()
 	call a:state.actions.add('f', 'Fight!', function('s:action_fight'))
@@ -37,3 +37,18 @@ function! s:event_forestentrance(state)
 	call a:state.actions.add('e', 'Enter the forest', function('s:action_enterforest'))
 	call a:state.actions.add('c', 'Continue', function('s:action_continue'))
 endfunction
+
+function! s:action_continue(state)
+	let result = a:state.scene.events.rnd()(a:state)
+endfunction
+
+function! s:action_fight(state)
+	let a:state.nextaction = function('s:action_continue')
+	call a:state.enter('fight')
+endfunction
+
+function! s:action_enterforest(state)
+	let a:state.scene = vimcastle#stories#main#forest#load()
+	call a:state.scene.begin(a:state)
+endfunction
+

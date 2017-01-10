@@ -1,7 +1,7 @@
 Execute (test setup):
   let screen = { 'width': 30 }
   let state = {}
-  let state.env = { 'label': 'Plains' }
+  let state.scene = { 'label': 'Plains' }
   let state.player = vimcastle#character#create('Player', 'You', 153)
   let state.actions = vimcastle#actions#create()
   call state.actions.addNoop('x',  'Action')
