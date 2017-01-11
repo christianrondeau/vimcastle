@@ -30,7 +30,7 @@ function! s:EventClass.enterscene(text, scene) dict abort
 endfunction
 
 function! s:EventClass.effect(fn) dict abort
-	call vimcastle#utils#validate(a:fn, v:t_func)
+	call vimcastle#utils#validate(a:fn, 2)
 	let self.effect_fn = a:fn
 	return self
 endfunction
