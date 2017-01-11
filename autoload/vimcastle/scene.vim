@@ -21,7 +21,3 @@ function! vimcastle#scene#load(story, name) abort
 	endif
 	return scene
 endfunction
-
-function! s:SceneClass.addevent() dict abort
-	return vimcastle#event#create()
-endfunction

@@ -8,13 +8,13 @@ function! vimcastle#stories#main#plains#load(scene) abort
 endfunction
 
 function! s:event_enter() abort
-	return vimcastle#event#create()
-				\.text('You pack up your stuff and you are ready to go!')
+	return vimcastle#event#create('enter')
+				\.text('The sun is shining, and the plains are crawling with monsters. A perfect day to go outside!')
 				\.explore('Start walking forward')
 endfunction
 
 function! s:event_nothing()
-	return vimcastle#event#create()
+	return vimcastle#event#create('nothing')
 				\.text('You wander aimlessly...')
 				\.text('You walk around...')
 				\.text('You see... nothing.')
@@ -23,7 +23,7 @@ function! s:event_nothing()
 endfunction
 
 function! s:event_heal()
-	return vimcastle#event#create()
+	return vimcastle#event#create('heal')
 				\.text('You see a pond of fresh water. You drink for it and feel refreshed.')
 				\.text('You see an abandoned house. You rest in it for a little bit.')
 				\.text( 'You see a camp, and decide to rest for a few minutes.')
@@ -36,13 +36,13 @@ function! s:effect_heal(state)
 endfunction
 
 function! s:event_encounter()
-	return vimcastle#event#create()
+	return vimcastle#event#create('encounter')
 				\.text('You encounter %e!')
 				\.fight('Fight!', vimcastle#stories#main#plains#monsters#get())
 endfunction
 
 function! s:event_forestentrance()
-	return vimcastle#event#create()
+	return vimcastle#event#create('forestentrance')
 				\.text('You face a dense forest. you see movement in the dark.')
 				\.enterscene('Enter the forest', 'forest')
 				\.explore('Avoid the forest for now')

@@ -4,8 +4,8 @@ function! vimcastle#stories#main#index#load(scene) abort
 endfunction
 
 function! s:event_enter() abort
-	return vimcastle#event#create()
-				\.text('You face a dense forest. you see movement in the dark.')
+	return vimcastle#event#create('enter')
+				\.text('You pack up your stuff, and get ready for adventure!')
 				\.effect(function('s:effect_setup'))
 				\.enterscene('Start exploring!', 'plains')
 endfunction

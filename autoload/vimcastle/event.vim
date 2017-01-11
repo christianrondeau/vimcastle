@@ -1,7 +1,8 @@
 let s:EventClass = {}
 
-function! vimcastle#event#create() abort
+function! vimcastle#event#create(name) abort
 	let event = copy(s:EventClass)
+	let event.name = a:name
 	let event.texts = []
 	return event
 endfunction
@@ -12,24 +13,25 @@ function! s:EventClass.text(text) dict abort
 endfunction
 
 function! s:EventClass.explore(text) dict abort
-	let self.explore = a:text
+	let self.action_explore_text = a:text
 	return self
 endfunction
 
 function! s:EventClass.fight(text, monsters) dict abort
 	let self.monsters = a:monsters
-	let self.fight = a:text
+	let self.action_fight_text = a:text
 	return self
 endfunction
 
 function! s:EventClass.enterscene(text, scene) dict abort
 	let self.nextscene = a:scene
-	let self.enterscene = a:text
+	let self.action_enterscene_text = a:text
 	return self
 endfunction
 
 function! s:EventClass.effect(fn) dict abort
-	let self.effect = a:fn
+	call vimcastle#utils#validate(a:fn, v:t_func)
+	let self.effect_fn = a:fn
 	return self
 endfunction
 
@@ -37,23 +39,27 @@ function! s:EventClass.invoke(state) dict abort
 	if(exists('self.monsters'))
 		let a:state.enemy = self.monsters.rnd()()
 	endif
-	if(exists('self.effect'))
-		call self.effect(a:state)
+	if(exists('self.effect_fn'))
+		try
+			call self.effect_fn(a:state)
+		catch
+			throw 'There was an error in effect of ' . a:state.scene.story . '/' . a:state.scene.name . '/' . self.name . ': ' . v:exception
+		endtry
 	endif
 
 	let text = vimcastle#utils#oneof(self.texts)
-	call self.processtext(text, a:state)
+	let text = self.processtext(text, a:state)
 	let a:state.log = [text]
 
 	call a:state.actions.clear()
-	if(exists('self.fight'))
-		call a:state.actions.add('c', self.fight, function('s:action_fight'))
+	if(exists('self.action_fight_text'))
+		call a:state.actions.add('f', self.action_fight_text, function('s:action_fight'))
 	endif
-	if(exists('self.enterscene'))
-		call a:state.actions.add('c', self.enterscene, function('s:action_enterscene'))
+	if(exists('self.action_enterscene_text'))
+		call a:state.actions.add('e', self.action_enterscene_text, function('s:action_enterscene', [self.nextscene]))
 	endif
-	if(exists('self.explore'))
-		call a:state.actions.add('c', self.explore, function('s:action_explore'))
+	if(exists('self.action_explore_text'))
+		call a:state.actions.add('c', self.action_explore_text, function('s:action_explore'))
 	endif
 endfunction
 
@@ -70,12 +76,12 @@ function! s:action_explore(state)
 endfunction
 
 function! s:action_fight(state)
-	let a:state.nextaction = function('s:action_continue')
+	let a:state.nextaction = function('s:action_explore')
 	call a:state.enter('fight')
 endfunction
 
-function! s:action_enterscene(state)
-	let a:state.scene.load(a:state.story.name, self.nextscene)
-	call a:state.scene.begin(a:state)
+function! s:action_enterscene(nextscene, state)
+	let a:state.scene = vimcastle#scene#load(a:state.scene.story, a:nextscene)
+	call a:state.scene.enter.invoke(a:state)
 endfunction
 

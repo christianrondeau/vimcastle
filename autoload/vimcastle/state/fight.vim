@@ -1,5 +1,3 @@
-let s:_ = vimcastle#utils#get()
-
 function! vimcastle#state#fight#enter(state) abort
 	call a:state.actions.add('a', 'Attack with <' . a:state.player.weapon.name.short . '>', function('s:action_hit'))
 endfunction
@@ -30,7 +28,7 @@ function! s:compute_hit(attacker, victim) abort
 	let weapon = a:attacker.weapon
 	let dmgmin = weapon.dmg.min
 	let dmgmax = weapon.dmg.max
-	let dmg = s:_.rnd(dmgmax - dmgmin + 1) + dmgmin
+	let dmg = vimcastle#utils#rnd(dmgmax - dmgmin + 1) + dmgmin
 	let a:victim.health.current -= dmg
 	if(a:victim.health.current < 0)
 		let a:victim.health.current = 0
