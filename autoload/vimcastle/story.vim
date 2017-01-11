@@ -10,7 +10,3 @@ function! vimcastle#story#load(name) abort
 	let story.name = a:name
 	return story
 endfunction
-
-function! s:StoryClass.begin(state) dict abort
-	execute 'call vimcastle#stories#' . self.name. '#index#begin(a:state)'
-endfunction

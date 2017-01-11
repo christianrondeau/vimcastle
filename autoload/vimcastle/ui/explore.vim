@@ -2,8 +2,10 @@ function! vimcastle#ui#explore#draw(screen, state) abort
 	call vimcastle#ui#common#drawtitle(a:screen, a:state.scene.label)
 	call append(line('$'), '')
 
-	call s:drawbar(a:screen, a:state.player.health)
-	call append(line('$'), '')
+	if(exists('a:state.player.health'))
+		call s:drawbar(a:screen, a:state.player.health)
+		call append(line('$'), '')
+	endif
 
 	if(len(a:state.log))
 		call vimcastle#ui#common#drawlog(a:state.log)

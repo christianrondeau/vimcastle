@@ -11,6 +11,10 @@ function! s:ActionsClass.addNoop(key, label) dict abort
 endfunction
 
 function! s:ActionsClass.add(key, label, fn) dict abort
+	call vimcastle#utils#validate(a:key, v:t_string)
+	call vimcastle#utils#validate(a:label, v:t_string)
+	call vimcastle#utils#validate(a:fn, v:t_func)
+
 	call add(self.items, {
 		\  'key': a:key,
 		\  'label': a:label,
