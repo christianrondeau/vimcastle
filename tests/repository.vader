@@ -9,7 +9,6 @@ Then (get by key):
   AssertEqual 0, repo.get('missing')
 
 Execute (add cases with different probabilities):
-  let _ = vimcastle#utils#get()
   let repo = vimcastle#repository#create()
   call repo.add('key1', 3, 'value1')
   call repo.add('key2', 5, 'value2')

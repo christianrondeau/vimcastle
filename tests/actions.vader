@@ -5,12 +5,12 @@ Then (key not found):
   Assert actions.getByKey('z') == 0, 'Key not found should return 0'
 
 Execute (setup action):
-  function! s:action_test(state)
+  function! Vimcastle_test_action(state)
     let a:state.called = 1
   endfunction
 
 Execute (add):
-  call actions.add('x', 'Do it!', function('s:action_test'))
+  call actions.add('x', 'Do it!', function('Vimcastle_test_action'))
 
 Then (getByKey):
   AssertEqual 'Do it!', actions.getByKey('x').label, 'Key should return action'
@@ -29,7 +29,7 @@ Then (key not found):
   Assert actions.getByKey('x') == 0, 'Key not found should return 0'
 
 Execute (addDefault):
-  call actions.addDefault('...', function('s:action_test'))
+  call actions.addDefault('...', function('Vimcastle_test_action'))
 
 Execute (invokeDefault):
   let g:test_state = {}

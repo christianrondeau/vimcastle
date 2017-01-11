@@ -3,8 +3,8 @@ Execute (test setup):
     \  'width': 30
     \}
   let state = {}
-  let state.player = vimcastle#character#create('Player', 'You', 153)
-  let state.enemy = vimcastle#character#create('Enemy', 'Enem.', 810)
+  let state.player = vimcastle#character#create('Player', 'You', 153, {})
+  let state.enemy = vimcastle#character#create('Enemy', 'Enem.', 810, {})
   let state.actions = vimcastle#actions#create()
   call state.actions.addNoop('a',  'Attack with <f. staff>')
   let state.log = []

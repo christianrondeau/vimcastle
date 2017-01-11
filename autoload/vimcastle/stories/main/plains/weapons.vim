@@ -1,5 +1,7 @@
-function! vimcastle#stories#main#plains#weapons#register(weapons) abort
-	let a:weapons.sword = function('s:sword')
+function! vimcastle#stories#main#plains#weapons#get() abort
+	let repo = vimcastle#repository#create()
+	call repo.add('sword', 1, function('s:sword'))
+	return repo
 endfunction
 
 function! s:sword()

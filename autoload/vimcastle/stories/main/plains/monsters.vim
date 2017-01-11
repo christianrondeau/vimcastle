@@ -1,4 +1,4 @@
-function! vimcastle#stories#main#plains#monsters#register() abort
+function! vimcastle#stories#main#plains#monsters#get() abort
 	let repo = vimcastle#repository#create()
 	call repo.add('rat', 10, function('s:rat'))
 	call repo.add('ogre', 2, function('s:ogre'))
