@@ -15,3 +15,7 @@ function! vimcastle#scene#load(story, name) abort
 	execute 'call vimcastle#stories#' . a:story . '#' . a:name . '#load(scene)'
 	return scene
 endfunction
+
+function! s:SceneClass.addevent() dict abort
+	return vimcastle#event#create()
+endfunction

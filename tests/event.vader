@@ -1,0 +1,11 @@
+Execute (state mock):
+  let state = vimcastle#state#create()
+
+Execute (create simple event):
+  let event = vimcastle#event#create().text('wow!').explore('Continue')
+
+Execute (event executes):
+  call event.invoke(state)
+
+Then (state is updated):
+  AssertEqual ['wow!'], state.log

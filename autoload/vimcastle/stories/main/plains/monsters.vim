@@ -1,6 +1,8 @@
-function! vimcastle#stories#main#plains#monsters#register(monsters) abort
-	call a:monsters.add('rat', 10, function('s:rat'))
-	call a:monsters.add('ogre', 2, function('s:ogre'))
+function! vimcastle#stories#main#plains#monsters#register() abort
+	let repo = vimcastle#repository#create()
+	call repo.add('rat', 10, function('s:rat'))
+	call repo.add('ogre', 2, function('s:ogre'))
+	return repo
 endfunction
 
 function! s:rat()

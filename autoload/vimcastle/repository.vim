@@ -1,4 +1,3 @@
-let s:_ = vimcastle#utils#get()
 let s:RepositoryClass = {}
 
 function! vimcastle#repository#create() abort
@@ -27,7 +26,7 @@ function! s:RepositoryClass.get(name) dict abort
 endfunction
 
 function! s:RepositoryClass.rnd() dict abort
-	let roll = s:_.rnd(self.totalprobabilities)
+	let roll = vimcastle#utils#rnd(self.totalprobabilities)
 	let i = 0
 	while(i < len(self.items))
 		let item = self.items[i]

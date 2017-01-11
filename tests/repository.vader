@@ -16,11 +16,11 @@ Execute (add cases with different probabilities):
   call repo.add('key3', 1, 'value3')
 
 Then (can randomly get items based on probabilities):
-  call _.setnextrnd(0)
+  call vimcastle#utils#setnextrnd(0)
   AssertEqual 'value1', repo.rnd()
-  call _.setnextrnd(1)
+  call vimcastle#utils#setnextrnd(1)
   AssertEqual 'value1', repo.rnd()
-  call _.setnextrnd(3)
+  call vimcastle#utils#setnextrnd(3)
   AssertEqual 'value2', repo.rnd()
-  call _.setnextrnd(9)
+  call vimcastle#utils#setnextrnd(9)
   AssertEqual 'value3', repo.rnd()
