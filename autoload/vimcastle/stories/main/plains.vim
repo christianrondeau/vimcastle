@@ -1,10 +1,10 @@
 function! vimcastle#stories#main#plains#load(scene) abort
 	let a:scene.label = 'Plains'
 	let a:scene.enter = s:event_enter()
-	call a:scene.events.add('nothing', 20, s:event_nothing())
-	call a:scene.events.add('encounter', 20, s:event_encounter())
-	call a:scene.events.add('heal', 4, s:event_heal())
-	call a:scene.events.add('forestentrance', 2, s:event_forestentrance())
+	call a:scene.events.add(20, s:event_nothing())
+	call a:scene.events.add(20, s:event_encounter())
+	call a:scene.events.add(4, s:event_heal())
+	call a:scene.events.add(2, s:event_forestentrance())
 endfunction
 
 function! s:event_enter() abort
