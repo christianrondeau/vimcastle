@@ -1,4 +1,4 @@
-let s:state = 0
+let s:state = {}
 
 function! vimcastle#action(key) abort
 	if(exists('s:state') && s:state.action(a:key))
@@ -7,6 +7,9 @@ function! vimcastle#action(key) abort
 endfunction
 
 function! vimcastle#start() abort
+	if(!has('patch-7.4.849'))
+		throw 'Requires at least vim 7.4.849'
+	endif
 	let s:state = vimcastle#state#create()
 	call vimcastle#ui#init()
 	call vimcastle#mappings#init()
@@ -20,6 +23,6 @@ function! vimcastle#start() abort
 endfunction
 
 function! vimcastle#quit() abort
-	let s:state = 0
+	let s:state = {}
 	call vimcastle#ui#quit()
 endfunction
