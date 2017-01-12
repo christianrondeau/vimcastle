@@ -1,0 +1,9 @@
+" Minimal vimrc to test vimcastle
+" vim -Nu tests/vimrc -c 'Vader tests/**'
+
+filetype off
+let pluginpath = expand("<sfile>:p:h") . '/..'
+let &rtp .= ',' . pluginpath . '/../vader.vim'
+let &rtp .= ',' . pluginpath
+filetype plugin indent on
+syntax enable
