@@ -1,0 +1,15 @@
+Execute (initialize story):
+  let state = vimcastle#state#create()
+  let state.scene = vimcastle#scene#load('main', 'index')
+  call state.enter('explore')
+  call state.scene.enter.invoke(state)
+
+Execute (play story):
+  let turns = 0
+  while turns < 1000 && state.screen != 'gameover'
+    let turns += 1
+    call state.actions.items[vimcastle#utils#rnd(len(state.actions.items))].fn(state)
+  endwhile
+
+Then (the game completed):
+  Assert turns > 10, 'turns: ' . turns
