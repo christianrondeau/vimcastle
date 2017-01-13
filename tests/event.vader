@@ -16,10 +16,7 @@ Then (state is updated):
 
 Execute (create fight event):
   let monsters = vimcastle#repository#create()
-  function! s:monster_test()
-    return vimcastle#character#create('imp', 0, 0, {})
-  endfunction
-  call monsters.add(1, function('s:monster_test'))
+  call monsters.add(1, vimcastle#monster#create('imp', 'imp', 0))
   let event = vimcastle#event#create('test').text('There is a %e before you!').fight('Fight', monsters)
 
 Execute (event executes):
@@ -30,7 +27,6 @@ Then (state is updated):
   AssertEqual 'Fight', state.actions.getByKey('f').label
 
 Execute (create change scene event):
-  let monsters = vimcastle#repository#create()
   let event = vimcastle#event#create('test').text('change scene').enterscene('Enter Test Scene', 'testscene')
 
 Execute (event executes):

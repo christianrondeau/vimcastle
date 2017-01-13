@@ -37,7 +37,7 @@ endfunction
 
 function! s:EventClass.invoke(state) dict abort
 	if(exists('self.monsters'))
-		let a:state.enemy = self.monsters.rnd()()
+		let a:state.enemy = self.monsters.rnd().invoke()
 	endif
 	if(exists('self.effect_fn'))
 		try

@@ -1,0 +1,21 @@
+Execute (create simple monster):
+  let monster = vimcastle#monster#create('Mon.', 'Monster', 100).weapon(vimcastle#weapon#create('weapon', 1, 2))
+
+Execute (invoke monster):
+  let instance = monster.invoke()
+
+Then (monster is created):
+  AssertEqual 'Mon.', instance.name.short
+  AssertEqual 'Monster', instance.name.long
+  AssertEqual 100, instance.health.max
+
+Execute (add a modifier):
+  let monster = monster.modifier(1, 'B.', 'Big', 20)
+
+Execute (invoke modified monster):
+  let instance = monster.invoke()
+
+Then (modified monster is created):
+  AssertEqual 'B. Mon.', instance.name.short
+  AssertEqual 'Big Monster', instance.name.long
+  AssertEqual 120, instance.health.max

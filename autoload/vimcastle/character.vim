@@ -1,11 +1,10 @@
 let s:CharacterClass = {}
 
-function! vimcastle#character#create(longname, shortname, health, weapon) abort
+function! vimcastle#character#create(name, health, weapon) abort
+	call vimcastle#utils#validate(a:name.short, 1)
+	call vimcastle#utils#validate(a:name.long, 1)
 	let character = copy(s:CharacterClass)
-	let character.name = {
-				\ 'long': a:longname,
-				\ 'short': a:shortname
-				\ }
+	let character.name = a:name
 	let character.health = {
 				\ 'current': a:health,
 				\ 'max': a:health
