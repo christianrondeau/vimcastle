@@ -6,7 +6,7 @@ function! s:action_hit(state) abort
 	let a:state.log = []
 
 	let dmg = s:compute_hit(a:state.player, a:state.enemy)
-	call add(a:state.log, 'You hit <' . a:state.enemy.name.long . '> for ' . dmg . ' damage!')
+	call add(a:state.log, 'You hit <' . a:state.enemy.name.long . '> with <' . a:state.player.weapon.name.long . '> for ' . dmg . ' damage!')
 	if(a:state.enemy.health.current <= 0)
 		call add(a:state.log, '<' . a:state.enemy.name.long . '> has been defeated!')
 		call a:state.actions.clear()
@@ -15,7 +15,7 @@ function! s:action_hit(state) abort
 	endif
 
 	let dmg = s:compute_hit(a:state.enemy, a:state.player)
-	call add(a:state.log, '<' . a:state.enemy.name.long . '> hits you for ' . dmg . ' damage!')
+	call add(a:state.log, '<' . a:state.enemy.name.long . '> hits you with <' . a:state.enemy.weapon.name.long . '> for ' . dmg . ' damage!')
 	if(a:state.player.health.current <= 0)
 		call add(a:state.log, 'You are dead.')
 		call a:state.actions.clear()

@@ -5,11 +5,11 @@ endfunction
 
 function! s:event_enter() abort
 	return vimcastle#event#create('enter')
-				\.text('You pack up your stuff, and get ready for adventure!')
+				\.text('You pack up your stuff, pick up your %w and get ready for adventure!')
 				\.effect(function('s:effect_setup'))
 				\.enterscene('Start exploring!', 'plains')
 endfunction
 
 function! s:effect_setup(state) abort
-	let a:state.player = vimcastle#character#create({ 'short': 'You', 'long': 'Player' }, 60, vimcastle#stories#main#plains#weapons#get().rnd()())
+	let a:state.player = vimcastle#character#create({ 'short': 'You', 'long': 'Player' }, 60, vimcastle#stories#main#plains#weapons#get().rnd().invoke())
 endfunction

@@ -12,7 +12,8 @@ endfunction
 
 function! s:event_encounter()
 	return vimcastle#event#create('encounter')
-				\.text('You encounter %e!')
+				\.text('You hear a sound from behind a tree, and you see %e!')
+				\.text('Out of a hole, mumps %e!')
 				\.fight('Fight!', s:getmonsters())
 endfunction
 
@@ -24,9 +25,9 @@ function! s:getmonsters() abort
 endfunction
 
 function! s:monster_wolf()
-	return vimcastle#monster#create('Wolf', 'Wolf', 8).weapon(vimcastle#weapon#create('claw', 5, 10))
+	return vimcastle#monster#create('Wolf', 'Wolf', 8).weapon(vimcastle#weapon#short('Claw', 5, 10))
 endfunction
 
 function! s:monster_foresttroll()
-	return vimcastle#monster#create('Forest Troll', 'F. Troll', 50).weapon(vimcastle#weapon#create('fists', 20, 50))
+	return vimcastle#monster#create('Forest Troll', 'F. Troll', 50).weapon(vimcastle#weapon#short('Fists', 20, 50))
 endfunction
