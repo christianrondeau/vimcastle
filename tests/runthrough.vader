@@ -1,15 +1,28 @@
-Execute (initialize story):
-  let state = vimcastle#state#create()
-  let state.scene = vimcastle#scene#load('main', 'index')
-  call state.enter('explore')
-  call state.scene.enter.invoke(state)
+Execute (initialize stats):
+  let maxturns = 500
+  let maxplaythroughs = 50
+  let totalturns = 0
+  let playthroughsturns = []
 
 Execute (play story):
-  let turns = 0
-  while turns < 1000 && state.screen != 'gameover'
-    let turns += 1
-    call state.actions.items[vimcastle#utils#rnd(len(state.actions.items))].fn(state)
+  let playhtroughs = 0
+  while(playhtroughs < maxplaythroughs)
+    let state = vimcastle#state#create()
+    let state.scene = vimcastle#scene#load('main', 'index')
+    call state.enter('explore')
+    call state.scene.enter.invoke(state)
+    let playhtroughs += 1
+    let turns = 0
+    while turns < maxturns && state.screen != 'gameover'
+      let turns += 1
+      call state.actions.items[vimcastle#utils#rnd(len(state.actions.items))].fn(state)
+    endwhile
+    let totalturns += turns
+  call add(playthroughsturns, turns)
   endwhile
 
 Then (the game completed):
-  Assert turns > 10, 'turns: ' . turns
+  let avgturns = totalturns / maxplaythroughs
+  if(!$CI)
+    Assert avgturns > 20 && avgturns < 200, 'average: ' . avgturns . ' (' . totalturns . ' total turns in ' . maxplaythroughs . ' playthroughs: ' . string(playthroughsturns)
+  endif
