@@ -16,7 +16,7 @@ Then (state is updated):
 
 Execute (create fight event):
   let monsters = vimcastle#repository#create()
-  call monsters.add(1, vimcastle#monster#create('imp', 'imp', 0))
+  call monsters.add(1, vimcastle#monstergen#create('imp', 'imp', 0))
   let event = vimcastle#event#create('test').text('There is a %e before you!').fight('Fight', monsters)
 
 Execute (event executes):

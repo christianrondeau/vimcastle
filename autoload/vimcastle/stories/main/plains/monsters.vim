@@ -6,9 +6,9 @@ function! vimcastle#stories#main#plains#monsters#get() abort
 endfunction
 
 function! s:monster_rat()
-	return vimcastle#monster#create('Rat', 'Rat', 8).weapon(vimcastle#weapon#short('Claw', 1, 2))
+	return vimcastle#monstergen#create('Rat', 'Rat', 8).weapon(vimcastle#weapon#short('Claw', 1, 2))
 endfunction
 
 function! s:monster_ogre()
-	return vimcastle#monster#create('Ogre', 'Ogre', 50).weapon(vimcastle#weapon#short('Club', 2, 4))
+	return vimcastle#monstergen#create('Ogre', 'Ogre', 50).weapon(vimcastle#weapon#short('Club', 2, 4))
 endfunction

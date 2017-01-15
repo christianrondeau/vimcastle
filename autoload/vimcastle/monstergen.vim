@@ -1,13 +1,13 @@
-let s:MonsterClass = {}
+let s:MonstergenClass = {}
 
-function! vimcastle#monster#create(basenameshort, basenamelong, basehealth) abort
-	let monster = copy(s:MonsterClass)
-	let monster.basename = { 'short': a:basenameshort, 'long': a:basenamelong }
-	let monster.basehealth = a:basehealth
-	return monster
+function! vimcastle#monstergen#create(basenameshort, basenamelong, basehealth) abort
+	let monstergen = copy(s:MonstergenClass)
+	let monstergen.basename = { 'short': a:basenameshort, 'long': a:basenamelong }
+	let monstergen.basehealth = a:basehealth
+	return monstergen
 endfunction
 
-function! s:MonsterClass.modifier(probabilities, prefixshort, prefixlong, healthmodifier) dict abort
+function! s:MonstergenClass.modifier(probabilities, prefixshort, prefixlong, healthmodifier) dict abort
 	if(!exists('self.modifiers'))
 		let self.modifiers = vimcastle#repository#create()
 	endif
@@ -15,12 +15,12 @@ function! s:MonsterClass.modifier(probabilities, prefixshort, prefixlong, health
 	return self
 endfunction
 
-function! s:MonsterClass.weapon(weapon) dict abort
+function! s:MonstergenClass.weapon(weapon) dict abort
 	let self.weapon = a:weapon
 	return self
 endfunction
 
-function! s:MonsterClass.invoke() dict abort
+function! s:MonstergenClass.invoke() dict abort
 	let name = { 'short': self.basename.short, 'long': self.basename.long }
 	let health = self.basehealth
 	if(exists('self.modifiers'))

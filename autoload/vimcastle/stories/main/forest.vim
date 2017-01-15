@@ -25,9 +25,9 @@ function! s:getmonsters() abort
 endfunction
 
 function! s:monster_wolf()
-	return vimcastle#monster#create('Wolf', 'Wolf', 8).weapon(vimcastle#weapon#short('Claw', 5, 10))
+	return vimcastle#monstergen#create('Wolf', 'Wolf', 8).weapon(vimcastle#weapon#short('Claw', 5, 10))
 endfunction
 
 function! s:monster_foresttroll()
-	return vimcastle#monster#create('Forest Troll', 'F. Troll', 50).weapon(vimcastle#weapon#short('Fists', 20, 50))
+	return vimcastle#monstergen#create('Forest Troll', 'F. Troll', 50).weapon(vimcastle#weapon#short('Fists', 20, 50))
 endfunction
