@@ -34,4 +34,5 @@ function! s:StateClass.reset() dict abort
 	endif
 	let self.log = []
 	call self.actions.clear()
+	let self.stats = { 'events': 0, 'fights': 0, 'scenes': 0 }
 endfunction
