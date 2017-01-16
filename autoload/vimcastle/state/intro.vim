@@ -1,5 +1,4 @@
 function! vimcastle#state#intro#enter(state) abort
-	call a:state.nav.clear()
 	call a:state.nav.addDefault('Start', function('s:nav_start'))
 endfunction
 

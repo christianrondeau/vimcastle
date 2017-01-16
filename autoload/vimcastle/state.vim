@@ -9,9 +9,7 @@ function! vimcastle#state#create() abort
 endfunction
 
 function! s:StateClass.enter(name) dict abort
-	call self.actions.clear()
 	call self.nav.clear()
-	let self.log = []
 	let self.screen = a:name
 	execute 'call vimcastle#state#' . a:name . '#enter(self)'
 endfunction

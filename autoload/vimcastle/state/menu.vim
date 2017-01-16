@@ -1,5 +1,4 @@
 function! vimcastle#state#menu#enter(state) abort
-	call a:state.nav.clear()
 	call a:state.nav.add('n', 'New Game', function('s:nav_newgame'))
 	call a:state.nav.add('h', 'Help', function('s:nav_help'))
 	call a:state.nav.add('q', 'Quit', function('s:nav_noop'))

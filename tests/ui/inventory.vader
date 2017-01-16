@@ -1,0 +1,19 @@
+Execute (test setup):
+  let screen = { 'width': 30 }
+  let state = vimcastle#state#create()
+  let weapon = vimcastle#weapon#create('.', 'Swooord', 5, 127)
+  let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100, weapon)
+  call state.nav.addNoop('b',  'Back')
+  let state.log = ['This should not be shown!']
+
+Execute (draw):
+  call vimcastle#ui#inventory#draw(screen, state)
+
+Expect (inventory screen):
+  ---------- Inventory ---------
+  
+  Equipment
+
+  * Weapon: <Swooord> (5-127 dmg)
+  
+  b) Back

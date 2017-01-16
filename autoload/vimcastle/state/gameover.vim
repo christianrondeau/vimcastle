@@ -1,6 +1,5 @@
 function! vimcastle#state#gameover#enter(state) abort
 	let a:state.actions.enabled = 0
-	call a:state.nav.clear()
 	call a:state.nav.addDefault('Restart', function('s:nav_restart'))
 endfunction
 
