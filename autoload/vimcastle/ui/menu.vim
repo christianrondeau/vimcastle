@@ -7,5 +7,5 @@ function! vimcastle#ui#menu#draw(screen, state) abort
 	endif
 	call append(line('$'), '')
 
-	call vimcastle#ui#common#drawactions(a:state.actions)
+	call vimcastle#ui#common#drawbindings(a:state.nav)
 endfunction

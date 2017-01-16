@@ -49,11 +49,11 @@ function! vimcastle#ui#common#drawlog(log) abort
 	endwhile
 endfunction
 
-function! vimcastle#ui#common#drawactions(actions) abort
+function! vimcastle#ui#common#drawbindings(bindings) abort
 	let i = 0
-	while(i < len(a:actions.items))
-		let action = a:actions.items[i]
-		call append(line('$'), action.key . ') ' . action.label)
+	while(i < len(a:bindings.items))
+		let binding = a:bindings.items[i]
+		call append(line('$'), binding.key . ') ' . binding.label)
 		let i += 1
 	endwhile
 endfunction

@@ -1,0 +1,47 @@
+Execute (setup bindings):
+  let bindings = vimcastle#bindings#create()
+
+Then (key not found):
+  Assert bindings.getByKey('z') == 0, 'Key not found should return 0'
+
+Execute (setup binding):
+  function! Vimcastle_test_binding(state)
+    let a:state.called = 1
+  endfunction
+
+Execute (add):
+  call bindings.add('x', 'Do it!', function('Vimcastle_test_binding'))
+
+Then (getByKey):
+  AssertEqual 'Do it!', bindings.getByKey('x').label, 'Key should return binding'
+  
+Execute (invoke):
+  let g:test_state = { 'called': 0 }
+  call bindings.invokeByKey('x', g:test_state)
+
+Then (called):
+  Assert g:test_state.called, 'Should call function'
+
+Execute (invoke):
+  let bindings.enabled = 0
+  let g:test_state = { 'called': 0 }
+  call bindings.invokeByKey('x', g:test_state)
+
+Then (not called):
+  Assert !g:test_state.called, 'Should not call function'
+
+Execute (clear):
+  call bindings.clear()
+
+Then (key not found):
+  Assert bindings.getByKey('x') == 0, 'Key not found should return 0'
+
+Execute (addDefault):
+  call bindings.addDefault('...', function('Vimcastle_test_binding'))
+
+Execute (invokeDefault):
+  let g:test_state = {}
+  call bindings.invokeDefault(g:test_state)
+
+Then (invokeDefault):
+  Assert g:test_state.called, 'Should call function'

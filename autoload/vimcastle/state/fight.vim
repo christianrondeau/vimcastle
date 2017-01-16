@@ -1,4 +1,5 @@
 function! vimcastle#state#fight#enter(state) abort
+	let a:state.actions.enabled = 1
 	call a:state.actions.add('a', 'Attack with <' . a:state.player.weapon.name.short . '>', function('s:action_hit'))
 endfunction
 

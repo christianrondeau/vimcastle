@@ -15,7 +15,11 @@ Execute (play story):
     let turns = 0
     while turns < maxturns && state.screen != 'gameover'
       let turns += 1
-      call state.actions.items[vimcastle#utils#rnd(len(state.actions.items))].fn(state)
+       if(state.actions.enabled)
+        call state.actions.items[vimcastle#utils#rnd(len(state.actions.items))].fn(state)
+      else
+        call state.nav.items[0].fn(state)
+      endif
     endwhile
     let totalturns += turns
   call add(playthroughsturns, turns)

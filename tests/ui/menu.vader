@@ -1,8 +1,7 @@
 Execute (test setup):
   let screen = { 'width': 30 }
-  let state = {}
-  let state.actions = vimcastle#actions#create()
-  call state.actions.addNoop('x',  'Action')
+  let state = vimcastle#state#create()
+  call state.nav.addNoop('x',  'Action')
   let state.log = ['This is a menu!']
 
 Execute (draw):
