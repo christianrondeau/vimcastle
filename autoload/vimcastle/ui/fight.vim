@@ -11,7 +11,7 @@ function! vimcastle#ui#fight#draw(screen, state) abort
 		call append(line('$'), '')
 	endif
 
-	call vimcastle#ui#common#drawactions(a:state.actions)
+	call vimcastle#ui#common#drawbindings(a:state.actions)
 endfunction
 
 function! s:drawsides(screen, left, right) abort
