@@ -1,5 +1,7 @@
 # Vimcastle TODO
 
+## Game
+
 * [ ] Save/Load game. Remember only scene and player state. Overwrite on `q`
 * [ ] Armor (reduce dmg)
 * [ ] Inventory (list of items, weapon stats)
@@ -20,6 +22,7 @@
 * [ ] Levels (+ warningsin scene changes)
 * [ ] Keys (required to proceed to other scenes)
 * [ ] Actually populate all this
+* [ ] Flee combat
 * [ ] Bestiary
 
 ## Refactors
@@ -32,3 +35,13 @@
 * [ ] Allow help anywhere
 * [ ] README for non-vim users?
 * [ ] Review colors
+
+## Ideas
+
+* [ ] Scenes that draw health (e.g. underwater)
+* [ ] Steal items
+* [ ] Temp. effects (e.g. poison)
+* [ ] Map of discovered areas and links
+* [ ] Fast travel to previously discovered areas
+* [ ] Weapon 'of Light', 'of the King' etc w/ special bonuses like heal, dbl attack, etc
+
