@@ -3,7 +3,6 @@
 ## Game
 
 * [ ] Save/Load game. Remember only scene and player state. Overwrite on `q`
-* [ ] Armor (reduce dmg)
 * [ ] Inventory (list of items, weapon stats)
   * [ ] Potions (heal)
   * [ ] Teleport scroll
@@ -11,6 +10,7 @@
 * [ ] The Void (scene with nothing)
 * [ ] Pickup stuff (show equip. diff)
 * [ ] str (dmg), dex (miss/crit), spd (first to attack), con (health), wil (interrupt), spi (magic str)
+* [ ] Change message for 0-damage hits
 * [ ] Miss/Critical
 * [ ] Attack order
 * [ ] Create character (name, assign stats)
@@ -27,6 +27,7 @@
 
 ## Refactors
 
+* [ ] Avoid duplicate short names and min/max stat on modifiers
 * [ ] Extract hit dmg logic
 * [ ] Allow multiple randomized logs per event
 * [ ] state.write to process %e etc (currently concatenated in fight, partially implemented in event)

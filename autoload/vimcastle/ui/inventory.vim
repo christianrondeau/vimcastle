@@ -2,7 +2,12 @@ function! vimcastle#ui#inventory#draw(screen, state) abort
 	call vimcastle#ui#common#drawtitle(a:screen, "Inventory")
 	call append(line('$'), '')
 
-	call s:showitem('Weapon', a:state.player.equipment.weapon)
+	if(exists('a:state.player.equipment.weapon'))
+		call s:showitem('Weapon', a:state.player.equipment.weapon)
+	endif
+	if(exists('a:state.player.equipment.armor'))
+		call s:showitem('Armor', a:state.player.equipment.armor)
+	endif
 	call append(line('$'), '')
 
 	call vimcastle#ui#common#drawbindings(a:state.nav)

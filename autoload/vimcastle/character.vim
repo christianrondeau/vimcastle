@@ -24,3 +24,10 @@ function! s:CharacterClass.equipweapon(weapon) dict abort
 	call self.equip('weapon', a:weapon)
 	return self
 endfunction
+
+function! s:CharacterClass.equiparmor(armor) dict abort
+	call vimcastle#utils#validate(a:armor.name.short, 1)
+	call vimcastle#utils#validate(a:armor.stats.def.min, 0)
+	call self.equip('armor', a:armor)
+	return self
+endfunction

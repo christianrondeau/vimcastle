@@ -56,14 +56,20 @@ function! s:hit_receive(state) abort
 	endif
 endfunction
 
-function! s:compute_hit(attacker, victim) abort
+function! s:compute_hit(attacker, defender) abort
 	let weapon = a:attacker.equipment.weapon
 	let dmgmin = weapon.stats.dmg.min
 	let dmgmax = weapon.stats.dmg.max
 	let dmg = vimcastle#utils#rnd(dmgmax - dmgmin + 1) + dmgmin
-	let a:victim.health.current -= dmg
-	if(a:victim.health.current < 0)
-		let a:victim.health.current = 0
+	if(exists('a:defender.equipment.armor'))
+		let dmg -= a:defender.equipment.armor.stats.def.min
+	endif
+	if(dmg < 0)
+		let dmg = 0
+	endif
+	let a:defender.health.current -= dmg
+	if(a:defender.health.current < 0)
+		let a:defender.health.current = 0
 	endif
 	return dmg
 endfunction

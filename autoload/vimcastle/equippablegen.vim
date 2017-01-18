@@ -13,6 +13,10 @@ function! vimcastle#equippablegen#weapon(shortname, longname, dmgmin, dmgmax) ab
 	return vimcastle#equippablegen#create(a:shortname, a:longname).stat('dmg', a:dmgmin, a:dmgmax)
 endfunction
 
+function! vimcastle#equippablegen#armor(shortname, longname, def) abort
+	return vimcastle#equippablegen#create(a:shortname, a:longname).stat('def', a:def, a:def)
+endfunction
+
 function! s:EquippablegenClass.stat(name, min, max) dict abort
 	let stat = {}
 	let stat.min = a:min
