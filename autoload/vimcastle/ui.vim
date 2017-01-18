@@ -18,9 +18,13 @@ function! vimcastle#ui#quit(dedicated) abort
 	call vimcastle#ui#clear()
 	if(s:isingamebuffer())
 		if a:dedicated
-			qall
+			if(confirm('Quit Vim?'))
+				qall
+			endif
 		else
-			bdelete
+			if(confirm('Exit Vimcastle?'))
+				bdelete
+			endif
 		endif
 	endif
 endfunction
