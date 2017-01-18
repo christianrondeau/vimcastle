@@ -48,7 +48,7 @@ function! s:EventClass.invoke(state) dict abort
 	endif
 
 	let text = vimcastle#utils#oneof(self.texts)
-	let text = self.processtext(text, a:state)
+	let text = a:state.msg(text)
 	let a:state.log = [text]
 
 	call a:state.actions.clear()
@@ -64,17 +64,6 @@ function! s:EventClass.invoke(state) dict abort
 	if(exists('self.action_explore_text'))
 		call a:state.actions.add('c', self.action_explore_text, function('s:action_explore'))
 	endif
-endfunction
-
-function! s:EventClass.processtext(text, state)
-	let text = a:text
-	if(exists('a:state.enemy'))
-		let text = substitute(text, '%e', '<' . a:state.enemy.name.long . '>', 'ge')
-	endif
-	if(exists('a:state.player.equipment.weapon'))
-		let text = substitute(text, '%w', '<' . a:state.player.equipment.weapon.name.long . '>', 'ge')
-	endif
-	return text
 endfunction
 
 function! s:action_explore(state)

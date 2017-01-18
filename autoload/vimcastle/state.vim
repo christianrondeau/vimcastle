@@ -36,3 +36,21 @@ function! s:StateClass.reset() dict abort
 	call self.actions.clear()
 	let self.stats = { 'events': 0, 'fights': 0, 'scenes': 0 }
 endfunction
+
+function s:StateClass.addlog(text) dict abort
+	call add(self.log, self.msg(a:text))
+endfunction
+
+function! s:StateClass.msg(text) dict abort
+	let text = a:text
+	if(exists('self.enemy.name.long'))
+		let text = substitute(text, '%<enemy.name>', '<' . self.enemy.name.long . '>', 'ge')
+	endif
+	if(exists('self.enemy.equipment.weapon.name.long'))
+		let text = substitute(text, '%<enemy.weapon>', '<' . self.enemy.equipment.weapon.name.long . '>', 'ge')
+	endif
+	if(exists('self.player.equipment.weapon.name.long'))
+		let text = substitute(text, '%<player.weapon>', '<' . self.player.equipment.weapon.name.long . '>', 'ge')
+	endif
+	return text
+endfunction

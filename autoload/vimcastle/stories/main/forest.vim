@@ -12,8 +12,8 @@ endfunction
 
 function! s:event_encounter()
 	return vimcastle#event#create('encounter')
-				\.text('You hear a sound from behind a tree, and you see %e!')
-				\.text('Out of a hole, mumps %e!')
+				\.text('You hear a sound from behind a tree, and you see %<enemy.name>!')
+				\.text('Out of a hole, jumps %<enemy.name>!')
 				\.fight('Fight!', s:getmonsters())
 endfunction
 

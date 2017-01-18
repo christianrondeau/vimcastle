@@ -5,7 +5,7 @@ endfunction
 
 function! s:event_enter() abort
 	return vimcastle#event#create('enter')
-				\.text('You pack up your stuff, pick up your %w and get ready for adventure!')
+				\.text('You pack up your stuff, pick up your %<player.weapon> and get ready for adventure!')
 				\.effect(function('s:effect_setup'))
 				\.enterscene('Start exploring!', 'plains')
 endfunction

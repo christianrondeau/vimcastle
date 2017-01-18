@@ -30,7 +30,6 @@
 * [ ] Avoid duplicate short names and min/max stat on modifiers
 * [ ] Extract hit dmg logic
 * [ ] Allow multiple randomized logs per event
-* [ ] state.write to process %e etc (currently concatenated in fight, partially implemented in event)
 * [ ] Documentation
 * [ ] Add tests for extracted utils
 * [ ] Allow (h)elp anywhere

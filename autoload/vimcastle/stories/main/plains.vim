@@ -37,7 +37,7 @@ endfunction
 
 function! s:event_encounter()
 	return vimcastle#event#create('encounter')
-				\.text('You encounter %e!')
+				\.text('You encounter %<enemy.name>!')
 				\.fight('Fight!', vimcastle#stories#main#plains#monsters#get())
 endfunction
 

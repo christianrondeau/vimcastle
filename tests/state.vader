@@ -22,6 +22,18 @@ Then (the default nav is called):
   Assert result
   AssertEqual 'test log any', state.log[0]
 
+Execute (properties than can be included in tests):
+  let state.player = {}
+  let state.player.equipment = {}
+  let state.player.equipment.weapon = { 'name': { 'long': 'Sword' } }
+  let state.enemy = { 'name': { 'long': 'Blob' } }
+  let state.enemy.equipment = {}
+  let state.enemy.equipment.weapon = { 'name': { 'long': 'Glue' } }
+  let msg = state.msg('Player Weapon: %<player.weapon>, Enemy: %<enemy.name>, Enemy Weapon: %<enemy.weapon>')
+
+Then (message is created):
+  AssertEqual 'Player Weapon: <Sword>, Enemy: <Blob>, Enemy Weapon: <Glue>', msg
+
 Execute (reset):
   let state.player = {}
   let state.enemy = {}

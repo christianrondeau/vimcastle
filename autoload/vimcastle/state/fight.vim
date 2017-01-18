@@ -20,13 +20,13 @@ endfunction
 function! s:action_look(state) abort
 	let a:state.log = []
 
-	call add(a:state.log, 'You look at <' . a:state.enemy.name.long . '>')
+	call a:state.addlog('You look at %<enemy.name>')
 
 	let health = a:state.enemy.health
-	call add(a:state.log, '* Health: ' . health.current . '/' . health.max)
+	call a:state.addlog('* Health: ' . health.current . '/' . health.max)
 
 	let weapon = a:state.enemy.equipment.weapon
-	call add(a:state.log, '* Weapon: <' . weapon.name.long . '> (' . weapon.stats.dmg.min . '-' . weapon.stats.dmg.max . ' dmg)')
+	call a:state.addlog('* Weapon: %<enemy.weapon> (' . weapon.stats.dmg.min . '-' . weapon.stats.dmg.max . ' dmg)')
 
 	if(s:hit_receive(a:state))
 		return
@@ -35,10 +35,10 @@ endfunction
 
 function! s:hit_send(state) abort
 	let dmg = s:compute_hit(a:state.player, a:state.enemy)
-	call add(a:state.log, 'You hit <' . a:state.enemy.name.long . '> with <' . a:state.player.equipment.weapon.name.long . '> for ' . dmg . ' damage!')
+	call a:state.addlog('You hit %<enemy.name> with %<player.weapon> for ' . dmg . ' damage!')
 
 	if(a:state.enemy.health.current <= 0)
-		call add(a:state.log, '<' . a:state.enemy.name.long . '> has been defeated!')
+		call a:state.addlog('%<enemy.name> has been defeated!')
 		call a:state.actions.clear()
 		call a:state.actions.add('c', 'Continue', function('s:action_win'))
 		return 1
@@ -47,7 +47,7 @@ endfunction
 
 function! s:hit_receive(state) abort
 	let dmg = s:compute_hit(a:state.enemy, a:state.player)
-	call add(a:state.log, '<' . a:state.enemy.name.long . '> hits you with <' . a:state.enemy.equipment.weapon.name.long . '> for ' . dmg . ' damage!')
+	call a:state.addlog('%<enemy.name> hits you with %<enemy.weapon> for ' . dmg . ' damage!')
 	if(a:state.player.health.current <= 0)
 		call add(a:state.log, 'You are dead.')
 		call a:state.actions.clear()
