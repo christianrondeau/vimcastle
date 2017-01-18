@@ -35,7 +35,6 @@
 * [ ] Add tests for extracted utils
 * [ ] Allow (h)elp anywhere
 * [ ] Review colors
-* [ ] `Vimcastle!` to run with color scheme, permanent settings and map q to quit vim
 * [ ] README for non-vim users?
 
 ## Ideas

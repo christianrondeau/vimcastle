@@ -1,1 +1,1 @@
-command! Vimcastle call vimcastle#start()
+command! -bang Vimcastle call vimcastle#start(<bang>0)

@@ -12,9 +12,11 @@ If you can't install a Vim plugin yet, you are not ready for Vim Castle!
 
 ## Usage
 
-Launch with `:Vimcastle`
+* Launch with `:Vimcastle`
+* Launch in dedicated mode with `:Vimcastle!` (overrides display settings, quits with `q`)
+* Launch from command line: `vim -c 'Vimcastle!'`
 
 ## License
 
-Copyright Christian Rondeau 2016
+Copyright Christian Rondeau 2017
 

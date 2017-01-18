@@ -15,10 +15,7 @@ function! s:StateClass.enter(name) dict abort
 endfunction
 
 function! s:StateClass.action(key) dict abort
-	if(a:key == "q")
-		call vimcastle#quit()
-		return 0
-	elseif(self.actions.invokeByKey(a:key, self))
+	if(self.actions.invokeByKey(a:key, self))
 		return 1
 	elseif(self.nav.invokeByKey(a:key, self))
 		return 1

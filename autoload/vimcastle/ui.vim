@@ -1,9 +1,9 @@
 let s:screen = {}
 let s:bufname = 'game.vimcastle'
 
-function! vimcastle#ui#init() abort
+function! vimcastle#ui#init(dedicated) abort
 	call vimcastle#ui#clear()
-	call s:opengamebuffer()
+	call s:opengamebuffer(a:dedicated)
 	call vimcastle#ui#updatescreen()
 endfunction
 
@@ -14,10 +14,14 @@ function! vimcastle#ui#clear() abort
 	endif
 endfunction
 
-function! vimcastle#ui#quit() abort
+function! vimcastle#ui#quit(dedicated) abort
 	call vimcastle#ui#clear()
 	if(s:isingamebuffer())
-		bdelete
+		if a:dedicated
+			qall
+		else
+			bdelete
+		endif
 	endif
 endfunction
 
@@ -38,7 +42,7 @@ function! vimcastle#ui#draw(state) abort
 	setlocal nomodifiable
 endfunction
 
-function! s:opengamebuffer() abort
+function! s:opengamebuffer(dedicated) abort
 	let l:winnr = bufwinnr('^' . s:bufname . '$')
 	if (l:winnr >= 0)
 		execute l:winnr . 'wincmd w'
@@ -50,12 +54,12 @@ function! s:opengamebuffer() abort
 
 		let l:winnr = winnr()
 		setlocal buftype=nofile
-		call s:configuregamebuffer()
+		call s:configuregamebuffer(a:dedicated)
 		setlocal nomodifiable
 	endif
 endfunction
 
-function! s:configuregamebuffer() abort
+function! s:configuregamebuffer(dedicated) abort
 		setlocal filetype=vimcastle
 		setlocal foldcolumn=0
 		setlocal noswapfile
@@ -69,8 +73,18 @@ function! s:configuregamebuffer() abort
 		setlocal nocursorline
 
 		" These settings are permanent
-		" highlight NonText guifg=bg
-		" highlight EndOfBuffer ctermfg=bg ctermbg=bg
+		if(a:dedicated)
+			set laststatus=0
+			set noshowcmd
+
+			if has("gui")
+				set guioptions-=m  "remove menu bar
+				set guioptions-=T  "remove toolbar
+			endif
+
+			highlight NonText guifg=bg
+			highlight EndOfBuffer ctermfg=bg ctermbg=bg
+		endif
 
 		call s:global2buf('timeoutlen', '1')
 		call s:global2buf('showcmd', '0')
