@@ -16,7 +16,10 @@ function! s:MonstergenClass.modifier(probabilities, prefixshort, prefixlong, hea
 endfunction
 
 function! s:MonstergenClass.weapon(weapon) dict abort
-	let self.weapon = a:weapon
+	if(!exists('self.weapons'))
+		let self.weapons = vimcastle#repository#create()
+	endif
+	call self.weapons.add(1, a:weapon)
 	return self
 endfunction
 
@@ -29,5 +32,9 @@ function! s:MonstergenClass.invoke() dict abort
 		let name.long = modifier.long . ' ' . name.long
 		let health += modifier.health
 	endif
-	return vimcastle#character#create(name, health, self.weapon)
+	let monster = vimcastle#character#create(name, health)
+	if(exists('self.weapons'))
+		call monster.equipweapon(self.weapons.rnd().invoke())
+	endif
+	return monster
 endfunction

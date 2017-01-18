@@ -5,9 +5,9 @@ function! vimcastle#stories#main#plains#weapons#get() abort
 endfunction
 
 function! s:sword()
-	return vimcastle#weapongen#create('S. Swrd', 'Short Sword', 2, 5)
-				\.prefix(10, 'Ord.', 'Ordinary', 0, 0)
-				\.prefix(6, 'Rust.', 'Rusted', -1, 0)
-				\.prefix(4, 'Sh.', 'Shiny', 2, 1)
-				\.prefix(1, 'Brk.', 'Broken', -1, -3)
+	return vimcastle#equippablegen#weapon('S. Swrd', 'Short Sword', 2, 5)
+				\.noprefix(10)
+				\.prefix(6, 'Rust.', 'Rusted', 'dmg', -1, 0)
+				\.prefix(4, 'Sh.', 'Shiny', 'dmg', 2, 1)
+				\.prefix(1, 'Brk.', 'Broken', 'dmg', -1, -3)
 endfunction

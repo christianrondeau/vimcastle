@@ -16,14 +16,14 @@ Then (state is updated):
 
 Execute (create fight event):
   let monsters = vimcastle#repository#create()
-  call monsters.add(1, vimcastle#monstergen#create('imp', 'imp', 0))
+  call monsters.add(1, vimcastle#monstergen#create('Imp', 'Imp', 0))
   let event = vimcastle#event#create('test').text('There is a %e before you!').fight('Fight', monsters)
 
 Execute (event executes):
   call event.invoke(state)
 
 Then (state is updated):
-  AssertEqual ['There is a <imp> before you!'], state.log
+  AssertEqual ['There is a <Imp> before you!'], state.log
   AssertEqual 'Fight', state.actions.getByKey('f').label
 
 Execute (create change scene event):

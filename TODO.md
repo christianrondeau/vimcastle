@@ -3,7 +3,7 @@
 ## Game
 
 * [ ] Save/Load game. Remember only scene and player state. Overwrite on `q`
-* [ ] Armor (reduce dmg)
+* [x] Armor (reduce dmg)
 * [ ] Inventory (list of items, weapon stats)
   * [ ] Potions (heal)
   * [ ] Teleport scroll

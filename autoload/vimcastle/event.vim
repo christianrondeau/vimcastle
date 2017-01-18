@@ -71,8 +71,8 @@ function! s:EventClass.processtext(text, state)
 	if(exists('a:state.enemy'))
 		let text = substitute(text, '%e', '<' . a:state.enemy.name.long . '>', 'ge')
 	endif
-	if(exists('a:state.player.weapon'))
-		let text = substitute(text, '%w', '<' . a:state.player.weapon.name.long . '>', 'ge')
+	if(exists('a:state.player.equipment.weapon'))
+		let text = substitute(text, '%w', '<' . a:state.player.equipment.weapon.name.long . '>', 'ge')
 	endif
 	return text
 endfunction
