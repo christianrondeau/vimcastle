@@ -1,0 +1,39 @@
+Execute (setup):
+  let attacker = vimcastle#character#create({ 'short': 'A.', 'long': 'Attacker' }, 100)
+  let defender = vimcastle#character#create({ 'short': 'D.', 'long': 'Defender' }, 100)
+
+Execute (simple resolution):
+  let dmg = vimcastle#resolver#hit(attacker, defender)
+
+Then:
+  AssertEqual 0, dmg
+
+Execute (randomized weapon damage):
+  call attacker.equipweapon(vimcastle#equippablegen#weapon('Swd.', 'Sword', 4, 8).invoke())
+  call vimcastle#utils#setnextrnd(2) " The damage over the minimum
+  let dmg = vimcastle#resolver#hit(attacker, defender)
+
+Then:
+  AssertEqual 6, dmg
+
+Execute (simple weapon damage):
+  call attacker.equipweapon(vimcastle#equippablegen#weapon('Swd.', 'Sword', 3, 3).invoke())
+  let dmg = vimcastle#resolver#hit(attacker, defender)
+
+Then:
+  AssertEqual 3, dmg
+
+Execute (defense reduces damage):
+  call defender.equiparmor(vimcastle#equippablegen#armor('Arm.', 'Armor', 2).invoke())
+  let dmg = vimcastle#resolver#hit(attacker, defender)
+
+Then:
+  AssertEqual 1, dmg
+
+Execute (strength increases damage):
+  call attacker.setstat('str', 4)
+  let dmg = vimcastle#resolver#hit(attacker, defender)
+
+Then:
+  AssertEqual 5, dmg
+

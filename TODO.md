@@ -5,7 +5,7 @@
 * [ ] Potions (heal)
 * [ ] The Void (scene with nothing)
 * [ ] Pickup stuff (show equip. diff)
-* [ ] str (dmg), dex (miss/crit), spd (first to attack), con (health), wil (interrupt), spi (magic str)
+* [ ] dex (miss/crit), spd (first to attack), con (health), wil (interrupt), spi (magic str)
 * [ ] Change message for 0-damage hits
 * [ ] Miss/Critical
 * [ ] Attack order
@@ -23,16 +23,16 @@
 
 ## Refactors
 
-* [ ] Avoid duplicate short names and min/max stat on modifiers
-* [ ] Extract hit dmg logic
+* [ ] Provide a color scheme for numbers (damage, stats, etc.)
+* [ ] Avoid duplicate short names
 * [ ] Allow multiple randomized logs per event
 * [ ] Add tests for extracted utils
-* [ ] Allow (h)elp anywhere
 * [ ] Review colors
 * [ ] README for non-vim users?
 
 ## Ideas
 
+* [ ] Character class? (May provide special bonuses)
 * [ ] Scenes that draw health (e.g. no air, burning floor)
 * [ ] Teleport scroll
 * [ ] Enchant weapon

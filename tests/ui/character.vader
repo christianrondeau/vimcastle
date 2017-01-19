@@ -14,5 +14,8 @@ Expect (character screen):
   
   * Name: Player
   * Health: 80/100
+  * Stats:
+    * str: 0
+      Increases base attack damage
   
   b) Back

@@ -34,7 +34,7 @@ function! s:action_look(state) abort
 endfunction
 
 function! s:hit_send(state) abort
-	let dmg = s:compute_hit(a:state.player, a:state.enemy)
+	let dmg = vimcastle#resolver#hit(a:state.player, a:state.enemy)
 	call a:state.addlog('You hit %<enemy.name> with %<player.weapon> for ' . dmg . ' damage!')
 
 	if(a:state.enemy.health.current <= 0)
@@ -46,7 +46,7 @@ function! s:hit_send(state) abort
 endfunction
 
 function! s:hit_receive(state) abort
-	let dmg = s:compute_hit(a:state.enemy, a:state.player)
+	let dmg = vimcastle#resolver#hit(a:state.enemy, a:state.player)
 	call a:state.addlog('%<enemy.name> hits you with %<enemy.weapon> for ' . dmg . ' damage!')
 	if(a:state.player.health.current <= 0)
 		call add(a:state.log, 'You are dead.')
@@ -54,24 +54,6 @@ function! s:hit_receive(state) abort
 		call a:state.actions.add('c', 'Continue', function('s:action_gameover'))
 		return 1
 	endif
-endfunction
-
-function! s:compute_hit(attacker, defender) abort
-	let weapon = a:attacker.equipment.weapon
-	let dmgmin = weapon.dmg.min
-	let dmgmax = weapon.dmg.max
-	let dmg = vimcastle#utils#rnd(dmgmax - dmgmin + 1) + dmgmin
-	if(exists('a:defender.equipment.armor'))
-		let dmg -= a:defender.equipment.armor.stats.def
-	endif
-	if(dmg < 0)
-		let dmg = 0
-	endif
-	let a:defender.health.current -= dmg
-	if(a:defender.health.current < 0)
-		let a:defender.health.current = 0
-	endif
-	return dmg
 endfunction
 
 function! s:action_win(state)
