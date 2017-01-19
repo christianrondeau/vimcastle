@@ -1,11 +1,11 @@
-function! vimcastle#state#inventory#enter(state) abort
+function! vimcastle#state#character#enter(state) abort
 	let a:state.actions.enabled = 0
-	call a:state.nav.add('s', 'Character Sheet', function('s:nav_character'))
+	call a:state.nav.add('i', 'Inventory', function('s:nav_inventory'))
 	call a:state.nav.add('b', 'Back', function('s:nav_back'))
 endfunction
 
-function! s:nav_character(state) abort
-	call a:state.enter('character')
+function! s:nav_inventory(state) abort
+	call a:state.enter('inventory')
 	return 1
 endfunction
 

@@ -1,0 +1,18 @@
+Execute (test setup):
+  let screen = { 'width': 30 }
+  let state = vimcastle#state#create()
+  let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  let state.player.health.current = 80
+  let state.log = ['This should not be shown!']
+  call state.nav.addNoop('b',  'Back')
+
+Execute (draw):
+  call vimcastle#ui#character#draw(screen, state)
+
+Expect (character screen):
+  ---------- Character ---------
+  
+  * Name: Player
+  * Health: 80/100
+  
+  b) Back
