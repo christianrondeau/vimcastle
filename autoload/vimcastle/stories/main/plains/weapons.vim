@@ -10,4 +10,6 @@ function! s:sword()
 				\.prefix(6, 'Rust.', 'Rusted', 'dmg', -1, 0)
 				\.prefix(4, 'Sh.', 'Shiny', 'dmg', 2, 1)
 				\.prefix(1, 'Brk.', 'Broken', 'dmg', -1, -3)
+				\.nosuffix(10)
+				\.suffix(1, 'of Str.', 'of Strength', 'str', 1)
 endfunction

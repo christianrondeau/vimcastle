@@ -7,6 +7,6 @@ endfunction
 function! s:rags()
 	return vimcastle#equippablegen#armor('Rags', 'Rags', 1)
 				\.noprefix(10)
-				\.prefix(2, 'Tor.', 'Torned', 'def', -1, -1)
-				\.prefix(2, 'Cl.', 'Clean', 'def', 1, 1)
+				\.prefix(2, 'Tor.', 'Torn', 'def', -1)
+				\.prefix(2, 'Cl.', 'Clean', 'def', 1)
 endfunction
