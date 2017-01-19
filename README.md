@@ -6,6 +6,8 @@ _Still under development_
 
 Discover and conquer the lands, dongeons and mysteries of Vim Castle!
 
+[![asciicast](https://asciinema.org/a/99866.png)](https://asciinema.org/a/99866)
+
 ## Installation
 
 If you can't install a Vim plugin yet, you are not ready for Vim Castle!
