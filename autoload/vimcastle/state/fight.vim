@@ -26,7 +26,7 @@ function! s:action_look(state) abort
 	call a:state.addlog('* Health: ' . health.current . '/' . health.max)
 
 	let weapon = a:state.enemy.equipment.weapon
-	call a:state.addlog('* Weapon: %<enemy.weapon> (' . weapon.stats.dmg.min . '-' . weapon.stats.dmg.max . ' dmg)')
+	call a:state.addlog('* Weapon: %<enemy.weapon> (' . weapon.dmg.min . '-' . weapon.dmg.max . ' dmg)')
 
 	if(s:hit_receive(a:state))
 		return
@@ -58,11 +58,11 @@ endfunction
 
 function! s:compute_hit(attacker, defender) abort
 	let weapon = a:attacker.equipment.weapon
-	let dmgmin = weapon.stats.dmg.min
-	let dmgmax = weapon.stats.dmg.max
+	let dmgmin = weapon.dmg.min
+	let dmgmax = weapon.dmg.max
 	let dmg = vimcastle#utils#rnd(dmgmax - dmgmin + 1) + dmgmin
 	if(exists('a:defender.equipment.armor'))
-		let dmg -= a:defender.equipment.armor.stats.def.min
+		let dmg -= a:defender.equipment.armor.stats.def
 	endif
 	if(dmg < 0)
 		let dmg = 0

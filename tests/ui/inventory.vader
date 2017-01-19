@@ -2,7 +2,7 @@ Execute (test setup):
   let screen = { 'width': 30 }
   let state = vimcastle#state#create()
   let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
-  call state.player.equipweapon(vimcastle#equippablegen#weapon('.', 'Swooord', 5, 127).stat('def', 3, 3).invoke())
+  call state.player.equipweapon(vimcastle#equippablegen#weapon('.', 'Swooord', 5, 127).stat('def', 3).invoke())
   call state.player.equiparmor(vimcastle#equippablegen#armor('.', 'Armooor', 4).invoke())
   let state.log = ['This should not be shown!']
   call state.nav.addNoop('b',  'Back')
@@ -14,8 +14,8 @@ Expect (inventory screen):
   ---------- Inventory ---------
   
   * Weapon: <Swooord>
-    * def: 3
     * dmg: 5-127
+    * def: 3
   * Armor: <Armooor>
     * def: 4
   

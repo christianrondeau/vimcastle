@@ -11,7 +11,8 @@ function! s:event_enter() abort
 endfunction
 
 function! s:effect_setup(state) abort
-	let a:state.player = vimcastle#character#create({ 'short': 'You', 'long': 'Player' }, 60)
+	let a:state.player = vimcastle#character#create({ 'short': 'Plr.', 'long': 'Player' }, 60)
+				\.setstat('con', 1)
 				\.equipweapon(vimcastle#stories#main#plains#weapons#get().rnd().invoke())
 				\.equiparmor(vimcastle#stories#main#plains#armors#get().rnd().invoke())
 endfunction
