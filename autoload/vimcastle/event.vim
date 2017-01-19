@@ -7,8 +7,8 @@ function! vimcastle#event#create(name) abort
 	return event
 endfunction
 
-function! s:EventClass.text(text) dict abort
-	call add(self.texts, a:text)
+function! s:EventClass.text(texts) dict abort
+	call add(self.texts, type(a:texts) == 1 ? [a:texts] : a:texts)
 	return self
 endfunction
 
@@ -47,9 +47,11 @@ function! s:EventClass.invoke(state) dict abort
 		endtry
 	endif
 
-	let text = vimcastle#utils#oneof(self.texts)
-	let text = a:state.msg(text)
-	let a:state.log = [text]
+	let a:state.log = []
+	for lineoptions in self.texts
+		let line = vimcastle#utils#oneof(lineoptions)
+		call add(a:state.log, a:state.msg(line))
+	endfor
 
 	call a:state.actions.clear()
 	if(exists('self.action_fight_text'))

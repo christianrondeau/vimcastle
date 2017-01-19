@@ -23,9 +23,9 @@
 
 ## Refactors
 
+* [ ] Show base and total stats (e.g. `dmg: 3 [+5]`)
 * [ ] Provide a color scheme for numbers (damage, stats, etc.)
-* [ ] Avoid duplicate short names
-* [ ] Allow multiple randomized logs per event
+* [ ] Avoid duplicating short names
 * [ ] Add tests for extracted utils
 * [ ] Review colors
 * [ ] README for non-vim users?
