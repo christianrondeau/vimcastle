@@ -22,6 +22,12 @@ function! vimcastle#start(dedicated) abort
 	augroup END
 
 	execute "nnoremap <silent> <buffer> q :call vimcastle#quit(" . a:dedicated . ")<CR>"
+	execute "nnoremap <silent> <buffer> h :call vimcastle#help()<CR>"
+endfunction
+
+function! vimcastle#help() abort
+	help vimcastle
+	nnoremap <silent> <buffer> q :q<CR>
 endfunction
 
 function! vimcastle#quit(dedicated) abort

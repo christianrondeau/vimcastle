@@ -13,10 +13,10 @@ Discover and conquer the lands, dongeons and mysteries of Vim Castle!
 CONTENTS                                                    *vimcastle-contents*
 
     1. Commands ......................... |vimcastle-commands|
-        1.1 Starting Vimcastle ...........*:Vimcastle*
+        1.1 Starting Vimcastle .......... |:Vimcastle|
     2. Controls ......................... |vimcastle-controls|
-        2.1 Application-wide controls.....*vimcastle-controls-common*
-        2.2 Explore Screen Controls ..... *vimcastle-explore-controls*
+        2.1 Application-wide controls.... |vimcastle-controls-common|
+        2.2 Explore Screen Controls ..... |vimcastle-controls-explore|
     3. About ............................ |vimcastle-about|
 
 --------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ Anywhere in the application, you can use these keys:
   * <h> Show this help screen
   * <:> The |command-mode| is still available to interact with VIM
 
-2.2 Explore Screen Controls                         *vimcastle-explore-controls*
+2.2 Explore Screen Controls                         *vimcastle-controls-explore*
 
   * <i> Shows the inventory
   * <s> Shows the character sheet
