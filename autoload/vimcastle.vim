@@ -21,10 +21,20 @@ function! vimcastle#start(dedicated) abort
 		autocmd VimResized <buffer> call vimcastle#ui#updatescreen() | call vimcastle#ui#draw(s:state)
 	augroup END
 
-	execute "nnoremap <buffer> q :call vimcastle#quit(" . a:dedicated . ")<CR>"
+	execute "nnoremap <silent> <buffer> q :call vimcastle#quit(" . a:dedicated . ")<CR>"
 endfunction
 
 function! vimcastle#quit(dedicated) abort
+	let ok = 0
+	if a:dedicated
+		let ok = confirm('Quit Vim?')
+	else
+		let ok = confirm('Exit Vimcastle?')
+	endif
+	if(!ok)
+		return
+	endif
+
 	let s:state = {}
 	call vimcastle#ui#quit(a:dedicated)
 endfunction

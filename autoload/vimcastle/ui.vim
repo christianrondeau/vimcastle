@@ -18,13 +18,9 @@ function! vimcastle#ui#quit(dedicated) abort
 	call vimcastle#ui#clear()
 	if(s:isingamebuffer())
 		if a:dedicated
-			if(confirm('Quit Vim?'))
-				qall
-			endif
+			qall
 		else
-			if(confirm('Exit Vimcastle?'))
-				bdelete
-			endif
+			bdelete
 		endif
 	endif
 endfunction
@@ -86,7 +82,7 @@ function! s:configuregamebuffer(dedicated) abort
 				set guioptions-=T  "remove toolbar
 			endif
 
-			highlight NonText guifg=bg
+			highlight NonText guifg=bg ctermfg=bg
 			highlight EndOfBuffer ctermfg=bg ctermbg=bg
 		endif
 
