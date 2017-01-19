@@ -2,19 +2,70 @@
 
 Author:  Christian Rondeau <http://christianrondeau.net/>
 
-======================================
+================================================================================
 
-INTRODUCTION
-*vimcastle*
+INTRODUCTION                                                         *vimcastle*
 
 Discover and conquer the lands, dongeons and mysteries of Vim Castle!
 
-COMMANDS           *vimcastle-commands*
+--------------------------------------------------------------------------------
 
-                   *vimcastle-Vimcastle*
-Starts the game
+CONTENTS                                                    *vimcastle-contents*
 
-ABOUT              *vimcastle-about*
+    1. Commands ......................... |vimcastle-commands|
+        1.1 Starting Vimcastle ...........*:Vimcastle*
+    2. Controls ......................... |vimcastle-controls|
+        2.1 Application-wide controls.....*vimcastle-controls-common*
+        2.2 Explore Screen Controls ..... *vimcastle-explore-controls*
+    3. About ............................ |vimcastle-about|
+
+--------------------------------------------------------------------------------
+
+1. COMMANDS                                                 *vimcastle-commands*
+
+1.1 Starting Vimcastle                                              *:Vimcastle*
+
+To start the game, simply type :Vimcastle in the command window:
+
+    :Vimcastle
+
+To start the game and let Vimcastle take over colors, bindings and other
+settings that would otherwise conflict with your environment, you add a bang (!)
+to the command, and get a slightly better experience:
+
+    :Vimcastle!
+
+This option is useful when you want to launch VIM just to play Vimcastle:
+
+    > vim -c 'Vimcastle!'
+
+--------------------------------------------------------------------------------
+
+2. Controls                                                 *vimcastle-controls*
+
+Throughout the game, most actions that you can take will be shown in the
+screen, like this:
+
+    c) Continue
+
+In this case, you can press <c> to continue.
+
+2.1 Application-wide controls                        *vimcastle-controls-common*
+
+Anywhere in the application, you can use these keys:
+
+  * <q> Exits the game - and quits vim if started with bang (!)
+  * <h> Show this help screen
+  * <:> The |command-mode| is still available to interact with VIM
+
+2.2 Explore Screen Controls                         *vimcastle-explore-controls*
+
+  * <i> Shows the inventory
+  * <s> Shows the character sheet
+
+--------------------------------------------------------------------------------
+
+3. ABOUT                                                       *vimcastle-about*
 
 Download the latest version or report a bug on GitHub:
 
