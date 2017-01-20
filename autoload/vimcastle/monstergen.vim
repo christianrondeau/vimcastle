@@ -4,7 +4,13 @@ function! vimcastle#monstergen#create(basenameshort, basenamelong, basehealth) a
 	let monstergen = copy(s:MonstergenClass)
 	let monstergen.basename = { 'short': a:basenameshort, 'long': a:basenamelong }
 	let monstergen.basehealth = a:basehealth
+	let monstergen.basestats = {}
 	return monstergen
+endfunction
+
+function! s:MonstergenClass.stat(name, value) dict abort
+	let self.basestats[a:name] = a:value
+	return self
 endfunction
 
 function! s:MonstergenClass.modifier(probabilities, prefixshort, prefixlong, healthmodifier) dict abort
@@ -26,13 +32,14 @@ endfunction
 function! s:MonstergenClass.invoke() dict abort
 	let name = { 'short': self.basename.short, 'long': self.basename.long }
 	let health = self.basehealth
+	let stats = self.basestats
 	if(exists('self.modifiers'))
 		let modifier = self.modifiers.rnd()
 		let name.short = modifier.short . ' ' . name.short
 		let name.long = modifier.long . ' ' . name.long
 		let health += modifier.health
 	endif
-	let monster = vimcastle#character#create(name, health)
+	let monster = vimcastle#character#create(name, health).setstats(stats)
 	if(exists('self.weapons'))
 		call monster.equipweapon(self.weapons.rnd().invoke())
 	endif

@@ -9,4 +9,5 @@ function! s:rags()
 				\.noprefix(10)
 				\.prefix(2, 'Tor.', 'Torn', 'def', -1)
 				\.prefix(2, 'Cl.', 'Clean', 'def', 1)
+				\.prefix(1, 'L.', 'Light', 'spd', 2)
 endfunction

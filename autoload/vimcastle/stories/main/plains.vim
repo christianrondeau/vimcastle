@@ -15,18 +15,13 @@ endfunction
 
 function! s:event_nothing()
 	return vimcastle#event#create('nothing')
-				\.text('You wander aimlessly...')
-				\.text('You walk around...')
-				\.text('You see... nothing.')
-				\.text('Nope. Nothing.')
+				\.text(['You wander aimlessly...', 'You walk around...', 'You see... nothing.', 'Nope. Nothing.'])
 				\.explore('Continue')
 endfunction
 
 function! s:event_heal()
 	return vimcastle#event#create('heal')
-				\.text('You see a pond of fresh water. You drink for it and feel refreshed.')
-				\.text('You see an abandoned house. You rest in it for a little bit.')
-				\.text( 'You see a camp, and decide to rest for a few minutes.')
+				\.text(['You see a pond of fresh water. You drink for it and feel refreshed.', 'You see an abandoned house. You rest in it for a little bit.',  'You see a camp, and decide to rest for a few minutes.'])
 				\.effect(function('s:effect_heal'))
 				\.explore('Continue')
 endfunction
@@ -37,7 +32,7 @@ endfunction
 
 function! s:event_encounter()
 	return vimcastle#event#create('encounter')
-				\.text('You encounter %<enemy.name>!')
+				\.text(['You encounter %<enemy.name>!', 'Oh no! %<enemy.name> stands before you, ready to attack!', '%<enemy.name> suddenly jumps from behind a tree!'])
 				\.fight('Fight!', vimcastle#stories#main#plains#monsters#get())
 endfunction
 

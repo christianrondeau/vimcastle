@@ -38,7 +38,11 @@ function! s:StateClass.reset() dict abort
 endfunction
 
 function s:StateClass.addlog(text) dict abort
-	call add(self.log, self.msg(a:text))
+	let text = a:text
+	if(type(text) == 3)
+		let text = vimcastle#utils#oneof(text)
+	endif
+	call add(self.log, self.msg(text))
 endfunction
 
 function! s:StateClass.msg(text) dict abort

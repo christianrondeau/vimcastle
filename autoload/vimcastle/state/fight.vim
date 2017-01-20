@@ -3,6 +3,14 @@ function! vimcastle#state#fight#enter(state) abort
 	call a:state.actions.clear()
 	call a:state.actions.add('a', 'Attack with <' . a:state.player.equipment.weapon.name.short . '>', function('s:action_hit'))
 	call a:state.actions.add('l', 'Look at <' . a:state.enemy.name.long . '>', function('s:action_look'))
+
+	let a:state.log = []
+	if(a:state.player.getstat('spd', 1) >= a:state.enemy.getstat('spd', 1))
+		call a:state.addlog(['You attack first!', 'You have the opportunity!', 'You got the first strike!'])
+	else
+		call a:state.addlog('%<enemy.name> sees you first!')
+		call s:hit_receive(a:state)
+	endif
 endfunction
 
 function! s:action_hit(state) abort

@@ -10,10 +10,10 @@ function! vimcastle#resolver#hit(attacker, defender) abort
 	let dmg = vimcastle#utils#rnd(dmgmax - dmgmin + 1) + dmgmin
 
 	" Defender Armor
-	let dmg -= a:defender.getstat('def')
+	let dmg -= a:defender.getstat('def', 1)
 
 	" Attacker Strength
-	let dmg += a:attacker.getstat('str')
+	let dmg += a:attacker.getstat('str', 1)
 
 	" Minimum Damage
 	if(dmg < 0)

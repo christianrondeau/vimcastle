@@ -39,17 +39,26 @@ endfunction
 
 " Stats {{{
 
-function! s:CharacterClass.getstat(name)
+function! s:CharacterClass.getstat(name, combined)
 	let value = get(self.stats, a:name, 0)
-	for slot in keys(self.equipment)
-		let item = self.equipment[slot]
-		let value += get(item.stats, a:name, 0)
-	endfor
+	if a:combined
+		for slot in keys(self.equipment)
+			let item = self.equipment[slot]
+			let value += get(item.stats, a:name, 0)
+		endfor
+	endif
 	return value
 endfunction
 
-function! s:CharacterClass.setstat(name, value)
+function! s:CharacterClass.setstat(name, value) dict abort
 	let self.stats[a:name] = a:value
+	return self
+endfunction
+
+function! s:CharacterClass.setstats(stats) dict abort
+	for name in keys(a:stats)
+		let self.stats[name] = a:stats[name]
+	endfor
 	return self
 endfunction
 
