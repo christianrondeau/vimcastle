@@ -6,7 +6,6 @@
 * [ ] The Void (scene with nothing)
 * [ ] Pickup stuff (show equip. diff)
 * [ ] dex (miss/crit), con (health), wil (interrupt), spi (magic str)
-* [ ] Change message for 0-damage hits
 * [ ] Miss/Critical
 * [ ] Attack order
 * [ ] Create character (name, assign stats)

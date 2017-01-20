@@ -43,7 +43,11 @@ endfunction
 
 function! s:hit_send(state) abort
 	let dmg = vimcastle#resolver#hit(a:state.player, a:state.enemy)
-	call a:state.addlog('You hit %<enemy.name> with %<player.weapon> for ' . dmg . ' damage!')
+	if(dmg > 0)
+		call a:state.addlog('You hit %<enemy.name> with %<player.weapon> for ' . dmg . ' damage!')
+	else
+		call a:state.addlog(['You miss!', 'You attack has no effect!'])
+	endif
 
 	if(a:state.enemy.health.current <= 0)
 		call a:state.addlog('%<enemy.name> has been defeated!')
@@ -55,7 +59,13 @@ endfunction
 
 function! s:hit_receive(state) abort
 	let dmg = vimcastle#resolver#hit(a:state.enemy, a:state.player)
-	call a:state.addlog('%<enemy.name> hits you with %<enemy.weapon> for ' . dmg . ' damage!')
+
+	if(dmg > 0)
+		call a:state.addlog('%<enemy.name> hits you with %<enemy.weapon> for ' . dmg . ' damage!')
+	else
+		call a:state.addlog(['%<enemy.name> misses you!', '%<enemy.name> attack has no effect!'])
+	endif
+
 	if(a:state.player.health.current <= 0)
 		call add(a:state.log, 'You are dead.')
 		call a:state.actions.clear()
