@@ -13,6 +13,7 @@
 * [ ] High scores
 * [ ] Spells (?) - multi turn casting + interruptions
 * [ ] XP and levels (+ warnings in scene changes and enemy fights)
+* [ ] Bosses
 * [ ] Keys (required to proceed to other scenes)
 * [ ] Actually populate all this
 * [ ] Flee combat
@@ -27,6 +28,7 @@
 * [ ] Add tests for extracted utils
 * [ ] Review colors
 * [ ] README for non-vim users?
+* [ ] Test each monster against matching player lvl
 
 ## Ideas
 
