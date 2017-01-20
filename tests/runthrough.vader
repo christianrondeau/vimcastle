@@ -15,8 +15,12 @@ Execute (play story):
     let turns = 0
     while turns < maxturns && state.screen != 'gameover'
       let turns += 1
-       if(state.actions.enabled)
-        call state.actions.items[vimcastle#utils#rnd(len(state.actions.items))].fn(state)
+      if(state.actions.enabled)
+        if(vimcastle#utils#rnd(10) < 7)
+          call state.actions.items[0].fn(state)
+        else
+          call vimcastle#utils#oneof(state.actions.items).fn(state)
+        endif
       else
         call state.nav.items[0].fn(state)
       endif
@@ -24,9 +28,10 @@ Execute (play story):
     let totalturns += turns
   call add(playthroughsturns, turns)
   endwhile
+  let avgturns = totalturns / maxplaythroughs
+  Log 'average turns/game: ' . avgturns . ' in ' . maxplaythroughs . ' playthroughs: ' . string(playthroughsturns)
 
 Then (the game completed):
-  let avgturns = totalturns / maxplaythroughs
   if(!$CI)
-    Assert avgturns > 20 && avgturns < 200, 'average: ' . avgturns . ' (' . totalturns . ' total turns in ' . maxplaythroughs . ' playthroughs: ' . string(playthroughsturns)
+    Assert avgturns > 20 && avgturns < 200, 'Too few/many turns'
   endif
