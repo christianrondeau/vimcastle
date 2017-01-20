@@ -7,6 +7,10 @@ function! vimcastle#repository#create() abort
 	return repository
 endfunction
 
+function! vimcastle#repository#single(item) abort
+	return vimcastle#repository#create().add(1, a:item)
+endfunction
+
 function! s:RepositoryClass.add(probability, item) dict abort
 	let probability = self.totalprobabilities + a:probability
 	call add(self.items, { 'value': a:item, 'probability': probability })

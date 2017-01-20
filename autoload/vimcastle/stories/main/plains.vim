@@ -3,6 +3,7 @@ function! vimcastle#stories#main#plains#load(scene) abort
 	let a:scene.enter = s:event_enter()
 	call a:scene.events.add(20, s:event_nothing())
 	call a:scene.events.add(20, s:event_encounter())
+	call a:scene.events.add(2, s:event_boss())
 	call a:scene.events.add(4, s:event_heal())
 	call a:scene.events.add(2, s:event_forestentrance())
 endfunction
@@ -35,6 +36,16 @@ function! s:event_encounter() abort
 				\.text(['You encounter %<enemy.name>!', 'Oh no! %<enemy.name> stands before you, ready to attack!', '%<enemy.name> suddenly jumps from behind a tree!'])
 				\.fight('Fight!', vimcastle#stories#main#plains#monsters#get())
 endfunction
+
+function! s:event_boss() abort
+	let boss = vimcastle#monstergen#create('Sl. Joe', 'Sloppy Joe', 120)
+				\.stat('spd', 0)
+				\.weapon(vimcastle#equippablegen#weapon('Hammer', 'Hammer', 0, 12))
+	return vimcastle#event#create('encounter')
+				\.text(['Oh no! It''s %<enemy.name>'])
+				\.fight('Fight!', vimcastle#repository#single(boss))
+endfunction
+
 
 function! s:event_forestentrance() abort
 	return vimcastle#event#create('forestentrance')

@@ -7,7 +7,6 @@
 * [ ] Pickup stuff (show equip. diff)
 * [ ] dex (miss/crit), con (health), wil (interrupt), spi (magic str)
 * [ ] Miss/Critical
-* [ ] Attack order
 * [ ] Create character (name, assign stats)
 * [ ] Bonus scenes (e.g. +str)
 * [ ] Tutorial (predetermined seq. of events) + Test that plays a complete game incl. menu
