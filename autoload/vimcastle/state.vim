@@ -37,12 +37,12 @@ function! s:StateClass.reset() dict abort
 	let self.stats = { 'events': 0, 'fights': 0, 'scenes': 0 }
 endfunction
 
-function s:StateClass.addlog(text) dict abort
-	let text = a:text
-	if(type(text) == 3)
-		let text = vimcastle#utils#oneof(text)
+function! s:StateClass.addlog(text) dict abort
+	if(type(a:text) == 3)
+		call add(self.log, self.msg(vimcastle#utils#oneof(a:text)))
+	else
+		call add(self.log, self.msg(a:text))
 	endif
-	call add(self.log, self.msg(text))
 endfunction
 
 function! s:StateClass.msg(text) dict abort
