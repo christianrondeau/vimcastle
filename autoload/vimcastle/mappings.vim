@@ -6,7 +6,7 @@ function! vimcastle#mappings#init() abort
 				\ range(char2nr('A'), char2nr('Z'))
 	for key in keys
 		let key = nr2char(key)
-		execute "nnoremap <silent> <buffer> " . key . " :call vimcastle#action('" . key . "')<CR>"
+		execute 'nnoremap <silent> <buffer> ' . key . ' :call vimcastle#action(''' . key . ''')<CR>'
 	endfor
 
 	nnoremap <silent> <buffer> <CR> :call vimcastle#action('cr')<CR>

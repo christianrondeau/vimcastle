@@ -39,7 +39,7 @@ endfunction
 
 " Stats {{{
 
-function! s:CharacterClass.getstat(name, combined)
+function! s:CharacterClass.getstat(name, combined) dict abort
 	let value = get(self.stats, a:name, 0)
 	if a:combined
 		for slot in keys(self.equipment)

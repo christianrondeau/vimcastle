@@ -32,6 +32,7 @@
 
 ## Ideas
 
+* [ ] "Animation" when selecting an action (transitions), e.g. highlight the option, shake, flash, etc.
 * [ ] Character class? (May provide special bonuses)
 * [ ] Scenes that draw health (e.g. no air, burning floor)
 * [ ] Teleport scroll

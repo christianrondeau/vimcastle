@@ -21,8 +21,8 @@ function! vimcastle#start(dedicated) abort
 		autocmd VimResized <buffer> call vimcastle#ui#updatescreen() | call vimcastle#ui#draw(s:state)
 	augroup END
 
-	execute "nnoremap <silent> <buffer> q :call vimcastle#quit(" . a:dedicated . ")<CR>"
-	execute "nnoremap <silent> <buffer> h :call vimcastle#help()<CR>"
+	execute 'nnoremap <silent> <buffer> q :call vimcastle#quit(' . a:dedicated . ')<CR>'
+	execute 'nnoremap <silent> <buffer> h :call vimcastle#help()<CR>'
 endfunction
 
 function! vimcastle#help() abort

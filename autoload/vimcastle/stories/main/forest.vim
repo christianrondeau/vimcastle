@@ -10,7 +10,7 @@ function! s:event_enter() abort
 				\.explore('Go deeper in the forest')
 endfunction
 
-function! s:event_encounter()
+function! s:event_encounter() abort
 	return vimcastle#event#create('encounter')
 				\.text(['You hear a sound from behind a tree, and you see %<enemy.name>!', 'Out of a hole, jumps %<enemy.name>!'])
 				\.fight('Fight!', s:getmonsters())
@@ -23,10 +23,10 @@ function! s:getmonsters() abort
 	return repo
 endfunction
 
-function! s:monster_wolf()
+function! s:monster_wolf() abort
 	return vimcastle#monstergen#create('Wolf', 'Wolf', 8).weapon(vimcastle#equippablegen#weapon('Paw', 'Paw', 5, 10))
 endfunction
 
-function! s:monster_foresttroll()
+function! s:monster_foresttroll() abort
 	return vimcastle#monstergen#create('Forest Troll', 'F. Troll', 50).weapon(vimcastle#equippablegen#weapon('Fists', 'Fists', 20, 50))
 endfunction

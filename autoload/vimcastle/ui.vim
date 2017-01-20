@@ -9,9 +9,6 @@ endfunction
 
 function! vimcastle#ui#clear() abort
 	let s:screen = {}
-	if(exists("s:laststate"))
-		unlet s:laststate
-	endif
 endfunction
 
 function! vimcastle#ui#quit(dedicated) abort
@@ -77,7 +74,7 @@ function! s:configuregamebuffer(dedicated) abort
 			set laststatus=0
 			set noshowcmd
 
-			if has("gui")
+			if has('gui')
 				set guioptions-=m  "remove menu bar
 				set guioptions-=T  "remove toolbar
 			endif
@@ -92,14 +89,14 @@ function! s:configuregamebuffer(dedicated) abort
 endfunction
 
 function! s:global2buf(name, value) abort
-	let dobackupandapply = 'if(!exists("g:vimcastle_bak_' . a:name . '")) | let g:vimcastle_bak_' . a:name . ' = &' . a:name . ' | endif | let &' . a:name . '=' . a:value
-	let dorestore = 'if(exists("g:vimcastle_bak_' . a:name . '")) | let &' . a:name . ' = g:vimcastle_bak_' . a:name . ' | unlet g:vimcastle_bak_' . a:name . ' | endif'
+	let dobackupandapply = 'if(!exists(''g:vimcastle_bak_' . a:name . ''')) | let g:vimcastle_bak_' . a:name . ' = &' . a:name . ' | endif | let &' . a:name . '=' . a:value
+	let dorestore = 'if(exists(''g:vimcastle_bak_' . a:name . ''')) | let &' . a:name . ' = g:vimcastle_bak_' . a:name . ' | unlet g:vimcastle_bak_' . a:name . ' | endif'
 
-	execute "augroup Vimcastle_ui_" . a:name
+	execute 'augroup Vimcastle_ui_' . a:name
 	autocmd!
 	execute 'autocmd BufEnter <buffer> ' . dobackupandapply
 	execute 'autocmd BufLeave,BufDelete <buffer> ' . dorestore
-	execute "augroup END"
+	execute 'augroup END'
 
 	execute dobackupandapply
 endfunction

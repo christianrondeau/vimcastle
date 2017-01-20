@@ -13,30 +13,30 @@ function! s:event_enter() abort
 				\.explore('Start walking forward')
 endfunction
 
-function! s:event_nothing()
+function! s:event_nothing() abort
 	return vimcastle#event#create('nothing')
 				\.text(['You wander aimlessly...', 'You walk around...', 'You see... nothing.', 'Nope. Nothing.'])
 				\.explore('Continue')
 endfunction
 
-function! s:event_heal()
+function! s:event_heal() abort
 	return vimcastle#event#create('heal')
 				\.text(['You see a pond of fresh water. You drink for it and feel refreshed.', 'You see an abandoned house. You rest in it for a little bit.',  'You see a camp, and decide to rest for a few minutes.'])
 				\.effect(function('s:effect_heal'))
 				\.explore('Continue')
 endfunction
 
-function! s:effect_heal(state)
+function! s:effect_heal(state) abort
 	let a:state.player.health.current = a:state.player.health.max
 endfunction
 
-function! s:event_encounter()
+function! s:event_encounter() abort
 	return vimcastle#event#create('encounter')
 				\.text(['You encounter %<enemy.name>!', 'Oh no! %<enemy.name> stands before you, ready to attack!', '%<enemy.name> suddenly jumps from behind a tree!'])
 				\.fight('Fight!', vimcastle#stories#main#plains#monsters#get())
 endfunction
 
-function! s:event_forestentrance()
+function! s:event_forestentrance() abort
 	return vimcastle#event#create('forestentrance')
 				\.text('You face a dense forest. you see movement in the dark.')
 				\.enterscene('Enter the forest', 'forest')

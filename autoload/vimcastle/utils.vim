@@ -19,7 +19,7 @@ function! vimcastle#utils#oneof(list) abort
 	return a:list[vimcastle#utils#rnd(len(a:list))]
 endfunction
 
-function! vimcastle#utils#validate(val, expectedtype)
+function! vimcastle#utils#validate(val, expectedtype) abort
 	let actualtype = type(a:val)
 	if(actualtype != a:expectedtype)
 		throw 'Expected an argument of type ' . a:expectedtype . ', received ' . actualtype

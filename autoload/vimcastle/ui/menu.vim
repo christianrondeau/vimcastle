@@ -1,5 +1,5 @@
 function! vimcastle#ui#menu#draw(screen, state) abort
-	call vimcastle#ui#common#drawtitle(a:screen, "Vimcastle")
+	call vimcastle#ui#common#drawtitle(a:screen, 'Vimcastle')
 	call append(line('$'), '')
 
 	if(len(a:state.log))

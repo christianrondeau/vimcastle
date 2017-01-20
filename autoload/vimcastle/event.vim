@@ -68,18 +68,18 @@ function! s:EventClass.invoke(state) dict abort
 	endif
 endfunction
 
-function! s:action_explore(state)
+function! s:action_explore(state) abort
 	let a:state.stats.events += 1
 	let result = a:state.scene.events.rnd().invoke(a:state)
 endfunction
 
-function! s:action_fight(state)
+function! s:action_fight(state) abort
 	let a:state.stats.fights += 1
 	let a:state.nextaction = function('s:action_explore')
 	call a:state.enter('fight')
 endfunction
 
-function! s:action_enterscene(state)
+function! s:action_enterscene(state) abort
 	let a:state.stats.scenes += 1
 	let a:state.scene = vimcastle#scene#load(a:state.scene.story, a:state.nextscene)
 	call a:state.scene.enter.invoke(a:state)

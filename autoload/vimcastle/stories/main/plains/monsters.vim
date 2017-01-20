@@ -5,7 +5,7 @@ function! vimcastle#stories#main#plains#monsters#get() abort
 	return repo
 endfunction
 
-function! s:monster_rat()
+function! s:monster_rat() abort
 	return vimcastle#monstergen#create('Rat', 'Rat', 8)
 				\.stat('spd', 3)
 				\.modifier(3, 'Sm.', 'Small', -3)
@@ -14,7 +14,7 @@ function! s:monster_rat()
 				\.weapon(vimcastle#equippablegen#weapon('Claw', 'Claw', 1, 2))
 endfunction
 
-function! s:monster_ogre()
+function! s:monster_ogre() abort
 	return vimcastle#monstergen#create('Ogre', 'Ogre', 50)
 				\.stat('spd', 1)
 				\.weapon(vimcastle#equippablegen#weapon('Club', 'Club', 2, 4))

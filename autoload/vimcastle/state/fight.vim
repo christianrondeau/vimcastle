@@ -64,10 +64,10 @@ function! s:hit_receive(state) abort
 	endif
 endfunction
 
-function! s:action_win(state)
+function! s:action_win(state) abort
 		call a:state.enter('win')
 endfunction
 
-function! s:action_gameover(state)
+function! s:action_gameover(state) abort
 		call a:state.enter('gameover')
 endfunction

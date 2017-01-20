@@ -1,4 +1,4 @@
-if exists("b:current_syntax")
+if exists('b:current_syntax')
 	finish
 endif
 
@@ -19,4 +19,5 @@ syntax region vimcastleBar start=/\v\[/ end=/\v\]/
 highlight link vimcastleBar Error
 
 
-let b:current_syntax = "vimcastle"
+let b:current_syntax = 'vimcastle'
+

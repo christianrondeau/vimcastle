@@ -36,7 +36,7 @@ function! vimcastle#ui#common#getbar(barwidth, val, max, char) abort
 	else
 		let filled = 0
 	endif
-	let bar = "[" . repeat(a:char, filled) . repeat(" ", a:barwidth - filled) . "]"
+	let bar = '[' . repeat(a:char, filled) . repeat(' ', a:barwidth - filled) . ']'
 	return bar
 endfunction
 

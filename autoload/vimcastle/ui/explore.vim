@@ -24,7 +24,7 @@ function! s:drawbar(screen, health) abort
 	let barwidth = a:screen.width / 2 - 8
 	call s:drawright(
 		\ a:screen,
-		\ a:health.current . " " . 
+		\ a:health.current . ' ' . 
 		\ vimcastle#ui#common#getbar(barwidth, a:health.current, a:health.max, '-')
 		\ )
 endfunction

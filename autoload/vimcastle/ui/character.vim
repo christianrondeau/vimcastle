@@ -1,5 +1,5 @@
 function! vimcastle#ui#character#draw(screen, state) abort
-	call vimcastle#ui#common#drawtitle(a:screen, "Character")
+	call vimcastle#ui#common#drawtitle(a:screen, 'Character')
 	call append(line('$'), '')
 
 	call append(line('$'), '* Name: ' . a:state.player.name.long)
@@ -12,7 +12,7 @@ function! vimcastle#ui#character#draw(screen, state) abort
 	call vimcastle#ui#common#drawbindings(a:state.nav)
 endfunction
 
-function! s:showstat(player, stat, label)
+function! s:showstat(player, stat, label) abort
 	let base = a:player.getstat(a:stat, 0)
 	let bonus = a:player.getstat(a:stat, 1) - base
 	let msg = base

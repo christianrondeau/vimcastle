@@ -43,7 +43,7 @@ function! s:EquippablegenClass.noprefix(probabilities) dict abort
  return self
 endfunction
 
-function! s:buildmodifier(short, long, stat, value, max)
+function! s:buildmodifier(short, long, stat, value, max) abort
 	let modifier = { 'short': a:short, 'long': a:long, 'stat': a:stat }
 	if(a:stat ==# 'dmg')
 		let modifier.min = a:value
@@ -100,7 +100,7 @@ function! s:EquippablegenClass.invoke() dict abort
 	return equippable
 endfunction
 
-function! s:applymodifier(equippable, modifier)
+function! s:applymodifier(equippable, modifier) abort
 	if(a:modifier.stat ==# 'dmg')
 		if(!has_key(a:equippable, 'dmg'))
 			let a:equippable.dmg = { 'min': 0, 'max': 0 }

@@ -4,7 +4,7 @@ function! vimcastle#stories#main#plains#armors#get() abort
 	return repo
 endfunction
 
-function! s:rags()
+function! s:rags() abort
 	return vimcastle#equippablegen#armor('Rags', 'Rags', 1)
 				\.noprefix(10)
 				\.prefix(2, 'Tor.', 'Torn', 'def', -1)

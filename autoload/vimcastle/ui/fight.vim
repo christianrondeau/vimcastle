@@ -1,5 +1,5 @@
 function! vimcastle#ui#fight#draw(screen, state) abort
-	call vimcastle#ui#common#drawtitle(a:screen, "Fight!")
+	call vimcastle#ui#common#drawtitle(a:screen, 'Fight!')
 	call append(line('$'), '')
 
 	call s:drawsides(a:screen, a:state.player.name.short,a:state.enemy.name.short)
@@ -24,8 +24,8 @@ function! s:drawbars(screen, lefthealth, righthealth, char) abort
 	call s:drawsides(
 		\ a:screen,
 		\ vimcastle#ui#common#getbar(barwidth, a:lefthealth.current, a:lefthealth.max, a:char) .
-		\ " " . a:lefthealth.current,
-		\ a:righthealth.current . " " . 
+		\ ' ' . a:lefthealth.current,
+		\ a:righthealth.current . ' ' . 
 		\ vimcastle#ui#common#getbar(barwidth, a:righthealth.current, a:righthealth.max, a:char)
 		\ )
 endfunction

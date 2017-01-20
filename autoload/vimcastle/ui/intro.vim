@@ -60,7 +60,7 @@ function! vimcastle#ui#intro#draw(screen, state) abort
 		\])
 endfunction
 
-function! s:drawframe(screen, img)
+function! s:drawframe(screen, img) abort
 	redraw!
 	sleep 200m
 	silent %delete

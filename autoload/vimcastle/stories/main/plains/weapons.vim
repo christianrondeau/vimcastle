@@ -4,7 +4,7 @@ function! vimcastle#stories#main#plains#weapons#get() abort
 	return repo
 endfunction
 
-function! s:sword()
+function! s:sword() abort
 	return vimcastle#equippablegen#weapon('S. Swrd', 'Short Sword', 2, 5)
 				\.noprefix(10)
 				\.prefix(6, 'Rust.', 'Rusted', 'dmg', -1, 0)
