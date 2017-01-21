@@ -1,13 +1,26 @@
 let s:rndseed = localtime() % 0x10000
 
 function! vimcastle#utils#setnextrnd(n) abort
-	let s:nextrnd = a:n
+	if(!exists('s:nextrnd'))
+		let s:nextrnd = []
+	endif
+	call add(s:nextrnd, a:n)
+endfunction
+
+function! vimcastle#utils#resetrnd() abort
+	if(exists('s:nextrnd'))
+		unlet s:nextrnd
+	endif
 endfunction
 
 function! vimcastle#utils#rnd(n) abort
 	if(exists('s:nextrnd'))
-		let v = s:nextrnd
-		unlet s:nextrnd
+		let v = s:nextrnd[0]
+		if(len(s:nextrnd) == 1)
+			unlet s:nextrnd
+		else
+			let s:nextrnd = s:nextrnd[1:]
+		endif
 		return v
 	endif
 

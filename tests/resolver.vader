@@ -10,7 +10,9 @@ Then:
 
 Execute (randomized weapon damage):
   call attacker.equipweapon(vimcastle#equippablegen#weapon('Swd.', 'Sword', 4, 8).invoke())
+  call vimcastle#utils#resetrnd()
   call vimcastle#utils#setnextrnd(2) " The damage over the minimum
+  call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex
   let dmg = vimcastle#resolver#hit(attacker, defender)
 
 Then:
@@ -18,6 +20,9 @@ Then:
 
 Execute (simple weapon damage):
   call attacker.equipweapon(vimcastle#equippablegen#weapon('Swd.', 'Sword', 3, 3).invoke())
+  call vimcastle#utils#resetrnd()
+  call vimcastle#utils#setnextrnd(0) " The damage over the minimum
+  call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex
   let dmg = vimcastle#resolver#hit(attacker, defender)
 
 Then:
@@ -25,6 +30,9 @@ Then:
 
 Execute (defense reduces damage):
   call defender.equiparmor(vimcastle#equippablegen#armor('Arm.', 'Armor', 2).invoke())
+  call vimcastle#utils#resetrnd()
+  call vimcastle#utils#setnextrnd(0) " The damage over the minimum
+  call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex
   let dmg = vimcastle#resolver#hit(attacker, defender)
 
 Then:
@@ -32,8 +40,21 @@ Then:
 
 Execute (strength increases damage):
   call attacker.setstat('str', 4)
+  call vimcastle#utils#resetrnd()
+  call vimcastle#utils#setnextrnd(0) " The damage over the minimum
+  call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex
   let dmg = vimcastle#resolver#hit(attacker, defender)
 
 Then:
   AssertEqual 5, dmg
+
+Execute (dex increases crit chances):
+  call attacker.setstat('dex', 4)
+  call vimcastle#utils#resetrnd()
+  call vimcastle#utils#setnextrnd(0) " The damage over the minimum
+  call vimcastle#utils#setnextrnd(4) " The dex roll must be <= to dex
+  let dmg = vimcastle#resolver#hit(attacker, defender)
+
+Then:
+  AssertEqual 10, dmg
 

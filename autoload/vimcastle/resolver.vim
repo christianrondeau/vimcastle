@@ -26,6 +26,15 @@ function! vimcastle#resolver#hit(attacker, defender) abort
 		let a:defender.health.current = 0
 	endif
 
+	" Critical
+	if(dmg > 0)
+		let dex = a:attacker.getstat('dex', 1)
+		let roll = vimcastle#utils#rnd(100)
+		if(roll <= dex)
+			let dmg = (dmg * 2) . ' critical'
+		endif
+	endif
+
 	" Final Damage
 	return dmg
 endfunction

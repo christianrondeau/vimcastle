@@ -7,6 +7,7 @@ function! vimcastle#ui#character#draw(screen, state) abort
 	call append(line('$'), '* Stats:')
 	call s:showstat(a:state.player, 'str', 'Increases base attack damage')
 	call s:showstat(a:state.player, 'spd', 'Determines the first to attack in a fight')
+	call s:showstat(a:state.player, 'dex', 'Determines critical damage chances')
 	call append(line('$'), '')
 
 	call vimcastle#ui#common#drawbindings(a:state.nav)

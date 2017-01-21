@@ -22,5 +22,7 @@ Expect (character screen):
       Increases base attack damage
     * spd: 2
       Determines the first to attack in a fight
+    * dex: 0
+      Determines critical damage chances
   
   b) Back
