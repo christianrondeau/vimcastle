@@ -5,8 +5,7 @@
 * [ ] Potions (heal)
 * [ ] The Void (scene with nothing)
 * [ ] Pickup stuff (show equip. diff)
-* [ ] dex (miss/crit), con (health), wil (interrupt), spi (magic str)
-* [ ] Miss/Critical
+* [ ] con (health), wil (interrupt), spi (magic str)
 * [ ] Create character (name, assign stats)
 * [ ] Bonus scenes (e.g. +str)
 * [ ] Tutorial (predetermined seq. of events) + Test that plays a complete game incl. menu
@@ -32,6 +31,7 @@
 
 ## Ideas
 
+* [ ] Scene can depend on you being (str)ong enough, etc.
 * [ ] "Animation" when selecting an action (transitions), e.g. highlight the option, shake, flash, etc.
 * [ ] Auto combat (skip)
 * [ ] Character class? (May provide special bonuses)

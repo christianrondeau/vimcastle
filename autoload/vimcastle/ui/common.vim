@@ -2,6 +2,10 @@ function! vimcastle#ui#common#drawtitle(screen, title) abort
 	call setline(1, s:getcentered(a:screen.width, a:title, '-'))
 endfunction
 
+function! vimcastle#ui#common#drawcenter(screen, text) abort
+	call append(line('$'), s:getcentered(a:screen.width, a:text, ' '))
+endfunction
+
 function! s:getcentered(width, title, pad) abort
 	let titlew = strlen(a:title) + 2
 	if(a:width <= titlew)
