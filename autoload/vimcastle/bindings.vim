@@ -27,7 +27,6 @@ function! s:BindingsClass.addDefault(label, fn) dict abort
 endfunction
 
 function! s:BindingsClass.clear() dict abort
-	let self.enabled = 1
 	let self.items = []
 endfunction
 
@@ -43,9 +42,6 @@ function! s:BindingsClass.getByKey(key) dict abort
 endfunction
 
 function! s:BindingsClass.invokeByKey(key, state) dict abort
-	if(!self.enabled)
-		return 0
-	endif
 	let item = self.getByKey(a:key)
 	if(type(item) == 4) " is dict
 		call item.fn(a:state)

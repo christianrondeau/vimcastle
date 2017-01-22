@@ -3,7 +3,7 @@ Execute (test setup):
   let state = vimcastle#state#create()
   let state.scene = { 'label': 'Plains' }
   let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 153)
-  call state.actions.addNoop('x',  'Action')
+  call state.actions().addNoop('x',  'Action')
   let state.log = ['Stuff happens!']
 
 Execute (draw):

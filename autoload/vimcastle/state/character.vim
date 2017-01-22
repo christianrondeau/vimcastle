@@ -1,5 +1,4 @@
 function! vimcastle#state#character#enter(state) abort
-	let a:state.actions.enabled = 0
 	call a:state.nav.add('i', 'Inventory', function('s:nav_inventory'))
 	call a:state.nav.add('b', 'Back', function('s:nav_back'))
 endfunction

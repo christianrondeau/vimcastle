@@ -6,7 +6,7 @@ Execute (enter):
 
 Then (screen is updated):
   AssertEqual 'test', state.screen, 'screen is updated'
-  AssertEqual 'Test Action', state.actions.items[0].label, 'state impl is called'
+  AssertEqual 'Test Action', state.actions().items[0].label, 'state impl is called'
 
 Execute (action):
   let result = state.action('1')
@@ -44,4 +44,5 @@ Then (the state is clean):
   Assert !has_key(state, 'enemy'), 'enemy is cleared'
   Assert !len(state.log), 'log is empty'
   Assert !len(state.nav.items), 'actions are empty'
-  Assert !len(state.actions.items), 'actions are empty'
+  Assert !len(state.actions().items), 'actions are empty'
+

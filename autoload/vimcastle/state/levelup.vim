@@ -1,5 +1,4 @@
 function! vimcastle#state#levelup#enter(state) abort
-	let a:state.actions.enabled = 1
 	call s:addincreaseaction(1, a:state, 'str')
 	call s:addincreaseaction(1, a:state, 'spd')
 	call s:addincreaseaction(1, a:state, 'dex')

@@ -1,8 +1,7 @@
 function! vimcastle#state#fight#enter(state) abort
-	let a:state.actions.enabled = 1
-	call a:state.actions.clear()
-	call a:state.actions.add('a', 'Attack with <' . a:state.player.equipment.weapon.name.short . '>', function('s:action_hit'))
-	call a:state.actions.add('l', 'Look at <' . a:state.enemy.name.long . '>', function('s:action_look'))
+	call a:state.actions().clear()
+	call a:state.actions().add('a', 'Attack with <' . a:state.player.equipment.weapon.name.short . '>', function('s:action_hit'))
+	call a:state.actions().add('l', 'Look at <' . a:state.enemy.name.long . '>', function('s:action_look'))
 
 	let a:state.log = []
 	if(a:state.player.getstat('spd', 1) >= a:state.enemy.getstat('spd', 1))
@@ -51,8 +50,8 @@ function! s:hit_send(state) abort
 
 	if(a:state.enemy.health.current <= 0)
 		call a:state.addlog('%<enemy.name> has been defeated!')
-		call a:state.actions.clear()
-		call a:state.actions.add('c', 'Continue', function('s:action_win'))
+		call a:state.actions().clear()
+		call a:state.actions().add('c', 'Continue', function('s:action_win'))
 		return 1
 	endif
 endfunction
@@ -68,8 +67,8 @@ function! s:hit_receive(state) abort
 
 	if(a:state.player.health.current <= 0)
 		call add(a:state.log, 'You are dead.')
-		call a:state.actions.clear()
-		call a:state.actions.add('c', 'Continue', function('s:action_gameover'))
+		call a:state.actions().clear()
+		call a:state.actions().add('c', 'Continue', function('s:action_gameover'))
 		return 1
 	endif
 endfunction

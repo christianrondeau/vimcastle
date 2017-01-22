@@ -28,9 +28,11 @@
 * [ ] Review colors
 * [ ] README for non-vim users?
 * [ ] Test each monster against matching player lvl
+* [ ] Contributing guide explaining vader/vint, concepts, terminology etc.
 
 ## Ideas
 
+* [ ] Special monsters / weapons / scenes with ASCII art (and animations?)
 * [ ] Scene can depend on you being (str)ong enough, etc.
 * [ ] "Animation" when selecting an action (transitions), e.g. highlight the option, shake, flash, etc.
 * [ ] Auto combat (skip)

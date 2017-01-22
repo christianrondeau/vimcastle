@@ -12,7 +12,7 @@ function! vimcastle#ui#explore#draw(screen, state) abort
 	endif
 	call append(line('$'), '')
 
-	call vimcastle#ui#common#drawbindings(a:state.actions)
+	call vimcastle#ui#common#drawbindings(a:state.actions())
 endfunction
 
 function! s:drawright(screen, right) abort

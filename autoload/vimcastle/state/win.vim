@@ -1,5 +1,4 @@
 function! vimcastle#state#win#enter(state) abort
-	let a:state.actions.enabled = 0
 	call a:state.nav.add('c', 'Continue', function('s:nav_continue'))
 endfunction
 

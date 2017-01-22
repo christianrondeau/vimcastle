@@ -53,18 +53,18 @@ function! s:EventClass.invoke(state) dict abort
 		call add(a:state.log, a:state.msg(line))
 	endfor
 
-	call a:state.actions.clear()
+	call a:state.actions().clear()
 	if(exists('self.action_fight_text'))
-		call a:state.actions.add('f', self.action_fight_text, function('s:action_fight'))
+		call a:state.actions().add('f', self.action_fight_text, function('s:action_fight'))
 	endif
 	if(exists('self.action_enterscene_text'))
 		" NOTE: Cannot use arglist in 7.4
-		" call a:state.actions.add('e', self.action_enterscene_text, function('s:action_enterscene', [self.nextscene]))
+		" call a:state.actions().add('e', self.action_enterscene_text, function('s:action_enterscene', [self.nextscene]))
 		let a:state.nextscene = self.nextscene
-		call a:state.actions.add('e', self.action_enterscene_text, function('s:action_enterscene'))
+		call a:state.actions().add('e', self.action_enterscene_text, function('s:action_enterscene'))
 	endif
 	if(exists('self.action_explore_text'))
-		call a:state.actions.add('c', self.action_explore_text, function('s:action_explore'))
+		call a:state.actions().add('c', self.action_explore_text, function('s:action_explore'))
 	endif
 endfunction
 

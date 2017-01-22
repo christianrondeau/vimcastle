@@ -12,7 +12,7 @@ Execute (event executes):
 
 Then (state is updated):
   AssertEqual ['wow!'], state.log
-  AssertEqual 'Continue', state.actions.getByKey('c').label
+  AssertEqual 'Continue', state.actions().getByKey('c').label
 
 Execute (create fight event):
   let monsters = vimcastle#repository#create()
@@ -24,7 +24,7 @@ Execute (event executes):
 
 Then (state is updated):
   AssertEqual ['There is a <Imp> before you!'], state.log
-  AssertEqual 'Fight', state.actions.getByKey('f').label
+  AssertEqual 'Fight', state.actions().getByKey('f').label
 
 Execute (create change scene event):
   let event = vimcastle#event#create('test').text('change scene').enterscene('Enter Test Scene', 'testscene')
@@ -34,4 +34,5 @@ Execute (event executes):
 
 Then (state is updated):
   AssertEqual ['change scene'], state.log
-  AssertEqual 'Enter Test Scene', state.actions.getByKey('e').label
+  AssertEqual 'Enter Test Scene', state.actions().getByKey('e').label
+

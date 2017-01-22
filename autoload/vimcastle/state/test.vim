@@ -1,5 +1,5 @@
 function! vimcastle#state#test#enter(state) abort
-	call a:state.actions.add('1', 'Test Action', function('s:action_test_1'))
+	call a:state.actions().add('1', 'Test Action', function('s:action_test_1'))
 	call a:state.nav.add('any', 'Test Action', function('s:nav_test_any'))
 endfunction
 

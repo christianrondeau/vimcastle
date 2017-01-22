@@ -5,7 +5,7 @@ Execute (test setup):
   let state = vimcastle#state#create()
   let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 153)
   let state.enemy = vimcastle#character#create({'long': 'Enemy', 'short': 'Enem.'}, 810)
-  call state.actions.addNoop('a',  'Attack with <f. staff>')
+  call state.actions().addNoop('a',  'Attack with <f. staff>')
   let state.log = []
   let state.enemy.health.current = 476
 

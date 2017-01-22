@@ -22,14 +22,6 @@ Execute (invoke):
 Then (called):
   Assert g:test_state.called, 'Should call function'
 
-Execute (invoke):
-  let bindings.enabled = 0
-  let g:test_state = { 'called': 0 }
-  call bindings.invokeByKey('x', g:test_state)
-
-Then (not called):
-  Assert !g:test_state.called, 'Should not call function'
-
 Execute (clear):
   call bindings.clear()
 
