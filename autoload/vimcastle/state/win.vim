@@ -1,4 +1,12 @@
 function! vimcastle#state#win#enter(state) abort
+	let a:state.log = []
+
+	let xp = a:state.enemy.xp
+	let a:state.player.xp += xp
+
+	call a:state.addlog('You gained:')
+  call a:state.addlog('  * ' . xp . ' xp! (total: ' . a:state.player.xp . ' xp)')
+
 	call a:state.nav.add('c', 'Continue', function('s:nav_continue'))
 endfunction
 
