@@ -5,11 +5,11 @@ endfunction
 
 function! s:event_enter() abort
 	return vimcastle#event#create('enter')
+				\.effect(function('s:effect_setup'))
 				\.text(['You are a barber in a small village.', 'You are a bored kid who wants to do something important.', 'You are an old warrior looking for adventure.', 'You are lost and you don''t know who you are.'])
 				\.text('You pack up your stuff, pick up your %<player.weapon> and get ready for adventure!')
 				\.text('')
 				\.text('(You can open the inventory with <i> and the character sheet with <s>)')
-				\.effect(function('s:effect_setup'))
 				\.enterscene('Start exploring!', 'plains')
 endfunction
 

@@ -1,5 +1,5 @@
 Execute (create simple monster):
-  let monster = vimcastle#monstergen#create('Mon.', 'Monster', 100).weapon(vimcastle#equippablegen#weapon('', '', 1, 2))
+  let monster = vimcastle#monstergen#create('Mon.', 'Monster').health(100).level(3).xp(14).weapon(vimcastle#equippablegen#weapon('', '', 1, 2))
 
 Execute (invoke monster):
   let instance = monster.invoke()
@@ -8,6 +8,8 @@ Then (monster is created):
   AssertEqual 'Mon.', instance.name.short
   AssertEqual 'Monster', instance.name.long
   AssertEqual 100, instance.health.max
+  AssertEqual 3, instance.level
+  AssertEqual 14, instance.xp
 
 Execute (add a modifier):
   let monster = monster.modifier(1, 'B.', 'Big', 20)

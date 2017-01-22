@@ -6,7 +6,10 @@ function! vimcastle#stories#main#plains#monsters#get() abort
 endfunction
 
 function! s:monster_rat() abort
-	return vimcastle#monstergen#create('Rat', 'Rat', 8)
+	return vimcastle#monstergen#create('Rat', 'Rat')
+				\.health(8)
+				\.level(1)
+				\.xp(1)
 				\.stat('spd', 3)
 				\.stat('dex', 1)
 				\.modifier(3, 'Sm.', 'Small', -3)
@@ -16,7 +19,10 @@ function! s:monster_rat() abort
 endfunction
 
 function! s:monster_ogre() abort
-	return vimcastle#monstergen#create('Ogre', 'Ogre', 50)
+	return vimcastle#monstergen#create('Ogre', 'Ogre')
+				\.health(50)
+				\.level(2)
+				\.xp(3)
 				\.stat('spd', 1)
 				\.stat('dex', 0)
 				\.weapon(vimcastle#equippablegen#weapon('Club', 'Club', 2, 4))

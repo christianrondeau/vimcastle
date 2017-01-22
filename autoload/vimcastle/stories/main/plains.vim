@@ -38,9 +38,12 @@ function! s:event_encounter() abort
 endfunction
 
 function! s:event_boss() abort
-	let boss = vimcastle#monstergen#create('Sl. Joe', 'Sloppy Joe', 120)
+	let boss = vimcastle#monstergen#create('Sl. Joe', 'Sloppy Joe')
+				\.health(120)
+				\.level(3)
+				\.xp(12)
 				\.stat('spd', 0)
-				\.weapon(vimcastle#equippablegen#weapon('Hammer', 'Hammer', 0, 12))
+				\.weapon(vimcastle#equippablegen#weapon('Hammer', 'Hammer', 0, 9))
 	return vimcastle#event#create('encounter')
 				\.text(['Oh no! It''s %<enemy.name>'])
 				\.fight('Fight!', vimcastle#repository#single(boss))

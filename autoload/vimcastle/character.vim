@@ -11,7 +11,7 @@ function! vimcastle#character#create(name, health) abort
 				\ }
 	let character.stats = {}
 	let character.equipment = {}
-	let character.level = 1
+	let character.level = 0
 	let character.xp = 0
 	return character
 endfunction

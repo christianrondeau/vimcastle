@@ -1,11 +1,28 @@
 let s:MonstergenClass = {}
 
-function! vimcastle#monstergen#create(basenameshort, basenamelong, basehealth) abort
+function! vimcastle#monstergen#create(basenameshort, basenamelong) abort
 	let monstergen = copy(s:MonstergenClass)
 	let monstergen.basename = { 'short': a:basenameshort, 'long': a:basenamelong }
-	let monstergen.basehealth = a:basehealth
+	let monstergen.basehealth = 1
+	let monstergen.basexp = 1
+	let monstergen.baselevel = 1
 	let monstergen.basestats = {}
 	return monstergen
+endfunction
+
+function! s:MonstergenClass.health(health) dict abort
+	let self.basehealth = a:health
+	return self
+endfunction
+
+function! s:MonstergenClass.xp(xp) dict abort
+	let self.basexp = a:xp
+	return self
+endfunction
+
+function! s:MonstergenClass.level(level) dict abort
+	let self.baselevel = a:level
+	return self
 endfunction
 
 function! s:MonstergenClass.stat(name, value) dict abort
@@ -43,5 +60,7 @@ function! s:MonstergenClass.invoke() dict abort
 	if(exists('self.weapons'))
 		call monster.equipweapon(self.weapons.rnd().invoke())
 	endif
+	let monster.level = self.baselevel
+	let monster.xp = self.basexp
 	return monster
 endfunction
