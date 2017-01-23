@@ -21,7 +21,8 @@
 
 ## Refactors
 
-* [ ] Show base and total stats (e.g. `dmg: 3 [+5]`)
+* [ ] Extract levelling algorithm (win.vim+levelup.vim)
+* [ ] Allow multiple level ups
 * [ ] Provide a color scheme for numbers (damage, stats, etc.)
 * [ ] Avoid duplicating short names
 * [ ] Add tests for extracted utils
@@ -29,6 +30,7 @@
 * [ ] README for non-vim users?
 * [ ] Test each monster against matching player lvl
 * [ ] Contributing guide explaining vader/vint, concepts, terminology etc.
+* [ ] Extract texts in locale files (especially core game)
 
 ## Ideas
 
@@ -40,7 +42,7 @@
 * [ ] Scenes that draw health (e.g. no air, burning floor)
 * [ ] Teleport scroll
 * [ ] Enchant weapon
-* [ ] Steal items (event
+* [ ] Steal items (events, monsters)
 * [ ] Temp. effects (e.g. poison hurts, blind hides logs)
 * [ ] Temp. buffs (e.g. boost strength)
 * [ ] Create your own character

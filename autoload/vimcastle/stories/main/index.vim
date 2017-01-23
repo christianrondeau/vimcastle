@@ -20,4 +20,5 @@ function! s:effect_setup(state) abort
 				\.setstat('dex', vimcastle#utils#rnd(3))
 				\.equipweapon(vimcastle#stories#main#plains#weapons#get().rnd().invoke())
 				\.equiparmor(vimcastle#stories#main#plains#armors#get().rnd().invoke())
+	let a:state.player.xp = 0
 endfunction
