@@ -1,5 +1,6 @@
 function! vimcastle#state#levelup#enter(state) abort
-	let a:state.log = []
+	let a:state.log = ['Your health was replenished! Select a skill to increase.']
+
 	call a:state.actions().clear()
 
 	let msg = 'Increase health ' . a:state.player.health.max . ' -> ' . (a:state.player.health.max + 10)

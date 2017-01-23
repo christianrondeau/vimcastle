@@ -3,7 +3,7 @@ Execute (test setup):
   let state = vimcastle#state#create()
   let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
   let state.player.level = 6
-  let state.log = ['This should not be shown!']
+  let state.log = ['Woot!']
   call state.actions().addNoop('1',  'Increase str 5 -> 6')
   call state.actions().addNoop('2',  'Increase dex 2 -> 3')
 
@@ -16,6 +16,8 @@ Expect (levelup screen):
         You gained a level!     
   
            Level 6 -> 7         
+
+  Woot!
   
   1) Increase str 5 -> 6
   2) Increase dex 2 -> 3
