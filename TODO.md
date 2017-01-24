@@ -21,8 +21,9 @@
 
 ## Refactors
 
-* [ ] Extract levelling algorithm (win.vim+levelup.vim)
+* [ ] Make health a stat and current health a property (so that it can be boosted)
 * [ ] Allow multiple level ups
+* Prepend `l:`
 * [ ] Provide a color scheme for numbers (damage, stats, etc.)
 * [ ] Avoid duplicating short names
 * [ ] Add tests for extracted utils

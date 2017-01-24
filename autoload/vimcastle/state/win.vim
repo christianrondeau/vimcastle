@@ -1,17 +1,18 @@
 function! vimcastle#state#win#enter(state) abort
 	let a:state.log = []
-	let nextlevelxp = (a:state.player.level + 1) * 10
+	
+	let [ignored, nextlevelxp] = vimcastle#levelling#forxp(a:state.player.xp)
 
-	if(exists('a:state.enemy'))
-		let xp = a:state.enemy.xp
-		let a:state.player.xp += xp
-		unlet a:state.enemy
+	let xp = a:state.enemy.xp
+	let a:state.player.xp += xp
+	unlet a:state.enemy
 
-		call a:state.addlog('You gained:')
-		call a:state.addlog('  * ' . xp . ' xp! (' . a:state.player.xp . '/' . nextlevelxp . ' xp)')
-	endif
+	let [expectedlevel, ignored] = vimcastle#levelling#forxp(a:state.player.xp)
 
-	if(a:state.player.xp >= nextlevelxp)
+	call a:state.addlog('You gained:')
+	call a:state.addlog('  * ' . xp . ' xp! (' . a:state.player.xp . '/' . nextlevelxp . ' xp)')
+
+	if(a:state.player.level < expectedlevel)
 		call a:state.nav.add('u', 'Level up!', function('s:nav_levelup'))
 	else
 		call a:state.nav.add('c', 'Continue', function('s:nav_continue'))

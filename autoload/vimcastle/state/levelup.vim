@@ -43,7 +43,13 @@ endfunction
 function! s:action_continue(state) abort
 	let a:state.player.health.current = a:state.player.health.max
 	let a:state.player.level += 1
-	call a:state.enter('explore')
-	call a:state.nextaction(a:state)
-	unlet a:state.nextaction
+
+	let [expectedlevel, ignored] = vimcastle#levelling#forxp(a:state.player.xp)
+	if(a:state.player.level < expectedlevel)
+		return 1
+	else
+		call a:state.enter('explore')
+		call a:state.nextaction(a:state)
+		unlet a:state.nextaction
+	endif
 endfunction

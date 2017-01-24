@@ -1,0 +1,8 @@
+Execute (next level +10/level):
+  AssertEqual [1, 10], vimcastle#levelling#forxp(0)
+  AssertEqual [1, 10], vimcastle#levelling#forxp(9)
+  AssertEqual [2, 20], vimcastle#levelling#forxp(10)
+  AssertEqual [2, 20], vimcastle#levelling#forxp(19)
+  AssertEqual [3, 40], vimcastle#levelling#forxp(20)
+  AssertEqual [3, 40], vimcastle#levelling#forxp(39)
+  AssertEqual [4, 70], vimcastle#levelling#forxp(40)
