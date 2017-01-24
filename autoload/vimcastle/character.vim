@@ -5,14 +5,12 @@ function! vimcastle#character#create(name, health) abort
 	call vimcastle#utils#validate(a:name.long, 1)
 	let character = copy(s:CharacterClass)
 	let character.name = a:name
-	let character.health = {
-				\ 'current': a:health,
-				\ 'max': a:health
-				\ }
-	let character.stats = {}
+	let character.health = a:health
 	let character.equipment = {}
 	let character.level = 0
 	let character.xp = 0
+	let character.stats = {}
+	call character.setstat('health', a:health)
 	return character
 endfunction
 

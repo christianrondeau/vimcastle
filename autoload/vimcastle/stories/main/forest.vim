@@ -25,7 +25,7 @@ endfunction
 
 function! s:monster_wolf() abort
 	return vimcastle#monstergen#create('Wolf', 'Wolf')
-				\.health(20)
+				\.health(30)
 				\.level(5)
 				\.xp(24)
 				\.weapon(vimcastle#equippablegen#weapon('Paw', 'Paw', 5, 10))
@@ -33,8 +33,8 @@ endfunction
 
 function! s:monster_foresttroll() abort
 	return vimcastle#monstergen#create('F. Troll', 'Forest Troll')
-				\.health(50)
+				\.health(100)
 				\.level(8)
 				\.xp(80)
-				\.weapon(vimcastle#equippablegen#weapon('Fists', 'Fists', 20, 50))
+				\.weapon(vimcastle#equippablegen#weapon('Fists', 'Fists', 10, 20))
 endfunction

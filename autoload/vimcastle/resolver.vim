@@ -21,9 +21,9 @@ function! vimcastle#resolver#hit(attacker, defender) abort
 	endif
 
 	" Maximum Damage
-	let a:defender.health.current -= dmg
-	if(a:defender.health.current < 0)
-		let a:defender.health.current = 0
+	let a:defender.health -= dmg
+	if(a:defender.health < 0)
+		let a:defender.health = 0
 	endif
 
 	" Critical

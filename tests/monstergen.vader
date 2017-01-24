@@ -7,7 +7,7 @@ Execute (invoke monster):
 Then (monster is created):
   AssertEqual 'Mon.', instance.name.short
   AssertEqual 'Monster', instance.name.long
-  AssertEqual 100, instance.health.max
+  AssertEqual 100, instance.health
   AssertEqual 3, instance.level
   AssertEqual 14, instance.xp
 
@@ -20,4 +20,4 @@ Execute (invoke modified monster):
 Then (modified monster is created):
   AssertEqual 'B. Mon.', instance.name.short
   AssertEqual 'Big Monster', instance.name.long
-  AssertEqual 120, instance.health.max
+  AssertEqual 120, instance.health

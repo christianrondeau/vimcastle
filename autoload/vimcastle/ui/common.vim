@@ -36,7 +36,7 @@ endfunction
 
 function! vimcastle#ui#common#getbar(barwidth, val, max, char) abort
 	if(a:val > 0 && a:max > 0)
-		let filled = a:val * a:barwidth / a:max
+		let filled = (a:val > a:max ? a:max : a:val) * a:barwidth / a:max
 	else
 		let filled = 0
 	endif

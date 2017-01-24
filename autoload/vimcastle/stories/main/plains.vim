@@ -28,7 +28,10 @@ function! s:event_heal() abort
 endfunction
 
 function! s:effect_heal(state) abort
-	let a:state.player.health.current = a:state.player.health.max
+	let maxhealth = a:state.player.getstat('health', 1)
+	if(a:state.player.health < maxhealth)
+		let a:state.player.health = maxhealth
+	endif
 endfunction
 
 function! s:event_encounter() abort

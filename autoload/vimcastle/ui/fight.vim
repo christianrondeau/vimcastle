@@ -3,7 +3,7 @@ function! vimcastle#ui#fight#draw(screen, state) abort
 	call append(line('$'), '')
 
 	call s:drawsides(a:screen, a:state.player.name.short,a:state.enemy.name.short)
-	call s:drawbars(a:screen, a:state.player.health, a:state.enemy.health, '-')
+	call s:drawbars(a:screen, a:state.player.health, a:state.player.getstat('health', 1), a:state.enemy.health, a:state.enemy.getstat('health', 1), '-')
 	call append(line('$'), '')
 
 	if(len(a:state.log))
@@ -19,13 +19,13 @@ function! s:drawsides(screen, left, right) abort
 	call append(line('$'), ' ' . a:left . repeat(' ', pad) . a:right)
 endfunction
 
-function! s:drawbars(screen, lefthealth, righthealth, char) abort
+function! s:drawbars(screen, lval, lmax, rval, rmax, char) abort
 	let barwidth = a:screen.width / 2 - 8
 	call s:drawsides(
 		\ a:screen,
-		\ vimcastle#ui#common#getbar(barwidth, a:lefthealth.current, a:lefthealth.max, a:char) .
-		\ ' ' . a:lefthealth.current,
-		\ a:righthealth.current . ' ' . 
-		\ vimcastle#ui#common#getbar(barwidth, a:righthealth.current, a:righthealth.max, a:char)
+		\ vimcastle#ui#common#getbar(barwidth, a:lval, a:lmax, a:char) .
+		\ ' ' . a:lval,
+		\ a:rval . ' ' . 
+		\ vimcastle#ui#common#getbar(barwidth, a:rval, a:rmax, a:char)
 		\ )
 endfunction

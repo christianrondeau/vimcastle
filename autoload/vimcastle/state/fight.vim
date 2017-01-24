@@ -29,8 +29,7 @@ function! s:action_look(state) abort
 
 	call a:state.addlog('You look at %<enemy.name>')
 
-	let health = a:state.enemy.health
-	call a:state.addlog('* Health: ' . health.current . '/' . health.max)
+	call a:state.addlog('* Health: ' . a:state.enemy.health . '/' . a:state.enemy.getstat('health', 1))
 
 	let weapon = a:state.enemy.equipment.weapon
 	call a:state.addlog('* Weapon: %<enemy.weapon> (' . weapon.dmg.min . '-' . weapon.dmg.max . ' dmg)')
@@ -48,7 +47,7 @@ function! s:hit_send(state) abort
 		call a:state.addlog(['You miss!', 'You attack has no effect!'])
 	endif
 
-	if(a:state.enemy.health.current <= 0)
+	if(a:state.enemy.health <= 0)
 		call a:state.addlog('%<enemy.name> has been defeated!')
 		call a:state.actions().clear()
 		call a:state.actions().add('c', 'Continue', function('s:action_win'))
@@ -65,7 +64,7 @@ function! s:hit_receive(state) abort
 		call a:state.addlog(['%<enemy.name> misses you!', '%<enemy.name> attack has no effect!'])
 	endif
 
-	if(a:state.player.health.current <= 0)
+	if(a:state.player.health <= 0)
 		call add(a:state.log, 'You are dead.')
 		call a:state.actions().clear()
 		call a:state.actions().add('c', 'Continue', function('s:action_gameover'))

@@ -3,8 +3,8 @@ function! vimcastle#ui#character#draw(screen, state) abort
 	call append(line('$'), '')
 
 	call append(line('$'), '* Name: ' . a:state.player.name.long)
-	call append(line('$'), '* Health: ' . a:state.player.health.current . '/' . a:state.player.health.max)
 	call append(line('$'), '* Stats:')
+	call s:showstat(a:state.player, 'health', 'Total damage you can receive before dying')
 	call s:showstat(a:state.player, 'str', 'Increases base attack damage')
 	call s:showstat(a:state.player, 'spd', 'Determines the first to attack in a fight')
 	call s:showstat(a:state.player, 'dex', 'Determines critical damage chances')

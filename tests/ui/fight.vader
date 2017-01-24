@@ -7,7 +7,7 @@ Execute (test setup):
   let state.enemy = vimcastle#character#create({'long': 'Enemy', 'short': 'Enem.'}, 810)
   call state.actions().addNoop('a',  'Attack with <f. staff>')
   let state.log = []
-  let state.enemy.health.current = 476
+  let state.enemy.health = 476
 
 Execute (draw screen):
   call vimcastle#ui#fight#draw(screen, state)
@@ -21,7 +21,7 @@ Expect (fight screen):
   a) Attack with <f. staff>
 
 Execute (add log):
-  let state.enemy.health.current = 12
+  let state.enemy.health = 12
   let state.log = ['You poke the enemy!', 'The enemy laughs.']
   call vimcastle#ui#fight#draw(screen, state)
 

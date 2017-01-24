@@ -3,7 +3,7 @@ function! vimcastle#ui#explore#draw(screen, state) abort
 	call append(line('$'), '')
 
 	if(exists('a:state.player.health'))
-		call s:drawbar(a:screen, a:state.player.health)
+		call s:drawbar(a:screen, a:state.player.health, a:state.player.getstat('health', 1))
 		call append(line('$'), '')
 	endif
 
@@ -20,11 +20,11 @@ function! s:drawright(screen, right) abort
 	call append(line('$'), repeat(' ', pad) . a:right)
 endfunction
 
-function! s:drawbar(screen, health) abort
+function! s:drawbar(screen, health, maxhealth) abort
 	let barwidth = a:screen.width / 2 - 8
 	call s:drawright(
 		\ a:screen,
-		\ a:health.current . ' ' . 
-		\ vimcastle#ui#common#getbar(barwidth, a:health.current, a:health.max, '-')
+		\ a:health . ' ' . 
+		\ vimcastle#ui#common#getbar(barwidth, a:health, a:maxhealth, '-')
 		\ )
 endfunction
