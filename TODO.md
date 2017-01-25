@@ -3,7 +3,7 @@
 ## Game
 
 * [ ] Potions (heal)
-* [ ] The Void (scene with nothing)
+* [ ] usable items (hurt enemy)
 * [ ] Pickup stuff (show equip. diff)
 * [ ] con (health), wil (interrupt), spi (magic str)
 * [ ] Create character (name, assign stats)
@@ -21,10 +21,11 @@
 
 ## Refactors
 
+* [ ] Run vint in travis
 * [ ] Prepend `l:`
 * [ ] Provide a color scheme for numbers (damage, stats, etc.)
 * [ ] Avoid duplicating short names
-* [ ] Add tests for extracted utils
+* [-] Add tests for extracted utils
 * [ ] Review colors
 * [ ] README for non-vim users?
 * [ ] Test each monster against matching player lvl
@@ -33,6 +34,7 @@
 
 ## Ideas
 
+* [ ] Custom text per weapon (slash, crush, aim and fire...)
 * [ ] Special monsters / weapons / scenes with ASCII art (and animations?)
 * [ ] Scene can depend on you being (str)ong enough, etc.
 * [ ] "Animation" when selecting an action (transitions), e.g. highlight the option, shake, flash, etc.
@@ -49,4 +51,6 @@
 * [ ] Map of discovered areas and links
 * [ ] Fast travel to previously discovered areas
 * [ ] Weapon 'of Light', 'of the King' etc w/ special bonuses like heal, dbl attack, etc
+* [ ] Add strategic elements and make the game enjoyable
+* [ ] The Void (scene with nothing)
 

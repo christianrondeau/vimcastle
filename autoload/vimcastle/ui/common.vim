@@ -55,8 +55,8 @@ endfunction
 
 function! vimcastle#ui#common#drawbindings(bindings) abort
 	let i = 0
-	while(i < len(a:bindings.items))
-		let binding = a:bindings.items[i]
+	while(i < len(a:bindings.display))
+		let binding = a:bindings.display[i]
 		call append(line('$'), binding.key . ') ' . binding.label)
 		let i += 1
 	endwhile

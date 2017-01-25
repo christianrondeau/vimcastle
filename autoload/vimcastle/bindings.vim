@@ -15,36 +15,26 @@ function! s:BindingsClass.add(key, label, fn) dict abort
 	call vimcastle#utils#validate(a:label, 1)
 	call vimcastle#utils#validate(a:fn, 2)
 
-	call add(self.items, {
+	let self.mappings[a:key] = a:fn
+	call add(self.display, {
 		\  'key': a:key,
-		\  'label': a:label,
-		\  'fn': a:fn,
+		\  'label': a:label
 		\})
 endfunction
 
 function! s:BindingsClass.addDefault(label, fn) dict abort
-	call self.add('any', a:label, a:fn)
+	let self.mappings['any'] = a:fn
 endfunction
 
 function! s:BindingsClass.clear() dict abort
-	let self.items = []
-endfunction
-
-function! s:BindingsClass.getByKey(key) dict abort
-	let i = 0
-	while i < len(self.items)
-		let item = self.items[i]
-		if(item.key ==# a:key)
-			return item
-		endif
-		let i += 1
-	endwhile
+	let self.display = []
+	let self.mappings = {}
 endfunction
 
 function! s:BindingsClass.invokeByKey(key, state) dict abort
-	let item = self.getByKey(a:key)
-	if(type(item) == 4) " is dict
-		call item.fn(a:state)
+	if(has_key(self.mappings, a:key))
+		let l:Fn = self.mappings[a:key]
+		call l:Fn(a:state)
 		return 1
 	endif
 endfunction
