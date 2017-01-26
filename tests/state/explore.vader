@@ -1,0 +1,18 @@
+Execute (setup):
+  let state = vimcastle#state#create()
+  call vimcastle#state#explore#enter(state)
+
+Then (has nav):
+  AssertEqual [{'label': 'Inventory', 'key': 'i'}, {'label': 'Character Sheet', 'key': 's'}], state.nav.display
+
+Execute (access inventory):
+  call state.nav.invokeByKey('i', state)
+  AssertEqual 'inventory', state.screen
+
+Execute (setup):
+  let state = vimcastle#state#create()
+  call vimcastle#state#explore#enter(state)
+
+Execute (access character sheet):
+  call state.nav.invokeByKey('s', state)
+  AssertEqual 'character', state.screen
