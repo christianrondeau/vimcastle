@@ -1,0 +1,14 @@
+Execute (setup):
+  let state = vimcastle#state#create()
+  let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+    \.equipweapon(vimcastle#equippablegen#weapon('Weap.', 'Weapon', 4, 4).invoke())
+  let state.player = player
+  let enemy = vimcastle#monstergen#create('Mon.', 'Monster')
+    \.health(200)
+    \.invoke()
+    \.equipweapon(vimcastle#equippablegen#weapon('Tent.', 'Tentacle', 3, 3).invoke())
+  let state.enemy = enemy
+  call vimcastle#state#fight#enter(state)
+
+Then (has actions):
+  AssertEqual [{'label': 'Attack with <Weap.>', 'key': 'a'}, {'label': 'Look at <Mon.>', 'key': 'l'}], state.actions().display

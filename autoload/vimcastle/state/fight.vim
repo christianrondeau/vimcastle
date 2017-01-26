@@ -1,7 +1,7 @@
 function! vimcastle#state#fight#enter(state) abort
 	call a:state.actions().clear()
 	call a:state.actions().add('a', 'Attack with <' . a:state.player.equipment.weapon.name.short . '>', function('s:action_hit'))
-	call a:state.actions().add('l', 'Look at <' . a:state.enemy.name.long . '>', function('s:action_look'))
+	call a:state.actions().add('l', 'Look at <' . a:state.enemy.name.short . '>', function('s:action_look'))
 
 	let a:state.log = []
 	if(a:state.player.getstat('spd', 1) >= a:state.enemy.getstat('spd', 1))
