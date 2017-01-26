@@ -1,0 +1,12 @@
+Execute (setup):
+  let state = vimcastle#state#create()
+  call vimcastle#state#menu#enter(state)
+
+Then (has actions):
+  AssertEqual [{'label': 'New Game', 'key': 'n'}, {'label': 'Help', 'key': 'h'}, {'label': 'Quit', 'key': 'q'}], state.nav.display
+
+Execute (new game):
+  call state.nav.invokeByKey('n', state)
+
+Then (enters main story):
+  AssertEqual 'main', state.scene.story
