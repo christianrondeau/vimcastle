@@ -20,10 +20,11 @@ Execute (play story):
       else
         let actions = state.nav
       endif
+      " 7/10 times, choose the 1st option
       if(vimcastle#utils#rnd(10) < 7)
-        let key = actions.items[0].key
+        let key = actions.display[0].key
       else
-        let key = vimcastle#utils#oneof(actions.items).key
+        let key = vimcastle#utils#oneof(actions.display).key
       endif
       call actions.invokeByKey(key, state)
     endwhile
