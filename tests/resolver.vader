@@ -58,3 +58,5 @@ Execute (dex increases crit chances):
 Then:
   AssertEqual 10, dmg
 
+After (clean random):
+  call vimcastle#utils#resetrnd()

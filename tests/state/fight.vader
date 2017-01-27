@@ -1,14 +1,74 @@
 Execute (setup):
   let state = vimcastle#state#create()
+  let playerweapon = vimcastle#equippablegen#weapon('Weap.', 'Weapon', 4, 4)
   let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
-    \.equipweapon(vimcastle#equippablegen#weapon('Weap.', 'Weapon', 4, 4).invoke())
+    \.setstat('spd', 5)
+    \.equipweapon(playerweapon.invoke())
   let state.player = player
+  let enemyweapon = vimcastle#equippablegen#weapon('Tent.', 'Tentacle', 3, 3)
   let enemy = vimcastle#monstergen#create('Mon.', 'Monster')
     \.health(200)
+    \.stat('spd', 2)
     \.invoke()
-    \.equipweapon(vimcastle#equippablegen#weapon('Tent.', 'Tentacle', 3, 3).invoke())
+    \.equipweapon(enemyweapon.invoke())
   let state.enemy = enemy
-  call vimcastle#state#fight#enter(state)
 
-Then (has actions):
+Execute (enter):
+  call state.enter('fight')
+
+Then (state is):
+  Log state.log
   AssertEqual [{'label': 'Attack with <Weap.>', 'key': 'a'}, {'label': 'Look at <Mon.>', 'key': 'l'}], state.actions().display
+
+Execute (look):
+  call vimcastle#utils#setnextrnd([0])
+  call state.actions().invokeByKey('l', state)
+
+Then (enemy counterattacks):
+  Log state.log
+  AssertEqual 97, player.health
+  AssertEqual 200, enemy.health
+
+Execute (attack):
+  call vimcastle#utils#setnextrnd([0, 0, 0])
+  call state.actions().invokeByKey('a', state)
+
+Then (both exchange a hit):
+  Log state.log
+  AssertEqual 94, player.health
+  AssertEqual 196, enemy.health
+
+Execute (given enemy kills player):
+  let player.health = 1
+  let enemy.health = 100
+  call state.enter('fight')
+  call state.actions().invokeByKey('a', state)
+
+Then (you are dead):
+  Log state.log
+  AssertEqual [{'label': 'Continue', 'key': 'c'}], state.actions().display
+
+Execute (continue to gameover):
+  call state.actions().invokeByKey('c', state)
+
+Then (screen is gameover):
+  AssertEqual 'gameover', state.screen
+
+Execute (given player kills enemy):
+  let player.health = 100
+  let enemy.health = 0
+  call state.enter('fight')
+  call state.actions().invokeByKey('a', state)
+
+Then (you win):
+  Log state.log
+  AssertEqual [{'label': 'Continue', 'key': 'c'}], state.actions().display
+
+Execute (continue to win):
+  call state.actions().invokeByKey('c', state)
+
+Then (screen is win):
+  AssertEqual 'win', state.screen
+
+After (clean random):
+  call vimcastle#utils#resetrnd()

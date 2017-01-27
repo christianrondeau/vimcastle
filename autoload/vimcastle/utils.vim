@@ -4,7 +4,14 @@ function! vimcastle#utils#setnextrnd(n) abort
 	if(!exists('s:nextrnd'))
 		let s:nextrnd = []
 	endif
-	call add(s:nextrnd, a:n)
+	let t = type(a:n)
+	if(t == 3)
+		let s:nextrnd += a:n
+	elseif(t == 0)
+		call add(s:nextrnd, a:n)
+	else
+		throw 'Invalid rnd: ' . t
+	endif
 endfunction
 
 function! vimcastle#utils#resetrnd() abort

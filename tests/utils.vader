@@ -1,14 +1,18 @@
 Execute (fakernd setup):
   call vimcastle#utils#resetrnd()
   call vimcastle#utils#setnextrnd(101)
-  call vimcastle#utils#setnextrnd(102)
-  call vimcastle#utils#setnextrnd(103)
+  call vimcastle#utils#setnextrnd([102, 103])
+  call vimcastle#utils#setnextrnd(104)
 
 Then (fake rnds):
   AssertEqual 101, vimcastle#utils#rnd(10)
   AssertEqual 102, vimcastle#utils#rnd(10)
   AssertEqual 103, vimcastle#utils#rnd(10)
+  AssertEqual 104, vimcastle#utils#rnd(10)
   Assert vimcastle#utils#rnd(10) < 10
 
 Execute (minimum rnd):
   Assert vimcastle#utils#rnd(1) == 0
+
+After (clean random):
+  call vimcastle#utils#resetrnd()
