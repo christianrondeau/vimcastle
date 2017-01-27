@@ -1,6 +1,6 @@
 Execute (setup):
   let state = vimcastle#state#create()
-  call vimcastle#state#menu#enter(state)
+  call state.enter('menu')
 
 Then (has nav):
   AssertEqual [{'label': 'New Game', 'key': 'n'}, {'label': 'Help', 'key': 'h'}, {'label': 'Quit', 'key': 'q'}], state.nav.display

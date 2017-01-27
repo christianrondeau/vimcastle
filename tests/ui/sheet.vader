@@ -10,11 +10,11 @@ Execute (test setup):
   call state.nav.addNoop('b',  'Back')
 
 Execute (draw):
-  call vimcastle#ui#character#draw(screen, state)
+  call vimcastle#ui#sheet#draw(screen, state)
 
 Expect (character screen):
-  ---------- Character ---------
-  
+  ------- Character Sheet ------
+
   * Name: Player
   * Stats:
     * health: 100

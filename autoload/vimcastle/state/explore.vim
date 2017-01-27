@@ -9,6 +9,6 @@ function! s:nav_inventory(state) abort
 endfunction
 
 function! s:nav_character(state) abort
-	call a:state.enter('character')
+	call a:state.enter('sheet')
 	return 1
 endfunction
