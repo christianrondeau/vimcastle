@@ -1,0 +1,46 @@
+Execute (under level setup):
+  let state = vimcastle#state#create()
+  let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  let player.level = 1
+  let player.xp = 5
+  let state.player = player
+  let enemy = vimcastle#monstergen#create('Mon.', 'Monster')
+  let enemy.xp = 4
+  let state.enemy = enemy
+  call state.enter('win')
+
+Then (has nav, log and xp):
+  AssertEqual ['You gained:', '  * 4 xp! (9/10 xp)'], state.log
+  AssertEqual [{'label': 'Continue', 'key': 'c'}], state.nav.display
+  AssertEqual 9, player.xp
+  AssertEqual 1, player.level
+  Assert !has_key(state, 'enemy')
+
+Execute (continue):
+  function! Vimcastle_test_continue(state)
+    let a:state.called = 1
+  endfunction
+  let state.nextaction = function('Vimcastle_test_continue')
+  call state.nav.invokeByKey('c', state)
+
+Then (next action is invoked):
+  AssertEqual 1, state.called
+  AssertEqual 'explore', state.screen
+
+Execute (over level setup):
+  let enemy = vimcastle#monstergen#create('Mon.', 'Monster')
+  let enemy.xp = 4
+  let state.enemy = enemy
+  call state.enter('win')
+
+Then (has nav, log and xp):
+  AssertEqual ['You gained:', '  * 4 xp! (13/10 xp)'], state.log
+  AssertEqual [{'label': 'Level up!', 'key': 'u'}], state.nav.display
+  AssertEqual 13, player.xp
+  AssertEqual 1, player.level, 'Player levels up in levelup screen'
+
+Execute (continue):
+  call state.nav.invokeByKey('u', state)
+
+Then (level up screen):
+  AssertEqual 'levelup', state.screen
