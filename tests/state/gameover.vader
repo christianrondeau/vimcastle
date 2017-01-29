@@ -1,0 +1,10 @@
+Execute (setup):
+  let state = vimcastle#state#create()
+  call state.enter('gameover')
+
+Execute (restart):
+  call state.nav.invokeDefault(state)
+
+Then (restarts game):
+  AssertEqual 'intro', state.screen
+  Assert !exists('state.player')
