@@ -47,7 +47,7 @@ function! s:action_continue(state) abort
 
 	let [expectedlevel, ignored] = vimcastle#levelling#forxp(a:state.player.xp)
 	if(a:state.player.level < expectedlevel)
-		return 1
+		call a:state.enter('levelup')
 	else
 		call a:state.enter('explore')
 		call a:state.nextaction(a:state)

@@ -1,0 +1,51 @@
+Execute (setup):
+  let state = vimcastle#state#create()
+  let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 50)
+    \.setstat('str', 3)
+    \.setstat('spd', 4)
+    \.setstat('dex', 5)
+  let player.level = 1
+  let player.xp = 22
+  let state.player = player
+  call state.enter('levelup')
+
+Then (has actions):
+  AssertEqual ['Your health was replenished! Select a skill to increase.'], state.log
+  AssertEqual [
+    \ {'label': 'Increase health 50 -> 60', 'key': '1'},
+    \ {'label': 'Increase str 3 -> 4', 'key': '2'},
+    \ {'label': 'Increase spd 4 -> 5', 'key': '3'},
+    \ {'label': 'Increase dex 5 -> 6', 'key': '4'}
+    \], state.actions().display
+
+Execute (increase health):
+  call state.actions().invokeByKey('1', state)
+
+Then (health increases, another level):
+  let player.level = 2
+  let player.xp = 22
+  AssertEqual 60, player.getstat('health', 0)
+  AssertEqual 60, player.health
+  AssertEqual ['Your health was replenished! Select a skill to increase.'], state.log
+  AssertEqual [
+    \ {'label': 'Increase health 60 -> 70', 'key': '1'},
+    \ {'label': 'Increase str 3 -> 4', 'key': '2'},
+    \ {'label': 'Increase spd 4 -> 5', 'key': '3'},
+    \ {'label': 'Increase dex 5 -> 6', 'key': '4'}
+    \], state.actions().display
+
+Execute (prepare next action):
+  function! Vimcastle_test_continue(state)
+    let a:state.called = 1
+  endfunction
+  let state.nextaction = function('Vimcastle_test_continue')
+
+Execute (increase dex):
+  call state.actions().invokeByKey('4', state)
+
+Then (dex increases, return to explore):
+  let player.level = 3
+  let player.xp = 22
+  AssertEqual 6, player.getstat('dex', 0)
+  AssertEqual 1, state.called
+  AssertEqual 'explore', state.screen
