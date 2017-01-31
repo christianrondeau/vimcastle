@@ -1,4 +1,5 @@
 function! vimcastle#state#win#enter(state) abort
+	call a:state.actions().clear()
 	let a:state.log = []
 	
 	let [ignored, nextlevelxp] = vimcastle#levelling#forxp(a:state.player.xp)
@@ -13,20 +14,20 @@ function! vimcastle#state#win#enter(state) abort
 	call a:state.addlog('  * ' . xp . ' xp! (' . a:state.player.xp . '/' . nextlevelxp . ' xp)')
 
 	if(a:state.player.level < expectedlevel)
-		call a:state.nav.add('u', 'Level up!', function('s:nav_levelup'))
+		call a:state.actions().add('u', 'Level up!', function('s:action_levelup'))
 	else
-		call a:state.nav.add('c', 'Continue', function('s:nav_continue'))
+		call a:state.actions().add('c', 'Continue', function('s:action_continue'))
 	endif
 endfunction
 
-function! s:nav_continue(state) abort
+function! s:action_continue(state) abort
 	call a:state.enter('explore')
 	call a:state.nextaction(a:state)
 	unlet a:state.nextaction
 	return 1
 endfunction
 
-function! s:nav_levelup(state) abort
+function! s:action_levelup(state) abort
 	call a:state.enter('levelup')
 	return 1
 endfunction

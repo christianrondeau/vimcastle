@@ -7,7 +7,7 @@ Execute (test setup):
   call state.player.setstat('spd', 2)
   call state.player.equipweapon(vimcastle#equippablegen#weapon('', '', 4, 7).stat('str', 2).invoke())
   let state.log = ['This should not be shown!']
-  call state.nav.addNoop('b',  'Back')
+  call state.actions().addNoop('b',  'Back')
 
 Execute (draw):
   call vimcastle#ui#sheet#draw(screen, state)

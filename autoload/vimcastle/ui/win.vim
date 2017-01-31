@@ -3,5 +3,6 @@ function! vimcastle#ui#win#draw(screen, state) abort
 	call append(line('$'), '')
 	call vimcastle#ui#common#drawlog(a:state.log)
 	call append(line('$'), '')
-	call vimcastle#ui#common#drawbindings(a:state.nav)
+	call vimcastle#ui#common#drawbindings(a:state.actions())
 endfunction
+

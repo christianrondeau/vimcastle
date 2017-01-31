@@ -10,7 +10,7 @@ function! vimcastle#ui#sheet#draw(screen, state) abort
 	call s:showstat(a:state.player, 'dex', 'Determines critical damage chances')
 	call append(line('$'), '')
 
-	call vimcastle#ui#common#drawbindings(a:state.nav)
+	call vimcastle#ui#common#drawbindings(a:state.actions())
 endfunction
 
 function! s:showstat(player, stat, label) abort

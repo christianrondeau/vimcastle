@@ -25,7 +25,6 @@
 * [ ] Prepend `l:`
 * [ ] Provide a color scheme for numbers (damage, stats, etc.)
 * [ ] Avoid duplicating short names
-* [-] Add tests for extracted utils
 * [ ] Review colors
 * [ ] README for non-vim users?
 * [ ] Test each monster against matching player lvl

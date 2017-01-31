@@ -5,7 +5,7 @@ Execute (test setup):
   call state.player.equipweapon(vimcastle#equippablegen#weapon('.', 'Swooord', 5, 127).stat('def', 3).invoke())
   call state.player.equiparmor(vimcastle#equippablegen#armor('.', 'Armooor', 4).invoke())
   let state.log = ['This should not be shown!']
-  call state.nav.addNoop('b',  'Back')
+  call state.actions().addNoop('b',  'Back')
 
 Execute (draw):
   call vimcastle#ui#inventory#draw(screen, state)

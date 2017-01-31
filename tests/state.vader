@@ -15,10 +15,10 @@ Then (the action is called):
   Assert result
   AssertEqual 'test log 1', state.log[0]
 
-Execute (default nav):
+Execute (default actions):
   let result = state.action('x')
 
-Then (the default nav is called):
+Then (the default action is called):
   Assert result
   AssertEqual 'test log any', state.log[0]
 
@@ -43,7 +43,7 @@ Then (the state is clean):
   Assert !has_key(state, 'player'), 'player is cleared'
   Assert !has_key(state, 'enemy'), 'enemy is cleared'
   Assert !len(state.log), 'log is empty'
-  Assert !len(state.nav.display), 'actions are empty'
+  Assert !len(state.actions().display), 'actions are empty'
   Assert !len(state.actions().display), 'actions are empty'
 
 

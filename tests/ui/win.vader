@@ -2,7 +2,7 @@ Execute (test setup):
   let screen = { 'width': 30 }
   let state = vimcastle#state#create()
   let state.log = ['Details on what you won...']
-  call state.nav.addNoop('c',  'Continue')
+  call state.actions().addNoop('c',  'Continue')
 
 Execute (draw):
   call vimcastle#ui#win#draw(screen, state)

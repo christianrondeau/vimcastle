@@ -9,9 +9,9 @@ Execute (under level setup):
   let state.enemy = enemy
   call state.enter('win')
 
-Then (has nav, log and xp):
+Then (has actions, log and xp):
   AssertEqual ['You gained:', '  * 4 xp! (9/10 xp)'], state.log
-  AssertEqual [{'label': 'Continue', 'key': 'c'}], state.nav.display
+  AssertEqual [{'label': 'Continue', 'key': 'c'}], state.actions().display
   AssertEqual 9, player.xp
   AssertEqual 1, player.level
   Assert !has_key(state, 'enemy')
@@ -21,7 +21,7 @@ Execute (continue):
     let a:state.called = 1
   endfunction
   let state.nextaction = function('Vimcastle_test_continue')
-  call state.nav.invokeByKey('c', state)
+  call state.actions().invokeByKey('c', state)
 
 Then (next action is invoked):
   AssertEqual 1, state.called
@@ -33,14 +33,14 @@ Execute (over level setup):
   let state.enemy = enemy
   call state.enter('win')
 
-Then (has nav, log and xp):
+Then (has actions, log and xp):
   AssertEqual ['You gained:', '  * 4 xp! (13/10 xp)'], state.log
-  AssertEqual [{'label': 'Level up!', 'key': 'u'}], state.nav.display
+  AssertEqual [{'label': 'Level up!', 'key': 'u'}], state.actions().display
   AssertEqual 13, player.xp
   AssertEqual 1, player.level, 'Player levels up in levelup screen'
 
-Execute (continue):
-  call state.nav.invokeByKey('u', state)
+Execute (level up):
+  call state.actions().invokeByKey('u', state)
 
 Then (level up screen):
   AssertEqual 'levelup', state.screen

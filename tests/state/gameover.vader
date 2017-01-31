@@ -3,7 +3,7 @@ Execute (setup):
   call state.enter('gameover')
 
 Execute (restart):
-  call state.nav.invokeDefault(state)
+  call state.actions().invokeDefault(state)
 
 Then (restarts game):
   AssertEqual 'intro', state.screen

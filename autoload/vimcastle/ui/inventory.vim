@@ -15,7 +15,7 @@ function! vimcastle#ui#inventory#draw(screen, state) abort
 	endif
 	call append(line('$'), '')
 
-	call vimcastle#ui#common#drawbindings(a:state.nav)
+	call vimcastle#ui#common#drawbindings(a:state.actions())
 endfunction
 
 function! s:showitemname(type, item) abort

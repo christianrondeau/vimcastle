@@ -7,7 +7,7 @@ function! vimcastle#state#create() abort
 endfunction
 
 function! s:StateClass.enter(name) dict abort
-	call self.nav.clear()
+	call self.actions().clear()
 	let self.screen = a:name
 	execute 'call vimcastle#state#' . a:name . '#enter(self)'
 endfunction
@@ -22,10 +22,10 @@ endfunction
 function! s:StateClass.action(key) dict abort
 	if(self.actions().invokeByKey(a:key, self))
 		return 1
-	elseif(self.nav.invokeByKey(a:key, self))
+	elseif(self.actions().invokeByKey(a:key, self))
 		return 1
 	else
-		return self.nav.invokeDefault(self)
+		return self.actions().invokeDefault(self)
 	endif
 endfunction
 
@@ -38,7 +38,6 @@ function! s:StateClass.reset() dict abort
 	endif
 	let self.screen = 'undefined'
 	let self.log = []
-	let self.nav = vimcastle#bindings#create()
 	let self.screenactions = {}
 	let self.stats = { 'events': 0, 'fights': 0, 'scenes': 0 }
 endfunction

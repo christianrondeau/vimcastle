@@ -18,7 +18,7 @@ Execute (play story):
       if(len(state.actions().display))
         let actions = state.actions()
       else
-        let actions = state.nav
+        let actions = state.actions()
       endif
       " 7/10 times, choose the 1st option
       if(vimcastle#utils#rnd(10) < 7)

@@ -2,16 +2,17 @@ Execute (setup):
   let state = vimcastle#state#create()
   call state.enter('inventory')
 
-Then (has nav):
-  AssertEqual [{'label': 'Character Sheet', 'key': 's'}, {'label': 'Back', 'key': 'b'}], state.nav.display
+Then (has actions):
+  AssertEqual [{'label': 'Character Sheet', 'key': 's'}, {'label': 'Back', 'key': 'b'}], state.actions().display
 
 Execute (go back):
-  call state.nav.invokeByKey('b', state)
+  call state.actions().invokeByKey('b', state)
   AssertEqual 'explore', state.screen
 
 Execute (setup):
   call state.enter('inventory')
 
 Execute (access character sheet):
-  call state.nav.invokeByKey('s', state)
+  call state.actions().invokeByKey('s', state)
   AssertEqual 'sheet', state.screen
+
