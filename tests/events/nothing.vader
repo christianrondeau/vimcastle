@@ -1,0 +1,27 @@
+Execute (create event):
+  let state = vimcastle#state#create()
+  let event = vimcastle#event#create('test')
+    \.text('text')
+    \.explore('Continue')
+
+Execute (event executes):
+  call event.invoke(state)
+
+Then (result):
+  AssertEqual ['text'], state.log
+  AssertEqual [{'label': 'Continue', 'key': 'c'}, {'label': 'Inventory', 'key': 'i'}, {'label': 'Character Sheet', 'key': 's'}], state.actions().display
+
+Execute (access inventory):
+  call state.enter('explore')
+  call event.invoke(state)
+  let result = state.actions().invokeByKey('i', state)
+  Assert result, 'Action was not called'
+  AssertEqual 'inventory', state.screen
+
+Execute (access character sheet):
+  call state.enter('explore')
+  call event.invoke(state)
+  let result = state.actions().invokeByKey('s', state)
+  Assert result, 'Action was not called'
+  AssertEqual 'sheet', state.screen
+

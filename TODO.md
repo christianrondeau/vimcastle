@@ -21,6 +21,7 @@
 
 ## Refactors
 
+* [ ] Add tests for final stats
 * [ ] Run vint in travis
 * [ ] Prepend `l:`
 * [ ] Provide a color scheme for numbers (damage, stats, etc.)

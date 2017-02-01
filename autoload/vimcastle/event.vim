@@ -66,6 +66,10 @@ function! s:EventClass.invoke(state) dict abort
 	if(exists('self.action_explore_text'))
 		call a:state.actions().add('c', self.action_explore_text, function('s:action_explore'))
 	endif
+	if(!exists('self.action_fight_text'))
+		call a:state.actions().add('i', 'Inventory', function('s:action_inventory'))
+		call a:state.actions().add('s', 'Character Sheet', function('s:action_character'))
+	endif
 endfunction
 
 function! s:action_explore(state) abort
@@ -85,3 +89,10 @@ function! s:action_enterscene(state) abort
 	call a:state.scene.enter.invoke(a:state)
 endfunction
 
+function! s:action_inventory(state) abort
+	call a:state.enter('inventory')
+endfunction
+
+function! s:action_character(state) abort
+	call a:state.enter('sheet')
+endfunction

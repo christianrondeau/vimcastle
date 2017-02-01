@@ -7,7 +7,6 @@ function! vimcastle#state#create() abort
 endfunction
 
 function! s:StateClass.enter(name) dict abort
-	call self.actions().clear()
 	let self.screen = a:name
 	execute 'call vimcastle#state#' . a:name . '#enter(self)'
 endfunction
@@ -21,8 +20,6 @@ endfunction
 
 function! s:StateClass.action(key) dict abort
 	if(self.actions().invokeByKey(a:key, self))
-		return 1
-	elseif(self.actions().invokeByKey(a:key, self))
 		return 1
 	else
 		return self.actions().invokeDefault(self)

@@ -1,0 +1,12 @@
+Execute (create event):
+  let state = vimcastle#state#create()
+  let event = vimcastle#event#create('test')
+    \.text('change scene')
+    \.enterscene('Enter Test Scene', 'testscene')
+
+Execute (event executes):
+  call event.invoke(state)
+
+Then (state is updated):
+  AssertEqual ['change scene'], state.log
+  AssertEqual [{'label': 'Enter Test Scene', 'key': 'e'}, {'label': 'Inventory', 'key': 'i'}, {'label': 'Character Sheet', 'key': 's'}], state.actions().display

@@ -1,6 +1,8 @@
 function! vimcastle#state#fight#enter(state) abort
 	call a:state.actions().clear()
-	call a:state.actions().add('a', 'Attack with <' . a:state.player.equipment.weapon.name.short . '>', function('s:action_hit'))
+	if(exists('a:state.player.equipment.weapon'))
+		call a:state.actions().add('a', 'Attack with <' . a:state.player.equipment.weapon.name.short . '>', function('s:action_hit'))
+	endif
 	call a:state.actions().add('l', 'Look at <' . a:state.enemy.name.short . '>', function('s:action_look'))
 
 	let a:state.log = []

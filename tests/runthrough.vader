@@ -15,17 +15,8 @@ Execute (play story):
     let turns = 0
     while turns < maxturns && state.screen != 'gameover'
       let turns += 1
-      if(len(state.actions().display))
-        let actions = state.actions()
-      else
-        let actions = state.actions()
-      endif
-      " 7/10 times, choose the 1st option
-      if(vimcastle#utils#rnd(10) < 7)
-        let key = actions.display[0].key
-      else
-        let key = vimcastle#utils#oneof(actions.display).key
-      endif
+      let actions = state.actions()
+      let key = actions.display[0].key
       call actions.invokeByKey(key, state)
     endwhile
     let totalturns += turns
