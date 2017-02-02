@@ -23,15 +23,8 @@ endfunction
 function! s:event_heal() abort
 	return vimcastle#event#create('heal')
 				\.text(['You see a pond of fresh water. You drink for it and feel refreshed.', 'You see an abandoned house. You rest in it for a little bit.',  'You see a camp, and decide to rest for a few minutes.'])
-				\.effect(function('s:effect_heal'))
+				\.effect(function('vimcastle#effects#heal'))
 				\.explore('Continue')
-endfunction
-
-function! s:effect_heal(state) abort
-	let maxhealth = a:state.player.getstat('health', 1)
-	if(a:state.player.health < maxhealth)
-		let a:state.player.health = maxhealth
-	endif
 endfunction
 
 function! s:event_encounter() abort
