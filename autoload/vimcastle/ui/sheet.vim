@@ -1,6 +1,5 @@
 function! vimcastle#ui#sheet#draw(screen, state) abort
 	call vimcastle#ui#common#drawtitle(a:screen, 'Character Sheet')
-	call append(line('$'), '')
 
 	call append(line('$'), '* Name: ' . a:state.player.name.long)
 	call append(line('$'), '* Stats:')

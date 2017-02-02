@@ -7,6 +7,7 @@ Execute (centered title):
 
 Expect (centered title):
   ------------ Test ------------
+  
 
 Execute (title too large):
   let screen.width = 10
@@ -14,6 +15,7 @@ Execute (title too large):
 
 Expect (title too large):
   This title
+  
 
 Given (empty):
 

@@ -1,5 +1,6 @@
 function! vimcastle#ui#common#drawtitle(screen, title) abort
-	call setline(1, s:getcentered(a:screen.width, a:title, '-'))
+	call setline(line('$'), s:getcentered(a:screen.width, a:title, '-'))
+		call append(line('$'), '')
 endfunction
 
 function! vimcastle#ui#common#drawcenter(screen, text) abort
@@ -49,6 +50,7 @@ function! vimcastle#ui#common#drawlog(log) abort
 	while(i < len(a:log))
 		let entry = a:log[i]
 		call append(line('$'), entry)
+		call append(line('$'), '')
 		let i += 1
 	endwhile
 endfunction

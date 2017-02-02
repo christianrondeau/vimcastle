@@ -1,6 +1,5 @@
 function! vimcastle#ui#inventory#draw(screen, state) abort
 	call vimcastle#ui#common#drawtitle(a:screen, 'Inventory')
-	call append(line('$'), '')
 
 	if(exists('a:state.player.equipment.weapon'))
 		let weapon = a:state.player.equipment.weapon

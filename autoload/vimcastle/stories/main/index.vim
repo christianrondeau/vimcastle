@@ -8,7 +8,6 @@ function! s:event_enter() abort
 				\.effect(function('s:effect_setup'), 0)
 				\.text(['You are a barber in a small village.', 'You are a bored kid who wants to do something important.', 'You are an old warrior looking for adventure.', 'You are lost and you don''t know who you are.'])
 				\.text('You pack up your stuff, pick up your %<player.weapon> and get ready for adventure!')
-				\.text('')
 				\.text('(You can open the inventory with <i> and the character sheet with <s>)')
 				\.enterscene('Start exploring!', 'plains')
 endfunction
