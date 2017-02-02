@@ -16,3 +16,15 @@ Execute (access character sheet):
   call state.actions().invokeByKey('s', state)
   AssertEqual 'sheet', state.screen
 
+Execute (with items):
+  let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  let state.player.items = [{}]
+  call state.enter('inventory')
+
+Then (has actions):
+  AssertEqual [{'label': 'Use an item', 'key': 'u'}, {'label': 'Character Sheet', 'key': 's'}, {'label': 'Back', 'key': 'b'}], state.actions().display
+
+Execute (access use item):
+  call state.actions().invokeByKey('u', state)
+  AssertEqual 'use', state.screen
+

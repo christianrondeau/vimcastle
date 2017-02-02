@@ -20,3 +20,22 @@ Expect (inventory screen):
     * def: 4
   
   b) Back
+
+Execute (items):
+  let state.player.items = [
+  \  { 'label': 'Potion of BANG' }
+  \]
+  call vimcastle#ui#inventory#draw(screen, state)
+
+Expect (inventory screen with ites):
+  ---------- Inventory ---------
+  
+  * Weapon: <Swooord>
+    * dmg: 5-127
+    * def: 3
+  * Armor: <Armooor>
+    * def: 4
+  * Items
+    * Potion of BANG
+  
+  b) Back

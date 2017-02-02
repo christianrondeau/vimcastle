@@ -7,11 +7,20 @@ function! vimcastle#ui#inventory#draw(screen, state) abort
 		call s:showitemdmg(weapon)
 		call s:showitemstats(weapon)
 	endif
+
 	if(exists('a:state.player.equipment.armor'))
 		let armor = a:state.player.equipment.armor
 		call s:showitemname('Armor', armor)
 		call s:showitemstats(armor)
 	endif
+
+	if(exists('a:state.player.items') && len(a:state.player.items))
+		call append(line('$'), '* Items')
+		for item in a:state.player.items
+			call append(line('$'), '  * ' . item.label)
+		endfor
+	endif
+
 	call append(line('$'), '')
 
 	call vimcastle#ui#common#drawbindings(a:state.actions())
