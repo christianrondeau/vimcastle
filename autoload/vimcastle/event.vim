@@ -29,9 +29,10 @@ function! s:EventClass.enterscene(text, scene) dict abort
 	return self
 endfunction
 
-function! s:EventClass.effect(fn) dict abort
+function! s:EventClass.effect(fn, value) dict abort
 	call vimcastle#utils#validate(a:fn, 2)
 	let self.effect_fn = a:fn
+	let self.effect_value = a:value
 	return self
 endfunction
 
@@ -41,7 +42,7 @@ function! s:EventClass.invoke(state) dict abort
 	endif
 	if(exists('self.effect_fn'))
 		try
-			call self.effect_fn(a:state)
+			call self.effect_fn(a:state, self.effect_value)
 		catch
 			throw 'There was an error in effect of ' . a:state.scene.story . '/' . a:state.scene.name . '/' . self.name . ': ' . v:exception
 		endtry

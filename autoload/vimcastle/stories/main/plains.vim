@@ -23,7 +23,7 @@ endfunction
 function! s:event_heal() abort
 	return vimcastle#event#create('heal')
 				\.text(['You see a pond of fresh water. You drink for it and feel refreshed.', 'You see an abandoned house. You rest in it for a little bit.',  'You see a camp, and decide to rest for a few minutes.'])
-				\.effect(function('vimcastle#effects#heal'))
+				\.effect(function('vimcastle#effects#heal'), 20)
 				\.explore('Continue')
 endfunction
 
