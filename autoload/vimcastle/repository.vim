@@ -28,4 +28,5 @@ function! s:RepositoryClass.rnd() dict abort
 		endif
 		let i += 1
 	endwhile
+	throw 'No items matched the given rnd. Roll: "' . roll . '", Total: ' . self.totalprobabilities
 endfunction

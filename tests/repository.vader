@@ -16,7 +16,7 @@ Then (can randomly get items based on probabilities):
   AssertEqual 'value1', repo.rnd()
   call vimcastle#utils#setnextrnd(3)
   AssertEqual 'value2', repo.rnd()
-  call vimcastle#utils#setnextrnd(9)
+  call vimcastle#utils#setnextrnd(8)
   AssertEqual 'value3', repo.rnd()
 
 After (clean random):

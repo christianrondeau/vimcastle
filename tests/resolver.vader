@@ -56,7 +56,7 @@ Execute (dex increases crit chances):
   let dmg = vimcastle#resolver#hit(attacker, defender)
 
 Then:
-  AssertEqual 10, dmg
+  AssertEqual '10 critical', dmg
 
 After (clean random):
   call vimcastle#utils#resetrnd()
