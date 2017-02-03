@@ -2,7 +2,9 @@
 
 ## Game
 
-* [ ] Potions (heal)
+* [x] Potions (heal)
+* [ ] Show a log when an effect is called
+* [ ] Allow using items in a fight (uses one turn) - note: this will break the "enter" logic on the fight screen
 * [ ] usable items (hurt enemy)
 * [ ] Pickup stuff (show equip. diff)
 * [ ] con (health), wil (interrupt), spi (magic str)

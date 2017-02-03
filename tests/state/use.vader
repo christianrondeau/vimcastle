@@ -1,0 +1,34 @@
+Execute (setup):
+  let state = vimcastle#state#create()
+  call state.enter('use')
+
+Then (has actions):
+  AssertEqual [{'label': 'Back', 'key': 'b'}], state.actions().display
+
+Execute (go back):
+  let result = state.actions().invokeByKey('b', state)
+  Assert result, 'Action was not called'
+  AssertEqual 'inventory', state.screen
+
+Execute (setup with items):
+  let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  let state.player.health = 10
+  let state.player.items = [
+  \  {'label': 'Potion of DOOM', 'effect': function('vimcastle#effects#heal'), 'value': 5}, 
+  \  {'label': 'Scroll of zoom'}
+  \]
+  call state.enter('use')
+
+Then (has actions):
+  AssertEqual [
+  \  {'label': 'Use <Potion of DOOM>', 'key': '1'}, 
+  \  {'label': 'Use <Scroll of zoom>', 'key': '2'}, 
+  \  {'label': 'Back', 'key': 'b'}
+  \], state.actions().display
+
+Execute (use item):
+  let result = state.actions().invokeByKey('1', state)
+  Assert result, 'Action was not called'
+  AssertEqual 'use', state.screen
+  AssertEqual 1, len(state.player.items)
+  AssertEqual 'Scroll of zoom', state.player.items[0].label

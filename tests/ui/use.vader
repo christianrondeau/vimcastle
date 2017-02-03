@@ -1,0 +1,15 @@
+Execute (test setup):
+  let screen = { 'width': 30 }
+  let state = vimcastle#state#create()
+  let state.log = ['This should not be shown!']
+  call state.actions().addNoop('b',  'Back')
+
+Execute (draw):
+  call vimcastle#ui#use#draw(screen, state)
+
+Expect (use screen):
+  ------------- Use ------------
+  
+  Select the item you want to use.
+  
+  b) Back

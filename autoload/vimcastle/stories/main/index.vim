@@ -21,4 +21,7 @@ function! s:effect_setup(state, value) abort
 				\.equiparmor(vimcastle#stories#main#plains#armors#get().rnd().invoke())
 	let a:state.player.level = 1
 	let a:state.player.xp = 0
+	let a:state.player.items = [
+  \  {'label': 'Small health potion', 'effect': function('vimcastle#effects#heal'), 'value': 10}, 
+	\]
 endfunction
