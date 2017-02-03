@@ -12,7 +12,6 @@ Execute (go back):
 
 Execute (setup with items):
   let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
-  let state.player.health = 10
   let state.player.items = [
   \  {'label': 'Potion of DOOM', 'effect': function('vimcastle#effects#heal'), 'value': 5}, 
   \  {'label': 'Scroll of zoom'}
@@ -25,10 +24,20 @@ Then (has actions):
   \  {'label': 'Use <Scroll of zoom>', 'key': '2'}, 
   \  {'label': 'Back', 'key': 'b'}
   \], state.actions().display
+  AssertEqual [], state.log
 
-Execute (use item):
+Execute (use item keeps if unusable):
+  let result = state.actions().invokeByKey('1', state)
+  Assert result, 'Action was not called'
+  AssertEqual 'use', state.screen
+  AssertEqual 2, len(state.player.items)
+  AssertEqual ['Use: <Potion of DOOM>', 'Your health is already full!'], state.log
+
+Execute (use item removes if usable):
+  let state.player.health = 10
   let result = state.actions().invokeByKey('1', state)
   Assert result, 'Action was not called'
   AssertEqual 'use', state.screen
   AssertEqual 1, len(state.player.items)
   AssertEqual 'Scroll of zoom', state.player.items[0].label
+  AssertEqual ['Use: <Potion of DOOM>', 'You gain <5> health'], state.log

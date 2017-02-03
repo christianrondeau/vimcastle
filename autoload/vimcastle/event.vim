@@ -40,6 +40,13 @@ function! s:EventClass.invoke(state) dict abort
 	if(exists('self.monsters'))
 		let a:state.enemy = self.monsters.rnd().invoke()
 	endif
+
+	let a:state.log = []
+	for lineoptions in self.texts
+		let line = vimcastle#utils#oneof(lineoptions)
+		call add(a:state.log, a:state.msg(line))
+	endfor
+
 	if(exists('self.effect_fn'))
 		try
 			call self.effect_fn(a:state, self.effect_value)
@@ -47,12 +54,6 @@ function! s:EventClass.invoke(state) dict abort
 			throw 'There was an error in effect of ' . a:state.scene.story . '/' . a:state.scene.name . '/' . self.name . ': ' . v:exception
 		endtry
 	endif
-
-	let a:state.log = []
-	for lineoptions in self.texts
-		let line = vimcastle#utils#oneof(lineoptions)
-		call add(a:state.log, a:state.msg(line))
-	endfor
 
 	call a:state.actions().clear()
 	if(exists('self.action_fight_text'))

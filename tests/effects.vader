@@ -1,0 +1,28 @@
+Execute (create event):
+  let state = vimcastle#state#create()
+  let state.player = vimcastle#character#create({'short':'', 'long':''}, 100)
+  let state.player.health = 50
+
+Execute (heal - partial):
+  call state.clearlog()
+  let result = vimcastle#effects#heal(state, 20)
+  Assert result, 'Should work'
+  AssertEqual 70, state.player.health
+  AssertEqual ['You gain <20> health'], state.log
+
+Execute (heal - full):
+  call state.clearlog()
+  let result = vimcastle#effects#heal(state, 40)
+  Assert result, 'Should work'
+  AssertEqual 100, state.player.health
+  AssertEqual ['Your health is fully replenished!'], state.log
+
+Execute (heal - full):
+  call state.clearlog()
+  let result = vimcastle#effects#heal(state, 10)
+  Assert !result, 'Should not work'
+  AssertEqual 100, state.player.health
+  AssertEqual ['Your health is already full!'], state.log
+
+After (clean random):
+  call vimcastle#utils#resetrnd()

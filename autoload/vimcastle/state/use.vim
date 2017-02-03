@@ -25,12 +25,20 @@ endfor
 " }}}
 
 function! s:action_use(state, index) abort
+	call a:state.clearlog()
 	let item = a:state.player.items[a:index - 1]
+
 	if(!exists('item.effect'))
 		throw 'Item <' . item.label . '> has no effect configured'
 	endif
-	call remove(a:state.player.items, a:index - 1)
-	call item.effect(a:state, exists(item.value) ? item.value : 0)
+
+	call a:state.addlog('Use: <' . item.label . '>')
+
+	let result = item.effect(a:state, exists('item.value') ? item.value : 0)
+	if(result)
+		call remove(a:state.player.items, a:index - 1)
+	endif
+
 	call s:refresh_menu(a:state)
 endfunction
 
