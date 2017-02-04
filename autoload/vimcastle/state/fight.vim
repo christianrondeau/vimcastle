@@ -4,13 +4,19 @@ function! vimcastle#state#fight#enter(state) abort
 		call a:state.actions().add('a', 'Attack with <' . a:state.player.equipment.weapon.name.short . '>', function('s:action_hit'))
 	endif
 	call a:state.actions().add('l', 'Look at <' . a:state.enemy.name.short . '>', function('s:action_look'))
+	call a:state.actions().add('u', 'Use an item', function('s:action_use'))
 
-	let a:state.log = []
-	if(a:state.player.getstat('spd', 1) >= a:state.enemy.getstat('spd', 1))
-		call a:state.addlog(['You attack first!', 'You have the opportunity!', 'You got the first strike!'])
-	else
-		call a:state.addlog('%<enemy.name> sees you first!')
+	if(exists('a:state.enemy.fighting'))
 		call s:hit_receive(a:state)
+	else
+		let a:state.enemy.fighting = 1
+		let a:state.log = []
+		if(a:state.player.getstat('spd', 1) >= a:state.enemy.getstat('spd', 1))
+			call a:state.addlog(['You attack first!', 'You have the opportunity!', 'You got the first strike!'])
+		else
+			call a:state.addlog('%<enemy.name> sees you first!')
+			call s:hit_receive(a:state)
+		endif
 	endif
 endfunction
 
@@ -72,6 +78,11 @@ function! s:hit_receive(state) abort
 		call a:state.actions().add('c', 'Continue', function('s:action_gameover'))
 		return 1
 	endif
+endfunction
+
+function! s:action_use(state) abort
+	call a:state.clearlog()
+	call a:state.enter('use')
 endfunction
 
 function! s:action_win(state) abort

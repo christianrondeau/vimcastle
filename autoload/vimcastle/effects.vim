@@ -1,3 +1,6 @@
+function! vimcastle#effects#none(state, value) abort
+endfunction
+
 function! vimcastle#effects#heal(state, value) abort
 	let maxhealth = a:state.player.getstat('health', 1)
 

@@ -18,7 +18,7 @@ Execute (enter):
 
 Then (state is):
   Log state.log
-  AssertEqual [{'label': 'Attack with <Weap.>', 'key': 'a'}, {'label': 'Look at <Mon.>', 'key': 'l'}], state.actions().display
+  AssertEqual [{'label': 'Attack with <Weap.>', 'key': 'a'}, {'label': 'Look at <Mon.>', 'key': 'l'}, {'label': 'Use an item', 'key': 'u'}], state.actions().display
 
 Execute (look):
   call vimcastle#utils#setnextrnd([0])
@@ -36,6 +36,21 @@ Execute (attack):
 Then (both exchange a hit):
   Log state.log
   AssertEqual 94, player.health
+  AssertEqual 196, enemy.health
+
+Execute (use item):
+  call state.actions().invokeByKey('u', state)
+
+Then (open use item screen):
+  AssertEqual 'use', state.screen
+
+Execute (come back):
+  call state.addlog('item used')
+  call state.enter('fight')
+
+Then (enemy hits):
+  Log state.log
+  AssertEqual 91, player.health
   AssertEqual 196, enemy.health
 
 Execute (given enemy kills player):

@@ -14,7 +14,7 @@ Execute (setup with items):
   let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
   let state.player.items = [
   \  {'label': 'Potion of DOOM', 'effect': function('vimcastle#effects#heal'), 'value': 5}, 
-  \  {'label': 'Scroll of zoom'}
+  \  {'label': 'Scroll of zoom', 'effect': function('vimcastle#effects#none')}
   \]
   call state.enter('use')
 
@@ -41,3 +41,13 @@ Execute (use item removes if usable):
   AssertEqual 1, len(state.player.items)
   AssertEqual 'Scroll of zoom', state.player.items[0].label
   AssertEqual ['Use: <Potion of DOOM>', 'You gain <5> health'], state.log
+
+Execute (item returns to fight if enemy):
+  let state.enemy = vimcastle#monstergen#create('Mon.', 'Monster').invoke()
+  let result = state.actions().invokeByKey('1', state)
+  AssertEqual 'fight', state.screen
+
+Execute (back returns to fight if enemy):
+  call state.enter('use')
+  let result = state.actions().invokeByKey('b', state)
+  AssertEqual 'fight', state.screen

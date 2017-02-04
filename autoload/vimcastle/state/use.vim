@@ -39,9 +39,17 @@ function! s:action_use(state, index) abort
 		call remove(a:state.player.items, a:index - 1)
 	endif
 
-	call s:refresh_menu(a:state)
+	if(exists('a:state.enemy'))
+		call a:state.enter('fight')
+	else
+		call s:refresh_menu(a:state)
+	endif
 endfunction
 
 function! s:action_back(state) abort
-	call a:state.enter('inventory')
+	if(exists('a:state.enemy'))
+		call a:state.enter('fight')
+	else
+		call a:state.enter('inventory')
+	endif
 endfunction
