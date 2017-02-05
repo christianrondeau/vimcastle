@@ -4,6 +4,7 @@
 
 * [ ] usable items (hurt enemy)
 * [ ] Pickup stuff (show equip. diff)
+* [ ] More effects (hurt and potentially die, win XP and potentially level up)
 * [ ] con (health), wil (interrupt), spi (magic str)
 * [ ] Create character (name, assign stats)
 * [ ] Bonus scenes (e.g. +str)
