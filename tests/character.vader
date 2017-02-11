@@ -22,3 +22,12 @@ Execute (character has equipment):
 Then (character has aggregated stats):
   AssertEqual 9, player.getstat('wil', 1)
   AssertEqual 11, player.getstat('con', 1)
+
+Execute (character picks up items):
+  let item1 = {'label': '1'}
+  let item2 = {'label': '2'}
+  call player.pickup(item1)
+  call player.pickup(item2)
+
+Then (character has items):
+  AssertEqual player.items, [item1, item2]

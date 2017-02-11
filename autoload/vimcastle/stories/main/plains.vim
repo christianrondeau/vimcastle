@@ -5,6 +5,7 @@ function! vimcastle#stories#main#plains#load(scene) abort
 	call a:scene.events.add(20, s:event_encounter())
 	call a:scene.events.add(2, s:event_boss())
 	call a:scene.events.add(3, s:event_heal())
+	call a:scene.events.add(2, s:event_finditem())
 	call a:scene.events.add(2, s:event_forestentrance())
 endfunction
 
@@ -36,6 +37,16 @@ function! s:event_heal() abort
 				\])
 				\.effect(function('vimcastle#effects#heal'), 20)
 				\.explore('Continue')
+endfunction
+
+function! s:event_finditem() abort
+	return vimcastle#event#create('finditem')
+				\.text([
+				\ 'You stumble on something... Oh, it''s a %<ground>!',
+				\ 'You find a dead body inside a satchel. You open it, and you find a %<ground>.',
+				\])
+				\.finditem(vimcastle#stories#main#plains#items#get())
+				\.explore('Leave it there and continue')
 endfunction
 
 function! s:event_encounter() abort

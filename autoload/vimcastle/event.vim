@@ -23,6 +23,11 @@ function! s:EventClass.fight(text, monsters) dict abort
 	return self
 endfunction
 
+function! s:EventClass.finditem(items) dict abort
+	let self.items = a:items
+	return self
+endfunction
+
 function! s:EventClass.enterscene(text, scene) dict abort
 	let self.nextscene = a:scene
 	let self.action_enterscene_text = a:text
@@ -37,8 +42,14 @@ function! s:EventClass.effect(fn, value) dict abort
 endfunction
 
 function! s:EventClass.invoke(state) dict abort
+	let a:state.stats.events += 1
+
 	if(exists('self.monsters'))
 		let a:state.enemy = self.monsters.rnd().invoke()
+	endif
+
+	if(exists('self.items'))
+		let a:state.ground = self.items.rnd()
 	endif
 
 	let a:state.log = []
@@ -56,18 +67,26 @@ function! s:EventClass.invoke(state) dict abort
 	endif
 
 	call a:state.actions().clear()
+
 	if(exists('self.action_fight_text'))
 		call a:state.actions().add('f', self.action_fight_text, function('s:action_fight'))
 	endif
+
 	if(exists('self.action_enterscene_text'))
 		" NOTE: Cannot use arglist in 7.4
 		" call a:state.actions().add('e', self.action_enterscene_text, function('s:action_enterscene', [self.nextscene]))
 		let a:state.nextscene = self.nextscene
 		call a:state.actions().add('e', self.action_enterscene_text, function('s:action_enterscene'))
 	endif
+
 	if(exists('self.action_explore_text'))
 		call a:state.actions().add('c', self.action_explore_text, function('s:action_explore'))
 	endif
+
+	if(exists('a:state.ground'))
+		call a:state.actions().add('p', 'Pick up', function('s:action_pickup_item'))
+	endif
+
 	if(!exists('self.action_fight_text'))
 		call a:state.actions().add('i', 'Inventory', function('s:action_inventory'))
 		call a:state.actions().add('s', 'Character Sheet', function('s:action_character'))
@@ -75,17 +94,19 @@ function! s:EventClass.invoke(state) dict abort
 endfunction
 
 function! s:action_explore(state) abort
-	let a:state.stats.events += 1
-	let result = a:state.scene.events.rnd().invoke(a:state)
+	call s:cleanup(a:state)
+	call a:state.scene.events.rnd().invoke(a:state)
 endfunction
 
 function! s:action_fight(state) abort
 	let a:state.stats.fights += 1
 	let a:state.nextaction = function('s:action_explore')
+	call s:cleanup(a:state)
 	call a:state.enter('fight')
 endfunction
 
 function! s:action_enterscene(state) abort
+	call s:cleanup(a:state)
 	let a:state.stats.scenes += 1
 	let a:state.scene = vimcastle#scene#load(a:state.scene.story, a:state.nextscene)
 	call a:state.scene.enter.invoke(a:state)
@@ -97,4 +118,16 @@ endfunction
 
 function! s:action_character(state) abort
 	call a:state.enter('sheet')
+endfunction
+
+function! s:action_pickup_item(state) abort
+	call a:state.player.pickup(a:state.ground)
+	call s:cleanup(a:state)
+	call a:state.scene.events.rnd().invoke(a:state)
+endfunction
+
+function! s:cleanup(state) abort
+	if(exists('a:state.ground'))
+		unlet a:state.ground
+	endif
 endfunction

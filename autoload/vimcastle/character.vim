@@ -63,3 +63,15 @@ function! s:CharacterClass.setstats(stats) dict abort
 endfunction
 
 " }}}
+
+" Items {{{
+
+function! s:CharacterClass.pickup(item) dict abort
+	if(!exists('self.items'))
+		let self.items = []
+	endif
+	call add(self.items, a:item)
+	return self
+endfunction
+
+" }}}

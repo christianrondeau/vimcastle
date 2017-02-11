@@ -9,6 +9,9 @@ function! s:refresh_menu(state)
 		let index = 0
 		for item in a:state.player.items
 			let index += 1
+			if(index > 9)
+				break
+			endif
 			call a:state.actions().add('' . index, 'Use <' . item.label . '>', function('s:action_use_' . index))
 		endfor
 	endif
