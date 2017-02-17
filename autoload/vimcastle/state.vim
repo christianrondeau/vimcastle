@@ -58,8 +58,12 @@ function! s:StateClass.msg(text) dict abort
 		let text = substitute(text, '%<enemy.name>', '<' . self.enemy.name.long . '>', 'ge')
 	endif
 
-	if(exists('self.ground'))
-		let text = substitute(text, '%<ground>', '<' . self.ground.label . '>', 'ge')
+	if(exists('self.ground_item'))
+		let text = substitute(text, '%<ground>', '<' . self.ground_item.label . '>', 'ge')
+	endif
+
+	if(exists('self.ground_equippable'))
+		let text = substitute(text, '%<ground>', '<' . self.ground_equippable.name.long . '>', 'ge')
 	endif
 
 	if(exists('self.enemy.equipment.weapon.name.long'))

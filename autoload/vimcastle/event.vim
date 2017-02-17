@@ -28,6 +28,11 @@ function! s:EventClass.finditem(items) dict abort
 	return self
 endfunction
 
+function! s:EventClass.findequippable(equippables) dict abort
+	let self.equippables = a:equippables
+	return self
+endfunction
+
 function! s:EventClass.enterscene(text, scene) dict abort
 	let self.nextscene = a:scene
 	let self.action_enterscene_text = a:text
@@ -49,7 +54,11 @@ function! s:EventClass.invoke(state) dict abort
 	endif
 
 	if(exists('self.items'))
-		let a:state.ground = self.items.rnd()
+		let a:state.ground_item = self.items.rnd()
+	endif
+
+	if(exists('self.equippables'))
+		let a:state.ground_equippable = self.equippables.rnd().invoke()
 	endif
 
 	let a:state.log = []
@@ -83,8 +92,12 @@ function! s:EventClass.invoke(state) dict abort
 		call a:state.actions().add('c', self.action_explore_text, function('s:action_explore'))
 	endif
 
-	if(exists('a:state.ground'))
+	if(exists('a:state.ground_item'))
 		call a:state.actions().add('p', 'Pick up', function('s:action_pickup_item'))
+	endif
+
+	if(exists('a:state.ground_equippable'))
+		call a:state.actions().add('e', 'Equip', function('s:action_equip_equippable'))
 	endif
 
 	if(!exists('self.action_fight_text'))
@@ -121,13 +134,23 @@ function! s:action_character(state) abort
 endfunction
 
 function! s:action_pickup_item(state) abort
-	call a:state.player.pickup(a:state.ground)
+	call a:state.player.pickup(a:state.ground_item)
+	call s:cleanup(a:state)
+	call a:state.scene.events.rnd().invoke(a:state)
+endfunction
+
+function! s:action_equip_equippable(state) abort
+	call a:state.player.equip('weapon', a:state.ground_equippable)
 	call s:cleanup(a:state)
 	call a:state.scene.events.rnd().invoke(a:state)
 endfunction
 
 function! s:cleanup(state) abort
-	if(exists('a:state.ground'))
-		unlet a:state.ground
+	if(exists('a:state.ground_item'))
+		unlet a:state.ground_item
+	endif
+
+	if(exists('a:state.ground_equippable'))
+		unlet a:state.ground_equippable
 	endif
 endfunction

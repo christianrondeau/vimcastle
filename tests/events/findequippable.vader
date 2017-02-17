@@ -1,0 +1,22 @@
+Execute (create event):
+  let state = vimcastle#state#create()
+  let state.player = vimcastle#character#create({'short':'', 'long':''}, 100)
+  let weapons = vimcastle#repository#create()
+  call weapons.add(1, vimcastle#equippablegen#weapon('Mace', 'Mace', 2, 4))
+  let event = vimcastle#event#create('test')
+    \.findequippable(weapons)
+    \.text('You see a weapon rack with a %<ground>')
+
+Execute (invoke):
+  call event.invoke(state)
+
+Then (state is updated):
+  AssertEqual ['You see a weapon rack with a <Mace>'], state.log
+
+Execute (equip weapon):
+  let state.scene = vimcastle#scene#create()
+  call state.scene.events.add(1, event)
+  call state.actions().invokeByKey('e', state)
+
+Then (weapon is equipped):
+  AssertEqual 'Mace', state.player.equipment.weapon.name.long

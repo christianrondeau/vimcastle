@@ -5,6 +5,7 @@ function! vimcastle#stories#main#plains#load(scene) abort
 	call a:scene.events.add(20, s:event_encounter())
 	call a:scene.events.add(2, s:event_boss())
 	call a:scene.events.add(3, s:event_heal())
+	call a:scene.events.add(2, s:event_findweapon())
 	call a:scene.events.add(2, s:event_finditem())
 	call a:scene.events.add(2, s:event_forestentrance())
 endfunction
@@ -46,6 +47,15 @@ function! s:event_finditem() abort
 				\ 'You find a dead body inside a satchel. You open it, and you find a %<ground>.',
 				\])
 				\.finditem(vimcastle#stories#main#plains#items#get())
+				\.explore('Leave it there and continue')
+endfunction
+
+function! s:event_findweapon() abort
+	return vimcastle#event#create('finditem')
+				\.text([
+				\ 'You find a weapon rack with containing a %<ground>!',
+				\])
+				\.findequippable(vimcastle#stories#main#plains#weapons#get())
 				\.explore('Leave it there and continue')
 endfunction
 

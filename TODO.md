@@ -2,7 +2,8 @@
 
 ## Game
 
-* [ ] usable items (hurt enemy)
+* [ ] Monster drops
+* [ ] Usable items (hurt enemy)
 * [ ] Pickup stuff (show equip. diff)
 * [ ] More effects (hurt and potentially die, win XP and potentially level up)
 * [ ] con (health), wil (interrupt), spi (magic str)
@@ -21,7 +22,10 @@
 
 ## Refactors
 
+* [ ] Compare equip. stats when found
+* [ ] Make the slot part of equippable instead of .equip
 * [ ] Are event name useful?
+* [ ] Use same label/name
 * [ ] Unlet enemy if continue in event
 * [ ] Deal w/ max inventory
 * [ ] effect should be a string

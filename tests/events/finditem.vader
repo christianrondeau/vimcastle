@@ -7,7 +7,7 @@ Execute (create event):
     \.finditem(items)
     \.text('You see a %<ground> lying on the floor')
 
-Execute (show items and actions):
+Execute (invoke):
   call event.invoke(state)
 
 Then (state is updated):
