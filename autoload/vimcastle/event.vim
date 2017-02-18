@@ -67,6 +67,10 @@ function! s:EventClass.invoke(state) dict abort
 		call add(a:state.log, a:state.msg(line))
 	endfor
 
+	if(exists('a:state.ground_equippable'))
+		call s:showequippablediff(a:state)
+	endif
+
 	if(exists('self.effect_fn'))
 		try
 			call self.effect_fn(a:state, self.effect_value)
@@ -88,16 +92,16 @@ function! s:EventClass.invoke(state) dict abort
 		call a:state.actions().add('e', self.action_enterscene_text, function('s:action_enterscene'))
 	endif
 
-	if(exists('self.action_explore_text'))
-		call a:state.actions().add('c', self.action_explore_text, function('s:action_explore'))
-	endif
-
 	if(exists('a:state.ground_item'))
 		call a:state.actions().add('p', 'Pick up', function('s:action_pickup_item'))
 	endif
 
 	if(exists('a:state.ground_equippable'))
 		call a:state.actions().add('e', 'Equip', function('s:action_equip_equippable'))
+	endif
+
+	if(exists('self.action_explore_text'))
+		call a:state.actions().add('c', self.action_explore_text, function('s:action_explore'))
 	endif
 
 	if(!exists('self.action_fight_text'))
@@ -153,4 +157,46 @@ function! s:cleanup(state) abort
 	if(exists('a:state.ground_equippable'))
 		unlet a:state.ground_equippable
 	endif
+endfunction
+
+function! s:showequippablediff(state) abort
+	if(exists('a:state.player.equipment.weapon'))
+		let current = a:state.player.equipment.weapon
+	else
+		let current = vimcastle#equippablegen#weapon('', '', 0, 0)
+	endif
+
+	call s:showequippabledmg(a:state, current, a:state.ground_equippable)
+	call s:showequippablestats(a:state, current, a:state.ground_equippable)
+endfunction
+
+function! s:showequippabledmg(state, current, ground) abort
+	let msg = '  * dmg: ' . s:getdiff(a:current['dmg'].min, a:ground['dmg'].min) . ' - ' . s:getdiff(a:current['dmg'].max, a:ground['dmg'].max)
+	call add(a:state.log, msg)
+endfunction
+
+function! s:showequippablestats(state, current, ground) abort
+	let allstats = copy(a:ground.stats)
+	for curkey in keys(a:current.stats)
+		if(!has_key(allstats, curkey))
+			let allstats[curkey] = a:current.stats[curkey]
+		endif
+	endfor
+	for name in sort(keys(allstats))
+		let currentval = has_key(a:current.stats, name) ? a:current.stats[name] : 0
+		let groundval = has_key(a:ground.stats, name) ? a:ground.stats[name] : 0
+		let msg = '  * ' . name . ': ' . s:getdiff(currentval, groundval)
+	call add(a:state.log, msg)
+	endfor
+endfunction
+
+function! s:getdiff(current, ground) abort
+	if(a:ground > a:current)
+		let diff = '+' . (a:ground - a:current)
+	elseif(a:ground < a:current)
+		let diff = '-' . (a:current - a:ground)
+	else
+		let diff = '=' . a:current
+	endif
+	return a:ground . ' (' . diff . ')'
 endfunction

@@ -22,7 +22,6 @@
 
 ## Refactors
 
-* [ ] Compare equip. stats when found
 * [ ] Make the slot part of equippable instead of .equip
 * [ ] Are event name useful?
 * [ ] Use same label/name

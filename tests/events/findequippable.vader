@@ -1,8 +1,10 @@
 Execute (create event):
   let state = vimcastle#state#create()
-  let state.player = vimcastle#character#create({'short':'', 'long':''}, 100)
+  let playerequippable = vimcastle#equippablegen#weapon('Stick', 'Stick', 5, 17).stat('old', 5).stat('chg', 4)
+  let state.player = vimcastle#character#create({'short':'', 'long':''}, 100).equipweapon(playerequippable.invoke())
   let weapons = vimcastle#repository#create()
-  call weapons.add(1, vimcastle#equippablegen#weapon('Mace', 'Mace', 2, 4))
+  let groundequippable = vimcastle#equippablegen#weapon('Mace', 'Mace', 15, 16).stat('new', 9).stat('chg', 7)
+  call weapons.add(1, groundequippable)
   let event = vimcastle#event#create('test')
     \.findequippable(weapons)
     \.text('You see a weapon rack with a %<ground>')
@@ -11,7 +13,13 @@ Execute (invoke):
   call event.invoke(state)
 
 Then (state is updated):
-  AssertEqual ['You see a weapon rack with a <Mace>'], state.log
+  AssertEqual [
+  \ 'You see a weapon rack with a <Mace>',
+  \ '  * dmg: 15 (+10) - 16 (-1)',
+  \ '  * chg: 7 (+3)',
+  \ '  * new: 9 (+9)',
+  \ '  * old: 0 (-5)',
+  \], state.log
 
 Execute (equip weapon):
   let state.scene = vimcastle#scene#create()
