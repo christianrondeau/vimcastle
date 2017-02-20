@@ -37,7 +37,7 @@
 * [ ] README for non-vim users?
 * [ ] Test each monster against matching player lvl
 * [ ] Contributing guide explaining vader/vint, concepts, terminology etc.
-* [ ] Extract texts in locale files (especially core game)
+* [ ] Increase probability of repo every turn, reset on hit
 
 ## Ideas
 
