@@ -42,7 +42,7 @@ function! s:event_heal() abort
 				\ 'There is a small, hidden cavern that seems easy to close using surrounding rocks. You sit down for a while.',
 				\ 'There is a small clearing. You decide to sit down and rest.'
 				\])
-				\.effect(function('vimcastle#effects#heal'), 10)
+				\.effect('heal', 10)
 				\.explore('Continue')
 endfunction
 

@@ -5,14 +5,14 @@ endfunction
 
 function! s:event_enter() abort
 	return vimcastle#event#create('enter')
-				\.effect(function('s:effect_setup'), 0)
+				\.before(function('s:setup'))
 				\.text(['You are a barber in a small village.', 'You are a bored kid who wants to do something important.', 'You are an old warrior looking for adventure.', 'You are lost and you don''t know who you are.'])
 				\.text('You pack up your stuff, pick up your %<player.weapon> and get ready for adventure!')
 				\.text('(You can open the inventory with <i> and the character sheet with <s>)')
 				\.enterscene('Start exploring!', 'plains')
 endfunction
 
-function! s:effect_setup(state, value) abort
+function! s:setup(state) abort
 	let a:state.player = vimcastle#character#create({ 'short': 'Plr.', 'long': 'Player' }, 60)
 				\.setstat('str', vimcastle#utils#rnd(2) + 2)
 				\.setstat('spd', vimcastle#utils#rnd(2) + 2)
@@ -22,6 +22,6 @@ function! s:effect_setup(state, value) abort
 	let a:state.player.level = 1
 	let a:state.player.xp = 0
 	let a:state.player.items = [
-  \  {'label': 'Small health potion', 'effect': function('vimcastle#effects#heal'), 'value': 10}, 
+  \  {'label': 'Small health potion', 'effect': 'heal', 'value': 10}, 
 	\]
 endfunction

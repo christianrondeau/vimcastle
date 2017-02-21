@@ -4,7 +4,7 @@ Execute (create event):
   let state.player.health = 50
   let event = vimcastle#event#create('test')
     \.text('Heal!')
-    \.effect(function('vimcastle#effects#heal'), 40)
+    \.effect('heal', 40)
 
 Execute (effect applies):
   call event.invoke(state)

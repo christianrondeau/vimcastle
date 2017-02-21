@@ -27,7 +27,6 @@
 * [ ] Use same label/name
 * [ ] Unlet enemy if continue in event
 * [ ] Deal w/ max inventory
-* [ ] effect should be a string
 * [ ] Add tests for final stats
 * [ ] Run vint in travis
 * [ ] Prepend `l:`

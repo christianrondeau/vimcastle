@@ -37,7 +37,9 @@ function! s:action_use(state, index) abort
 
 	call a:state.addlog('Use: <' . item.label . '>')
 
-	let result = item.effect(a:state, exists('item.value') ? item.value : 0)
+	let effect_value = exists('item.value') ? item.value : 0
+	execute 'let result = vimcastle#effects#' . item.effect . '(a:state, effect_value)'
+
 	if(result)
 		call remove(a:state.player.items, a:index - 1)
 	endif

@@ -36,7 +36,7 @@ function! s:event_heal() abort
 				\ 'You see an abandoned house. You rest in it for a little bit.',
 				\ 'You see a camp, and decide to rest for a few minutes.'
 				\])
-				\.effect(function('vimcastle#effects#heal'), 20)
+				\.effect('heal', 20)
 				\.explore('Continue')
 endfunction
 
