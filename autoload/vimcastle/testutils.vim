@@ -27,6 +27,7 @@ endfunction
 function! s:VimcastleTestutilsClass.playgame(maxturns) dict abort
 	let stats = {}
 	let stats.turns = 0
+	let stats.log = []
 
 	let state = vimcastle#state#create()
 	let state.scene = vimcastle#scene#load('main', 'index')
@@ -35,7 +36,9 @@ function! s:VimcastleTestutilsClass.playgame(maxturns) dict abort
 
 	while stats.turns < a:maxturns && state.screen != 'gameover'
 		let stats.turns += 1
+		call add(stats.log, '---- TURN ' . stats.turns)
 		call self.playdefault(state)
+		let stats.log += state.log
 	endwhile
 
 	return stats

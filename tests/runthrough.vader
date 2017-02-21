@@ -3,7 +3,15 @@ Execute (initialize stats):
   let maxturns = 500
   let testutils = vimcastle#testutils#create()
 
-Execute (play story):
+Execute (play once):
+  let stats = testutils.playgame(maxturns)
+
+Then (the game completes):
+  for log in stats.log 
+    Log log
+  endfor
+
+Execute (play multiple times):
   let stats = testutils.playgames(maxplaythroughs, maxturns)
 
 Then (the game completes):
