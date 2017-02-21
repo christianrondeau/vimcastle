@@ -97,6 +97,8 @@ function! s:EquippablegenClass.invoke() dict abort
 		endif
 	endif
 
+	let equippable.score = s:computescore(equippable)
+
 	return equippable
 endfunction
 
@@ -113,4 +115,15 @@ function! s:applymodifier(equippable, modifier) abort
 		endif
 		let a:equippable.stats[a:modifier.stat] += a:modifier.value
 	endif
+endfunction
+
+function! s:computescore(equippable) abort
+	let score = 0
+	if(exists('a:equippable.dmg'))
+		let score += a:equippable.dmg.min + (a:equippable.dmg.max - a:equippable.dmg.min) / 2
+	endif
+	for stat in keys(a:equippable.stats)
+		let score += a:equippable.stats[stat]
+	endfor
+	return score
 endfunction

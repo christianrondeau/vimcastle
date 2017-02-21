@@ -196,7 +196,7 @@ function! s:getdiff(current, ground) abort
 	elseif(a:ground < a:current)
 		let diff = '-' . (a:current - a:ground)
 	else
-		let diff = '=' . a:current
+		let diff = '='
 	endif
 	return a:ground . ' (' . diff . ')'
 endfunction

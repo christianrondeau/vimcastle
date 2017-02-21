@@ -9,6 +9,7 @@ Then (weapon is created):
   AssertEqual 'Sword', weapon.name.long
   AssertEqual 4, weapon.dmg.min
   AssertEqual 8, weapon.dmg.max
+  AssertEqual 6, weapon.score
 
 Execute (invoke prefixed weapon):
   let weapon = weapongen.prefix(1, 'Rust.', 'Rusted', 'dmg', -2, -3).invoke()
@@ -18,6 +19,7 @@ Then (modified weapon is created):
   AssertEqual 'Rusted Sword', weapon.name.long
   AssertEqual 2, weapon.dmg.min
   AssertEqual 5, weapon.dmg.max
+  AssertEqual 3, weapon.score
 
 Execute (invoke suffixed weapon):
   let weapon = weapongen.suffix(1, 'of D.', 'of Doom', 'wil', 3).invoke()
@@ -28,6 +30,7 @@ Then (modified weapon is created):
   AssertEqual 2, weapon.dmg.min
   AssertEqual 5, weapon.dmg.max
   AssertEqual 3, weapon.stats.wil
+  AssertEqual 6, weapon.score
 
 Execute (type shortcuts):
   let weapon = vimcastle#equippablegen#weapon('Ham.', 'Hammer', 5, 9).invoke()
@@ -35,4 +38,5 @@ Execute (type shortcuts):
 Then (items are created):
   AssertEqual 5, weapon.dmg.min
   AssertEqual 9, weapon.dmg.max
+  AssertEqual 7, weapon.score
 

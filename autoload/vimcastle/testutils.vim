@@ -33,19 +33,35 @@ function! s:VimcastleTestutilsClass.playgame(maxturns) dict abort
 	let state.scene = vimcastle#scene#load('main', 'index')
 	call state.enter('explore')
 	call state.scene.enter.invoke(state)
+	let stats.log += state.log
 
 	while stats.turns < a:maxturns && state.screen != 'gameover'
 		let stats.turns += 1
 		call add(stats.log, '---- TURN ' . stats.turns)
-		call self.playdefault(state)
+		if(exists('state.ground_equippable'))
+			call self.playfindequippable(stats, state)
+		else
+			call self.playdefault(stats, state)
+		endif
 		let stats.log += state.log
 	endwhile
 
 	return stats
 endfunction
 
-function! s:VimcastleTestutilsClass.playdefault(state) dict abort
+function! s:VimcastleTestutilsClass.playdefault(stats, state) dict abort
 		let actions = a:state.actions()
 		let key = actions.display[0].key
+		call add(a:stats.log, 'PLAY: ' . key . ' (default)')
 		call actions.invokeByKey(key, a:state)
+endfunction
+
+function! s:VimcastleTestutilsClass.playfindequippable(stats, state) dict abort
+	if(a:state.ground_equippable.score > a:state.player.equipment.weapon.score)
+		call add(a:stats.log, 'PLAY: e (better equipment)')
+		call a:state.actions().invokeByKey('e', a:state)
+	else
+		call add(a:stats.log, 'PLAY: c (worse equipment)')
+		call a:state.actions().invokeByKey('c', a:state)
+	endif
 endfunction
