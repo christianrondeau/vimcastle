@@ -15,7 +15,9 @@ Execute (play multiple times):
   let stats = testutils.playgames(maxplaythroughs, maxturns)
 
 Then (the game completes):
-  Log 'average turns/game: ' . stats.avgturns . ' in ' . maxplaythroughs . ' playthroughs: ' . string(stats.playthroughsturns)
+  Log 'average turns/game: ' . stats.avgturns . ' in ' . maxplaythroughs
+  Log 'average level: ' . stats.avglevels
+  Log 'playthroughs: ' . string(stats.playthroughsturns)
   if(!$CI)
     Assert stats.avgturns > 20 && stats.avgturns < 200, 'Too few/many turns'
   endif
