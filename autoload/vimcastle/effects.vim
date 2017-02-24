@@ -20,3 +20,10 @@ function! vimcastle#effects#heal(state, value) abort
 
 	return 1
 endfunction
+
+function! vimcastle#effects#gainhealth(state, value) abort
+	call a:state.player.setstat('health', a:state.player.getstat('health', 0) + a:value)
+	let a:state.player.health  += a:value
+	call a:state.addlog('You gain <' . a:value . '> to your maximum health permanently')
+	return 1
+endfunction

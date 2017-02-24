@@ -7,6 +7,7 @@ function! vimcastle#stories#main#plains#load(scene) abort
 	call a:scene.events.add(3, s:event_heal())
 	call a:scene.events.add(2, s:event_findweapon())
 	call a:scene.events.add(2, s:event_finditem())
+	call a:scene.events.add(1, s:event_gainhealth())
 	call a:scene.events.add(2, s:event_forestentrance())
 endfunction
 
@@ -44,10 +45,19 @@ function! s:event_finditem() abort
 	return vimcastle#event#create('finditem')
 				\.text([
 				\ 'You stumble on something... Oh, it''s a %<ground>!',
-				\ 'You find a dead body inside a satchel. You open it, and you find a %<ground>.',
+				\ 'You find a dead body holding a satchel. You open it, and you find a %<ground>.',
 				\])
 				\.finditem(vimcastle#stories#main#plains#items#get())
 				\.explore('Leave it there and continue')
+endfunction
+
+function! s:event_gainhealth() abort
+	return vimcastle#event#create('gainhealth')
+				\.text([
+				\ 'You find a shrine, with a soft, magical feeling around it. You touch it.',
+				\])
+				\.effect('gainhealth', 5)
+				\.explore('Leave the shrine')
 endfunction
 
 function! s:event_findweapon() abort

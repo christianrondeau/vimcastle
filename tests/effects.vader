@@ -24,5 +24,10 @@ Execute (heal - full):
   AssertEqual 100, state.player.health
   AssertEqual ['Your health is already full!'], state.log
 
-After (clean random):
-  call vimcastle#utils#resetrnd()
+Execute (gainhealth):
+  call state.clearlog()
+  let state.player.health = 90
+  let result = vimcastle#effects#gainhealth(state, 20)
+  AssertEqual 110, state.player.health
+  AssertEqual 120, state.player.getstat('health', 0)
+  AssertEqual ['You gain <20> to your maximum health permanently'], state.log
