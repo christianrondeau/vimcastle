@@ -8,7 +8,7 @@ Execute (heal - partial):
   let result = vimcastle#effects#heal(state, 20)
   Assert result, 'Should work'
   AssertEqual 70, state.player.health
-  AssertEqual ['You gain <20> health'], state.log
+  AssertEqual ['You gain <+20> health.'], state.log
 
 Execute (heal - full):
   call state.clearlog()
@@ -30,4 +30,11 @@ Execute (gainhealth):
   let result = vimcastle#effects#gainhealth(state, 20)
   AssertEqual 110, state.player.health
   AssertEqual 120, state.player.getstat('health', 0)
-  AssertEqual ['You gain <20> to your maximum health permanently'], state.log
+  AssertEqual ['You gain <+20> to your maximum health permanently.'], state.log
+
+Execute (gainstr):
+  call state.clearlog()
+  call state.player.setstat('str', 3)
+  let result = vimcastle#effects#gainstr(state, 2)
+  AssertEqual 5, state.player.getstat('str', 0)
+  AssertEqual ['You feel stronger! gain <+2> to your strength permanently.'], state.log

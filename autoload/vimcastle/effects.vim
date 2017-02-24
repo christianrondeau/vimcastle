@@ -15,15 +15,25 @@ function! vimcastle#effects#heal(state, value) abort
 		let a:state.player.health = maxhealth
 		call a:state.addlog('Your health is fully replenished!')
 	else
-		call a:state.addlog('You gain <' . a:value . '> health')
+		call a:state.addlog('You gain <+' . a:value . '> health.')
 	endif
 
 	return 1
 endfunction
 
 function! vimcastle#effects#gainhealth(state, value) abort
-	call a:state.player.setstat('health', a:state.player.getstat('health', 0) + a:value)
+	call s:incrstat(a:state, 'health', a:value)
 	let a:state.player.health  += a:value
-	call a:state.addlog('You gain <' . a:value . '> to your maximum health permanently')
+	call a:state.addlog('You gain <+' . a:value . '> to your maximum health permanently.')
 	return 1
+endfunction
+
+function! vimcastle#effects#gainstr(state, value) abort
+	call s:incrstat(a:state, 'str', a:value)
+	call a:state.addlog('You feel stronger! gain <+' . a:value . '> to your strength permanently.')
+	return 1
+endfunction
+
+function! s:incrstat(state, stat, value) abort
+	call a:state.player.setstat(a:stat, a:state.player.getstat(a:stat, 0) + a:value)
 endfunction

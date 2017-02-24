@@ -9,4 +9,4 @@ Execute (create event):
 Execute (effect applies):
   call event.invoke(state)
   AssertEqual 90, state.player.health
-  AssertEqual ['Heal!', 'You gain <40> health'], state.log
+  AssertEqual ['Heal!', 'You gain <+40> health.'], state.log

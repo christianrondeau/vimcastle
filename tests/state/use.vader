@@ -40,7 +40,7 @@ Execute (use item removes if usable):
   AssertEqual 'use', state.screen
   AssertEqual 1, len(state.player.items)
   AssertEqual 'Scroll of zoom', state.player.items[0].label
-  AssertEqual ['Use: <Potion of DOOM>', 'You gain <5> health'], state.log
+  AssertEqual ['Use: <Potion of DOOM>', 'You gain <+5> health.'], state.log
 
 Execute (item returns to fight if enemy):
   let state.enemy = vimcastle#monstergen#create('Mon.', 'Monster').invoke()

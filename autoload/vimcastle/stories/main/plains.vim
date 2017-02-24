@@ -8,6 +8,7 @@ function! vimcastle#stories#main#plains#load(scene) abort
 	call a:scene.events.add(2, s:event_findweapon())
 	call a:scene.events.add(2, s:event_finditem())
 	call a:scene.events.add(1, s:event_gainhealth())
+	call a:scene.events.add(1, s:event_gainstr())
 	call a:scene.events.add(2, s:event_forestentrance())
 endfunction
 
@@ -58,6 +59,15 @@ function! s:event_gainhealth() abort
 				\])
 				\.effect('gainhealth', 5)
 				\.explore('Leave the shrine')
+endfunction
+
+function! s:event_gainstr() abort
+	return vimcastle#event#create('gainstr')
+				\.text([
+				\ 'You stop by a small house with an elder cutting wood. You decide to help him.',
+				\])
+				\.effect('gainstr', 1)
+				\.explore('Say bye and leave')
 endfunction
 
 function! s:event_findweapon() abort
