@@ -23,7 +23,7 @@ function! vimcastle#ui#inventory#draw(screen, state) abort
 
 	call append(line('$'), '')
 
-	call vimcastle#ui#common#drawbindings(a:state.actions())
+	call vimcastle#ui#actions#draw(a:state.actions())
 endfunction
 
 function! s:showitemname(type, item) abort

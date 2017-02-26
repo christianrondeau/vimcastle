@@ -10,7 +10,7 @@ function! vimcastle#ui#explore#draw(screen, state) abort
 		call vimcastle#ui#common#drawlog(a:state.log)
 	endif
 
-	call vimcastle#ui#common#drawbindings(a:state.actions())
+	call vimcastle#ui#actions#draw(a:state.actions())
 endfunction
 
 function! s:drawright(screen, right) abort
