@@ -6,6 +6,7 @@
 * [ ] High scores
 * [ ] Save/Load game. Remember only scene and player state. Overwrite on `q`
 * [ ] Animations: Fight (hurt), action
+* [ ] Increase probabilities over time
 * [ ] Max inventory / drop items
 * [ ] Usable items (hurt enemy)
 * [ ] More effects (hurt and potentially die, win XP and potentially level up, gain stats e.g. +str)

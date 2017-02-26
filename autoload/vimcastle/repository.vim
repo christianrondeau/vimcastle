@@ -12,18 +12,31 @@ function! vimcastle#repository#single(item) abort
 endfunction
 
 function! s:RepositoryClass.add(probability, item) dict abort
-	let probability = self.totalprobabilities + a:probability
-	call add(self.items, { 'value': a:item, 'probability': probability })
-	let self.totalprobabilities = probability
+	return self.additem(a:probability, a:item, 0)
+endfunction
+
+function! s:RepositoryClass.once(probability, item) dict abort
+	return self.additem(a:probability, a:item, 1)
+endfunction
+
+function! s:RepositoryClass.additem(probability, item, once) dict abort
+	call add(self.items, { 'value': a:item, 'probability': a:probability, 'once': a:once })
+	let self.totalprobabilities += a:probability
 	return self
 endfunction
 
 function! s:RepositoryClass.rnd() dict abort
 	let roll = vimcastle#utils#rnd(self.totalprobabilities)
 	let i = 0
+	let probability = 0
 	while(i < len(self.items))
 		let item = self.items[i]
-		if(roll < item.probability)
+		let probability += item.probability
+		if(roll < probability)
+			if(item.once)
+				call remove(self.items, i)
+				let self.totalprobabilities -= item.probability
+			endif
 			return item.value
 		endif
 		let i += 1

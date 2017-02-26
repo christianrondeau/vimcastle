@@ -19,5 +19,16 @@ Then (can randomly get items based on probabilities):
   call vimcastle#utils#setnextrnd(8)
   AssertEqual 'value3', repo.rnd()
 
+Execute (add cases with uniques):
+  let repo = vimcastle#repository#create()
+  call repo.once(9, 'value1')
+  call repo.add(1, 'value2')
+
+Then (once picked, is removed):
+  call vimcastle#utils#setnextrnd(0)
+  AssertEqual 'value1', repo.rnd()
+  call vimcastle#utils#setnextrnd(0)
+  AssertEqual 'value2', repo.rnd()
+
 After (clean random):
   call vimcastle#utils#resetrnd()
