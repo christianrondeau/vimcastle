@@ -1,4 +1,4 @@
-function! vimcastle#stories#main#plains#load(scene) abort
+function! vimcastle#stories#main#plains#index#load(scene) abort
 	let a:scene.label = 'Plains'
 	let a:scene.enter = s:event_enter()
 	call a:scene.events.add(30, s:event_nothing())

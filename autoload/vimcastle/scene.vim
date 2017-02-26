@@ -12,7 +12,7 @@ function! vimcastle#scene#load(story, name) abort
 	let scene = vimcastle#scene#create()
 	let scene.story = a:story
 	let scene.name = a:name
-	execute 'call vimcastle#stories#' . a:story . '#' . a:name . '#load(scene)'
+	execute 'call vimcastle#stories#' . a:story . '#' . a:name . '#index#load(scene)'
 	if(!exists('scene.label'))
 		throw 'Scene ' . a:story . '/' . a:name . ' does not define a "label"'
 	endif

@@ -1,4 +1,4 @@
-function! vimcastle#stories#main#index#load(scene) abort
+function! vimcastle#stories#main#intro#index#load(scene) abort
 	let a:scene.label = 'Beginning'
 	let a:scene.enter = s:event_enter()
 endfunction

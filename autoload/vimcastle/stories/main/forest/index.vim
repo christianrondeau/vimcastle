@@ -1,4 +1,4 @@
-function! vimcastle#stories#main#forest#load(scene) abort
+function! vimcastle#stories#main#forest#index#load(scene) abort
 	let a:scene.label = 'Forest'
 	let a:scene.enter = s:event_enter()
 	call a:scene.events.add(30, s:event_nothing())

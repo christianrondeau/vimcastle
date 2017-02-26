@@ -18,7 +18,7 @@ endfunction
 
 function! s:action_newgame(state) abort
 	call a:state.reset()
-	let a:state.scene = vimcastle#scene#load('main', 'index')
+	let a:state.scene = vimcastle#scene#load('main', 'intro')
 	call a:state.enter('explore')
 	call a:state.scene.enter.invoke(a:state)
 endfunction
