@@ -13,3 +13,13 @@ function! s:sword() abort
 				\.nosuffix(10)
 				\.suffix(1, 'of Str.', 'of Strength', 'str', 1)
 endfunction
+
+function! s:woodaxe() abort
+	return vimcastle#equippablegen#weapon('Wd. Axe', 'Wood Axe', 2, 5)
+				\.noprefix(10)
+				\.prefix(6, 'Rust.', 'Rusted', 'dmg', -1, 0)
+				\.prefix(4, 'Sh.', 'Sharp', 'dmg', 2, 1)
+				\.prefix(1, 'Brk.', 'Broken', 'dmg', -1, -3)
+				\.nosuffix(10)
+				\.suffix(1, 'of Def.', 'of Defense', 'def', 1)
+endfunction

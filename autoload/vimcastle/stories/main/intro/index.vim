@@ -17,11 +17,11 @@ function! s:setup(state) abort
 				\.setstat('str', vimcastle#utils#rnd(2) + 2)
 				\.setstat('spd', vimcastle#utils#rnd(2) + 2)
 				\.setstat('dex', vimcastle#utils#rnd(3))
-				\.equipweapon(vimcastle#stories#main#plains#weapons#get().rnd().invoke())
-				\.equiparmor(vimcastle#stories#main#plains#armors#get().rnd().invoke())
+				\.equipweapon(vimcastle#stories#main#intro#weapons#get().rnd().invoke())
+				\.equiparmor(vimcastle#stories#main#intro#armors#get().rnd().invoke())
 	let a:state.player.level = 1
 	let a:state.player.xp = 0
 	let a:state.player.items = [
-  \  {'label': 'Small health potion', 'effect': 'heal', 'value': 10}, 
-	\]
+				\ vimcastle#stories#main#intro#items#get().rnd()
+				\]
 endfunction
