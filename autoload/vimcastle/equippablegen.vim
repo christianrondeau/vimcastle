@@ -1,7 +1,8 @@
 let s:EquippablegenClass = {}
 
-function! vimcastle#equippablegen#create(shortname, longname) abort
+function! vimcastle#equippablegen#create(slot, shortname, longname) abort
 	let equippablegen = copy(s:EquippablegenClass)
+	let equippablegen.slot = a:slot
 	let equippablegen.base = {
 				\  'name': { 'short': a:shortname, 'long': a:longname },
 				\  'dmg': { 'min': 0, 'max': 0 },
@@ -11,12 +12,12 @@ function! vimcastle#equippablegen#create(shortname, longname) abort
 endfunction
 
 function! vimcastle#equippablegen#weapon(shortname, longname, dmgmin, dmgmax) abort
-	return vimcastle#equippablegen#create(a:shortname, a:longname)
+	return vimcastle#equippablegen#create('weapon', a:shortname, a:longname)
 				\.dmg(a:dmgmin, a:dmgmax)
 endfunction
 
 function! vimcastle#equippablegen#armor(shortname, longname, def) abort
-	return vimcastle#equippablegen#create(a:shortname, a:longname)
+	return vimcastle#equippablegen#create('armor', a:shortname, a:longname)
 				\.stat('def', a:def)
 endfunction
 
@@ -78,6 +79,7 @@ endfunction
 
 function! s:EquippablegenClass.invoke() dict abort
 	let equippable = deepcopy(self.base)
+	let equippable.slot = self.slot
 
 	if(exists('self.prefixes'))
 		let prefix = self.prefixes.rnd()

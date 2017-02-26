@@ -6,6 +6,7 @@ function! vimcastle#stories#main#plains#index#load(scene) abort
 	call a:scene.events.add(20, s:event_encounter())
 	call a:scene.events.add(3, s:event_heal())
 	call a:scene.events.add(2, s:event_findweapon())
+	call a:scene.events.add(2, s:event_findarmor())
 	call a:scene.events.add(2, s:event_finditem())
 
 	call a:scene.events.add(2, s:event_forestentrance())
@@ -74,11 +75,20 @@ function! s:event_gainstr() abort
 endfunction
 
 function! s:event_findweapon() abort
-	return vimcastle#event#create('finditem')
+	return vimcastle#event#create('findweapon')
 				\.text([
-				\ 'You find a weapon rack with containing a %<ground>!',
+				\ 'You find a weapon rack with containing %<ground>!',
 				\])
 				\.findequippable(vimcastle#stories#main#plains#weapons#get())
+				\.explore('Leave it there and continue')
+endfunction
+
+function! s:event_findarmor() abort
+	return vimcastle#event#create('findarmor')
+				\.text([
+				\ 'You find %<ground> lying on the ground!',
+				\])
+				\.findequippable(vimcastle#stories#main#plains#armors#get())
 				\.explore('Leave it there and continue')
 endfunction
 

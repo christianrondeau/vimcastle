@@ -1,32 +1,32 @@
 Execute (create simple weapon):
-  let weapongen = vimcastle#equippablegen#create('Swrd.', 'Sword')
+  let weapongen = vimcastle#equippablegen#create('slot', 'short name', 'long name')
 
 Execute (invoke weapon):
   let weapon = weapongen.dmg(4, 8).invoke()
 
 Then (weapon is created):
-  AssertEqual 'Swrd.', weapon.name.short
-  AssertEqual 'Sword', weapon.name.long
+  AssertEqual 'short name', weapon.name.short
+  AssertEqual 'long name', weapon.name.long
   AssertEqual 4, weapon.dmg.min
   AssertEqual 8, weapon.dmg.max
   AssertEqual 6, weapon.score
 
 Execute (invoke prefixed weapon):
-  let weapon = weapongen.prefix(1, 'Rust.', 'Rusted', 'dmg', -2, -3).invoke()
+  let weapon = weapongen.prefix(1, 'short prefix', 'long prefix', 'dmg', -2, -3).invoke()
 
 Then (modified weapon is created):
-  AssertEqual 'Rust. Swrd.', weapon.name.short
-  AssertEqual 'Rusted Sword', weapon.name.long
+  AssertEqual 'short prefix short name', weapon.name.short
+  AssertEqual 'long prefix long name', weapon.name.long
   AssertEqual 2, weapon.dmg.min
   AssertEqual 5, weapon.dmg.max
   AssertEqual 3, weapon.score
 
 Execute (invoke suffixed weapon):
-  let weapon = weapongen.suffix(1, 'of D.', 'of Doom', 'wil', 3).invoke()
+  let weapon = weapongen.suffix(1, 'short suffix', 'long suffix', 'wil', 3).invoke()
 
 Then (modified weapon is created):
-  AssertEqual 'Rust. Swrd. of D.', weapon.name.short
-  AssertEqual 'Rusted Sword of Doom', weapon.name.long
+  AssertEqual 'short prefix short name short suffix', weapon.name.short
+  AssertEqual 'long prefix long name long suffix', weapon.name.long
   AssertEqual 2, weapon.dmg.min
   AssertEqual 5, weapon.dmg.max
   AssertEqual 3, weapon.stats.wil
@@ -36,6 +36,7 @@ Execute (type shortcuts):
   let weapon = vimcastle#equippablegen#weapon('Ham.', 'Hammer', 5, 9).invoke()
 
 Then (items are created):
+  AssertEqual 'weapon', weapon.slot
   AssertEqual 5, weapon.dmg.min
   AssertEqual 9, weapon.dmg.max
   AssertEqual 7, weapon.score

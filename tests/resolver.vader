@@ -9,7 +9,7 @@ Then:
   AssertEqual 0, dmg
 
 Execute (randomized weapon damage):
-  call attacker.equipweapon(vimcastle#equippablegen#weapon('Swd.', 'Sword', 4, 8).invoke())
+  call attacker.equip(vimcastle#equippablegen#weapon('Swd.', 'Sword', 4, 8).invoke())
   call vimcastle#utils#resetrnd()
   call vimcastle#utils#setnextrnd(2) " The damage over the minimum
   call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex
@@ -19,7 +19,7 @@ Then:
   AssertEqual 6, dmg
 
 Execute (simple weapon damage):
-  call attacker.equipweapon(vimcastle#equippablegen#weapon('Swd.', 'Sword', 3, 3).invoke())
+  call attacker.equip(vimcastle#equippablegen#weapon('Swd.', 'Sword', 3, 3).invoke())
   call vimcastle#utils#resetrnd()
   call vimcastle#utils#setnextrnd(0) " The damage over the minimum
   call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex
@@ -29,7 +29,7 @@ Then:
   AssertEqual 3, dmg
 
 Execute (defense reduces damage):
-  call defender.equiparmor(vimcastle#equippablegen#armor('Arm.', 'Armor', 2).invoke())
+  call defender.equip(vimcastle#equippablegen#armor('Arm.', 'Armor', 2).invoke())
   call vimcastle#utils#resetrnd()
   call vimcastle#utils#setnextrnd(0) " The damage over the minimum
   call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex

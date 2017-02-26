@@ -17,8 +17,8 @@ function! s:setup(state) abort
 				\.setstat('str', vimcastle#utils#rnd(2) + 2)
 				\.setstat('spd', vimcastle#utils#rnd(2) + 2)
 				\.setstat('dex', vimcastle#utils#rnd(3))
-				\.equipweapon(vimcastle#stories#main#intro#weapons#get().rnd().invoke())
-				\.equiparmor(vimcastle#stories#main#intro#armors#get().rnd().invoke())
+				\.equip(vimcastle#stories#main#intro#weapons#get().rnd().invoke())
+				\.equip(vimcastle#stories#main#intro#armors#get().rnd().invoke())
 	let a:state.player.level = 1
 	let a:state.player.xp = 0
 	let a:state.player.items = [

@@ -58,7 +58,7 @@ function! s:MonstergenClass.invoke() dict abort
 	endif
 	let monster = vimcastle#character#create(name, health).setstats(stats)
 	if(exists('self.weapons'))
-		call monster.equipweapon(self.weapons.rnd().invoke())
+		call monster.equip(self.weapons.rnd().invoke())
 	endif
 	let monster.level = self.baselevel
 	let monster.xp = self.basexp

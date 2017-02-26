@@ -15,9 +15,9 @@ Then (character has default stats):
 
 Execute (character has equipment):
   let weapon = vimcastle#equippablegen#weapon('', '', 7, 12).stat('wil', 5).invoke()
-  call player.equipweapon(weapon)
+  call player.equip(weapon)
   let armor = vimcastle#equippablegen#armor('', '', 35).stat('wil', 4).stat('con', 6).invoke()
-  call player.equiparmor(armor)
+  call player.equip(armor)
 
 Then (character has aggregated stats):
   AssertEqual 9, player.getstat('wil', 1)

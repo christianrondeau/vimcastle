@@ -5,7 +5,7 @@ Execute (test setup):
   let state.player.health = 80
   call state.player.setstat('str', 4)
   call state.player.setstat('spd', 2)
-  call state.player.equipweapon(vimcastle#equippablegen#weapon('', '', 4, 7).stat('str', 2).invoke())
+  call state.player.equip(vimcastle#equippablegen#weapon('', '', 4, 7).stat('str', 2).invoke())
   let state.log = ['This should not be shown!']
   call state.actions().addNoop('b',  'Back')
 

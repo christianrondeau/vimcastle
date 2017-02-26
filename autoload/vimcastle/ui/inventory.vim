@@ -3,14 +3,14 @@ function! vimcastle#ui#inventory#draw(screen, state) abort
 
 	if(exists('a:state.player.equipment.weapon'))
 		let weapon = a:state.player.equipment.weapon
-		call s:showitemname('Weapon', weapon)
+		call s:showitemname(weapon)
 		call s:showitemdmg(weapon)
 		call s:showitemstats(weapon)
 	endif
 
 	if(exists('a:state.player.equipment.armor'))
 		let armor = a:state.player.equipment.armor
-		call s:showitemname('Armor', armor)
+		call s:showitemname(armor)
 		call s:showitemstats(armor)
 	endif
 
@@ -26,8 +26,9 @@ function! vimcastle#ui#inventory#draw(screen, state) abort
 	call vimcastle#ui#actions#draw(a:state.actions())
 endfunction
 
-function! s:showitemname(type, item) abort
-	call append(line('$'), '* ' . a:type . ': <' . a:item.name.long . '>')
+function! s:showitemname(item) abort
+	let type = substitute(a:item.slot,'\(\<\w\+\>\)', '\u\1', 'g')
+	call append(line('$'), '* ' . type . ': <' . a:item.name.long . '>')
 endfunction
 
 function! s:showitemdmg(item) abort

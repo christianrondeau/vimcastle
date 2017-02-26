@@ -3,14 +3,14 @@ Execute (setup):
   let playerweapon = vimcastle#equippablegen#weapon('Weap.', 'Weapon', 4, 4)
   let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
     \.setstat('spd', 5)
-    \.equipweapon(playerweapon.invoke())
+    \.equip(playerweapon.invoke())
   let state.player = player
   let enemyweapon = vimcastle#equippablegen#weapon('Tent.', 'Tentacle', 3, 3)
   let enemy = vimcastle#monstergen#create('Mon.', 'Monster')
     \.health(200)
     \.stat('spd', 2)
     \.invoke()
-    \.equipweapon(enemyweapon.invoke())
+    \.equip(enemyweapon.invoke())
   let state.enemy = enemy
 
 Execute (enter):

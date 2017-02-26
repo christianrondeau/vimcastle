@@ -19,7 +19,6 @@
 
 ## Refactors
 
-* [ ] Make the slot part of equippable instead of .equip
 * [ ] Test invoking all items and weapons
 * [ ] Test all monsters w/ level (max dmg, max def, etc)
 * [ ] Are event name useful?

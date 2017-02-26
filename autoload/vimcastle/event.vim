@@ -154,7 +154,7 @@ function! s:action_pickup_item(state) abort
 endfunction
 
 function! s:action_equip_equippable(state) abort
-	call a:state.player.equip('weapon', a:state.ground_equippable)
+	call a:state.player.equip(a:state.ground_equippable)
 	call s:cleanup(a:state)
 	call a:state.scene.events.rnd().invoke(a:state)
 endfunction
