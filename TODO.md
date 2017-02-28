@@ -9,9 +9,7 @@
 * [ ] Increase probabilities over time
 * [ ] Max inventory / drop items
 * [ ] Usable items (hurt enemy)
-* [ ] More effects (hurt and potentially die, win XP and potentially level up, gain stats e.g. +str)
-* [ ] Auto combat (skip)
-* [ ] Custom text per weapon (slash, crush, aim and fire...)
+* [ ] More effects (hurt and potentially die, win XP and potentially level up, gain stats e.g. +def, +dex)
 * [ ] Show enemy level in fights, your level and enter scene level
 * [ ] Allow specifying a 'next event' (e.g. after a boss, or logical sequence)
 * [ ] Teleport scroll
@@ -31,6 +29,9 @@
 
 ## Backlog
 
+* [ ] Look at enemy description
+* [ ] Auto combat (skip)
+* [ ] Custom text per weapon (slash, crush, aim and fire...)
 * [ ] Scene can depend on you being (str)ong enough, etc.
 * [ ] Tutorial (predetermined seq. of events) + Test that plays a complete game incl. menu
 * [ ] Flee combat

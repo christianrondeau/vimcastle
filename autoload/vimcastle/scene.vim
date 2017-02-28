@@ -2,10 +2,12 @@ let s:SceneClass = {}
 
 function! vimcastle#scene#create() abort
 	let scene = copy(s:SceneClass)
-	let scene.weapons = vimcastle#repository#create()
 	let scene.events = vimcastle#repository#create()
-	let scene.monsters = vimcastle#repository#create()
 	return scene
+endfunction
+
+function! vimcastle#scene#loadintro(story) abort
+	return vimcastle#scene#load(a:story, 'intro')
 endfunction
 
 function! vimcastle#scene#load(story, name) abort

@@ -1,0 +1,21 @@
+Execute (initialize):
+  let storyname = 'main'
+  let scenes = {}
+  execute 'let scenenames = vimcastle#stories#' . storyname . '#index#scenes()'
+  for scenename in scenenames
+    let scenes[scenename] = vimcastle#scene#load(storyname, scenename)
+  endfor
+
+Execute (invoke all events):
+  let state = vimcastle#state#create()
+  let state.scene = vimcastle#scene#loadintro(storyname)
+  call state.scene.enter.invoke(state)
+  for scenename in keys(scenes)
+    for event in scenes[scenename].events.items
+      try
+        call event.value.invoke(state)
+      catch
+        throw 'Scene "' . storyname . '/' . scenename . '" has an error: ' . v:exception
+      endtry
+    endfor
+  endfor

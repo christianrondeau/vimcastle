@@ -33,7 +33,7 @@ function! s:VimcastleTestutilsClass.playgame(maxturns) dict abort
 	let stats.log = []
 
 	let state = vimcastle#state#create()
-	let state.scene = vimcastle#scene#load('main', 'intro')
+	let state.scene = vimcastle#scene#loadintro('main')
 	call state.enter('explore')
 	call state.scene.enter.invoke(state)
 	let stats.log += state.log
