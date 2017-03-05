@@ -2,7 +2,7 @@ function! vimcastle#state#use#enter(state) abort
 	call s:refresh_menu(a:state)
 endfunction
 
-function! s:refresh_menu(state)
+function! s:refresh_menu(state) abort
  	call a:state.actions().clear()
 
 	if(exists('a:state.player.items') && len(a:state.player.items))
@@ -23,7 +23,7 @@ endfunction
 " NOTE: Cannot use arglist in 7.4
 " call a:state.actions().add('' . index, '...', function('s:action_use', [index]))
 for i in range(9)
-	execute "function! s:action_use_" . (i+1) . "(state) abort\ncall s:action_use(a:state, " . (i+1) . ")\nendfunction"
+	execute 'function! s:action_use_' . (i+1) . "(state) abort\ncall s:action_use(a:state, " . (i+1) . ")\nendfunction"
 endfor
 " }}}
 
@@ -38,6 +38,7 @@ function! s:action_use(state, index) abort
 	call a:state.addlog('Use: <' . item.label . '>')
 
 	let effect_value = exists('item.value') ? item.value : 0
+	let result = 0
 	execute 'let result = vimcastle#effects#' . item.effect . '(a:state, effect_value)'
 
 	if(result)

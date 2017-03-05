@@ -38,14 +38,14 @@ function! s:VimcastleTestutilsClass.playgame(maxturns) dict abort
 	call state.scene.enter.invoke(state)
 	let stats.log += state.log
 
-	while stats.turns < a:maxturns && state.screen != 'gameover'
+	while stats.turns < a:maxturns && state.screen !=# 'gameover'
 		let stats.turns += 1
 		call add(stats.log, '---- TURN ' . stats.turns)
 		let health = state.player.health
 
 		if(exists('state.ground_equippable'))
 			call self.playfindequippable(stats, state)
-		elseif(state.screen == 'fight')
+		elseif(state.screen ==# 'fight')
 			call self.playfight(stats, state)
 		else
 			call self.playdefault(stats, state)
@@ -76,7 +76,7 @@ endfunction
 
 function! s:VimcastleTestutilsClass.playfight(stats, state) dict abort
 	let itemidx = s:indexofitemwitheffect(a:state.player.items, 'heal')
-	if(a:state.actions().display[0].key == 'c')
+	if(a:state.actions().display[0].key ==# 'c')
 		call add(a:stats.log, 'PLAY: c (fight complete)')
 		call a:state.actions().invokeByKey('c', a:state)
 	elseif(itemidx > -1 && a:state.player.health < (a:state.player.getstat('health', 1) / 3))
@@ -103,7 +103,7 @@ function! s:indexofitemwitheffect(items, effect) abort
 	let i = 0
 	while i < 9 && i < len(a:items)
 		let item = a:items[i]
-		if(item.effect == a:effect)
+		if(item.effect ==# a:effect)
 			return i
 		endif
 		let i += 1
