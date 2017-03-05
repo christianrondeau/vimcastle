@@ -11,6 +11,7 @@ Execute (invoke all events):
   let state.scene = vimcastle#scene#loadintro(storyname)
   call state.scene.enter.invoke(state)
   for scenename in keys(scenes)
+    Log 'Scene: ' . scenename
     " EVENTS
     for event in scenes[scenename].events.items
       try
@@ -22,7 +23,12 @@ Execute (invoke all events):
     " MONSTERS
     let f = 'vimcastle#stories#' . storyname . '#' . scenename . '#monsters#get'
     try
+      let repo = {}
       execute 'let repo = ' . f . '()'
+      for monstergen in repo.items
+        let monster = monstergen.value.invoke()
+        Log '  Monster: ' . monster.name.long . ' (lvl ' . monster.level . ')'
+      endfor
     catch
       throw 'Scene "' . storyname . '/' . scenename . '" has an erroneous monsters: ' . v:exception
     endtry
