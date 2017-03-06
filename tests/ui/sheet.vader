@@ -2,6 +2,8 @@ Execute (test setup):
   let screen = { 'width': 30 }
   let state = vimcastle#state#create()
   let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 70)
+  let state.player.level = 3
+  let state.player.xp = 26
   let state.player.health = 80
   call state.player.setstat('con', 3)
   call state.player.setstat('str', 4)
@@ -17,6 +19,8 @@ Expect (character screen):
   ------- Character Sheet ------
 
   * Name: Player
+  * Level: 3
+  * XP: 26 (next level: 40)
   * Stats:
     * health: 80/85
       Total damage you can receive before dying

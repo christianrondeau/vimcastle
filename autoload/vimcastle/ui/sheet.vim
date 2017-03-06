@@ -2,6 +2,8 @@ function! vimcastle#ui#sheet#draw(screen, state) abort
 	call vimcastle#ui#common#drawtitle(a:screen, 'Character Sheet')
 
 	call append(line('$'), '* Name: ' . a:state.player.name.long)
+	call append(line('$'), '* Level: ' . a:state.player.level)
+	call append(line('$'), '* XP: ' . a:state.player.xp . ' (next level: ' . vimcastle#levelling#forxp(a:state.player.xp)[1] . ')')
 	call append(line('$'), '* Stats:')
 	call s:showhealth(a:state.player, 'Total damage you can receive before dying')
 	call s:showstat(a:state.player, 'con', 'Increases your base health')
