@@ -1,3 +1,6 @@
+After (clean random):
+  call vimcastle#utils#resetrnd()
+
 Execute (setup):
   let attacker = vimcastle#character#create({ 'short': 'A.', 'long': 'Attacker' }, 100)
   let defender = vimcastle#character#create({ 'short': 'D.', 'long': 'Defender' }, 100)
@@ -11,8 +14,7 @@ Then:
 Execute (randomized weapon damage):
   call attacker.equip(vimcastle#equippablegen#weapon('Swd.', 'Sword', 4, 8).invoke())
   call vimcastle#utils#resetrnd()
-  call vimcastle#utils#setnextrnd(2) " The damage over the minimum
-  call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex
+  call vimcastle#utils#setnextrnd([2, 100, 0])
   let dmg = vimcastle#resolver#hit(attacker, defender)
 
 Then:
@@ -21,8 +23,7 @@ Then:
 Execute (simple weapon damage):
   call attacker.equip(vimcastle#equippablegen#weapon('Swd.', 'Sword', 3, 3).invoke())
   call vimcastle#utils#resetrnd()
-  call vimcastle#utils#setnextrnd(0) " The damage over the minimum
-  call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex
+  call vimcastle#utils#setnextrnd([0, 100, 0])
   let dmg = vimcastle#resolver#hit(attacker, defender)
 
 Then:
@@ -31,8 +32,7 @@ Then:
 Execute (defense reduces damage):
   call defender.equip(vimcastle#equippablegen#armor('Arm.', 'Armor', 2).invoke())
   call vimcastle#utils#resetrnd()
-  call vimcastle#utils#setnextrnd(0) " The damage over the minimum
-  call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex
+  call vimcastle#utils#setnextrnd([0, 100, 0])
   let dmg = vimcastle#resolver#hit(attacker, defender)
 
 Then:
@@ -41,8 +41,7 @@ Then:
 Execute (strength increases damage):
   call attacker.setstat('str', 4)
   call vimcastle#utils#resetrnd()
-  call vimcastle#utils#setnextrnd(0) " The damage over the minimum
-  call vimcastle#utils#setnextrnd(100) " The dex roll must be <= to dex
+  call vimcastle#utils#setnextrnd([0, 100, 0])
   let dmg = vimcastle#resolver#hit(attacker, defender)
 
 Then:
@@ -51,12 +50,8 @@ Then:
 Execute (dex increases crit chances):
   call attacker.setstat('dex', 4)
   call vimcastle#utils#resetrnd()
-  call vimcastle#utils#setnextrnd(0) " The damage over the minimum
-  call vimcastle#utils#setnextrnd(4) " The dex roll must be <= to dex
+  call vimcastle#utils#setnextrnd([0, 4, 0])
   let dmg = vimcastle#resolver#hit(attacker, defender)
 
 Then:
   AssertEqual '10 critical', dmg
-
-After (clean random):
-  call vimcastle#utils#resetrnd()

@@ -18,7 +18,7 @@ Expect (character screen):
 
   * Name: Player
   * Stats:
-    * health: 80/100
+    * health: 80/85
       Total damage you can receive before dying
     * con: 3
       Increases your base health

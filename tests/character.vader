@@ -13,7 +13,7 @@ Execute (increase stats):
 Then (character has updated stats):
   AssertEqual 5, player.getstat('con', 0), 'base'
   AssertEqual 5, player.getstat('con', 1), 'combined'
-  AssertEqual 150, player.getmaxhealth()
+  AssertEqual 125, player.getmaxhealth()
 
 Execute (character has equipment):
   let weapon = vimcastle#equippablegen#weapon('', '', 7, 12).stat('wil', 5).invoke()
@@ -24,7 +24,7 @@ Execute (character has equipment):
 Then (character has aggregated stats):
   AssertEqual 9, player.getstat('wil', 1)
   AssertEqual 11, player.getstat('con', 1)
-  AssertEqual 210, player.getmaxhealth()
+  AssertEqual 155, player.getmaxhealth()
 
 Execute (character picks up items):
   let item1 = {'label': '1'}

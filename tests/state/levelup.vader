@@ -26,8 +26,8 @@ Then (health increases, another level):
   let player.level = 2
   let player.xp = 22
   AssertEqual 3, player.getstat('con', 0)
-  AssertEqual 80, player.getmaxhealth()
-  AssertEqual 80, player.health
+  AssertEqual 65, player.getmaxhealth()
+  AssertEqual 65, player.health
   AssertEqual ['Your health was replenished! Select a skill to increase.'], state.log
   AssertEqual [
     \ {'label': 'Increase con 3 -> 4', 'key': '1'},

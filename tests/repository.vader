@@ -1,3 +1,6 @@
+After (clean random):
+  call vimcastle#utils#resetrnd()
+
 Execute (setup actions):
   let repo = vimcastle#repository#create()
   call repo.add(1, 'value1')
@@ -29,6 +32,3 @@ Then (once picked, is removed):
   AssertEqual 'value1', repo.rnd()
   call vimcastle#utils#setnextrnd(0)
   AssertEqual 'value2', repo.rnd()
-
-After (clean random):
-  call vimcastle#utils#resetrnd()

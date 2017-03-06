@@ -49,7 +49,7 @@ function! s:CharacterClass.setstats(stats) dict abort
 endfunction
 
 function! s:CharacterClass.getmaxhealth() dict abort
-	return self.basehealth + self.getstat('con', 1) * 10
+	return self.basehealth + self.getstat('con', 1) * 5
 endfunction
 
 " }}}

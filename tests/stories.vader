@@ -1,3 +1,6 @@
+After (clean random):
+  call vimcastle#utils#resetrnd()
+
 Execute (initialize):
   let testutils = vimcastle#testutils#create()
   let storyname = 'main'
@@ -8,6 +11,7 @@ Execute (initialize):
   endfor
 
 Execute (invoke all events):
+  call vimcastle#utils#setnextrnd(2)
   let state = vimcastle#state#create()
   let state.scene = vimcastle#scene#loadintro(storyname)
   call state.scene.enter.invoke(state)
@@ -21,6 +25,30 @@ Execute (invoke all events):
         throw 'Scene "' . storyname . '/' . scenename . '" has an error: ' . v:exception
       endtry
     endfor
+    " EQUIPPABLES
+    try
+      let equippables = []
+      try
+        let f = 'vimcastle#stories#' . storyname . '#' . scenename . '#weapons#get'
+        let repo = {}
+        execute 'let repo = ' . f . '()'
+        let equippables += repo.items
+      catch
+      endtry
+      try
+        let f = 'vimcastle#stories#' . storyname . '#' . scenename . '#armors#get'
+        let repo = {}
+        execute 'let repo = ' . f . '()'
+        let equippables += repo.items
+      catch
+      endtry
+      for equippablegen in equippables
+        let equippable = equippablegen.value.invoke()
+        Log '  Equippable (' . equippable.slot . '): ' . equippable.name.long . ' - score: ' . equippable.score
+      endfor
+    catch
+      throw 'Scene "' . storyname . '/' . scenename . '" has an erroneous equippable: ' . v:exception
+    endtry
     " MONSTERS
     let f = 'vimcastle#stories#' . storyname . '#' . scenename . '#monsters#get'
     try

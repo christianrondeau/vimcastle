@@ -46,4 +46,3 @@ Then (the state is clean):
   Assert !len(state.actions().display), 'actions are empty'
   Assert !len(state.actions().display), 'actions are empty'
 
-
