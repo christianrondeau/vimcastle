@@ -1,6 +1,6 @@
 Execute (initialize stats):
-  let maxplaythroughs = 50
-  let maxturns = 500
+  let maxplaythroughs = 30
+  let maxturns = 400
   let testutils = vimcastle#testutils#create()
 
 Execute (play once):

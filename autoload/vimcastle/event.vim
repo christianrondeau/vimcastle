@@ -170,13 +170,15 @@ function! s:cleanup(state) abort
 endfunction
 
 function! s:showequippablediff(state) abort
-	if(exists('a:state.player.equipment.weapon'))
-		let current = a:state.player.equipment.weapon
+	if(has_key(a:state.player.equipment, a:state.ground_equippable.slot))
+		let current = a:state.player.equipment[a:state.ground_equippable.slot]
 	else
-		let current = vimcastle#equippablegen#weapon('', '', 0, 0)
+		let current = vimcastle#equippablegen#create(a:state.ground_equippable.slot, 0, 0)
 	endif
 
-	call s:showequippabledmg(a:state, current, a:state.ground_equippable)
+	if(a:state.ground_equippable.slot ==# 'weapon')
+		call s:showequippabledmg(a:state, current, a:state.ground_equippable)
+	endif
 	call s:showequippablestats(a:state, current, a:state.ground_equippable)
 endfunction
 
