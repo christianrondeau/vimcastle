@@ -7,6 +7,32 @@ function! vimcastle#testutils#create() abort
 	return utils
 endfunction
 
+function! vimcastle#testutils#noop(...) abort
+endfunction
+
+function! s:VimcastleTestutilsClass.givenstate(story, level) dict abort
+	let state = vimcastle#state#create()
+  let state.scene = vimcastle#scene#loadintro(a:story)
+  call state.scene.enter.invoke(state)
+	while(state.player.level < a:level)
+		let next = vimcastle#levelling#forxp(state.player.xp)
+		let state.player.xp = next[1]
+		call state.enter('levelup')
+		let state.nextaction = function('vimcastle#testutils#noop')
+		call self.playdefault({'log': []}, state)
+	endwhile
+	return state
+endfunction
+
+function! s:VimcastleTestutilsClass.autofight(state, monster) dict abort
+	let a:state.enemy = a:monster
+	let a:state.nextaction = function('vimcastle#testutils#noop')
+	call vimcastle#state#fight#enter(a:state)
+	let stats = {'log': []}
+	call self.playfight(stats, a:state)
+	return stats
+endfunction
+
 function! s:VimcastleTestutilsClass.playgames(maxplaythroughs, maxturns) dict abort
 	let totalstats = {}
 	let totalstats.playthroughs = 0

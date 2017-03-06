@@ -1,4 +1,5 @@
 Execute (initialize):
+  let testutils = vimcastle#testutils#create()
   let storyname = 'main'
   let scenes = {}
   execute 'let scenenames = vimcastle#stories#' . storyname . '#index#scenes()'
@@ -27,7 +28,23 @@ Execute (invoke all events):
       execute 'let repo = ' . f . '()'
       for monstergen in repo.items
         let monster = monstergen.value.invoke()
-        Log '  Monster: ' . monster.name.long . ' (lvl ' . monster.level . ')'
+        let tempstate = testutils.givenstate(storyname, monster.level)
+        let stats = testutils.autofight(tempstate, monster)
+        if(tempstate.player.health <= 0)
+          throw 'Scene "' . storyname . '/' . scenename . '" has a monster that is too difficult: ' . monster.name.long
+        endif
+        let difficulty = 100 - (tempstate.player.health * 100 / tempstate.player.getstat('health', 1))
+        let difficultyname = ''
+        if(difficulty < 15)
+          let difficultyname = 'EASY'
+        elseif(difficulty < 30)
+          let difficultyname = 'MEDIUM'
+        elseif(difficulty < 50)
+          let difficultyname = 'HARD'
+        else
+          let difficultyname = 'EXTREME'
+        endif
+        Log '  Monster: ' . monster.name.long . ' (lvl ' . monster.level . ') - combat: ' . len(stats.log) . ' turns, hp: ' . tempstate.player.health . '/' . tempstate.player.getstat('health', 1) . ' - Difficulty: ' . difficulty . '% (' . difficultyname . ')'
       endfor
     catch
       throw 'Scene "' . storyname . '/' . scenename . '" has an erroneous monsters: ' . v:exception
