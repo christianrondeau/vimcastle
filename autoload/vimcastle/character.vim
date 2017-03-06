@@ -5,12 +5,12 @@ function! vimcastle#character#create(name, health) abort
 	call vimcastle#utils#validate(a:name.long, 1)
 	let character = copy(s:CharacterClass)
 	let character.name = a:name
+	let character.basehealth = a:health
 	let character.health = a:health
 	let character.equipment = {}
 	let character.level = 0
 	let character.xp = 0
 	let character.stats = {}
-	call character.setstat('health', a:health)
 	return character
 endfunction
 
@@ -46,6 +46,10 @@ function! s:CharacterClass.setstats(stats) dict abort
 		let self.stats[name] = a:stats[name]
 	endfor
 	return self
+endfunction
+
+function! s:CharacterClass.getmaxhealth() dict abort
+	return self.basehealth + self.getstat('con', 1) * 10
 endfunction
 
 " }}}

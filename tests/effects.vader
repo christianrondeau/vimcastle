@@ -29,7 +29,7 @@ Execute (gainhealth):
   let state.player.health = 90
   let result = vimcastle#effects#gainhealth(state, 20)
   AssertEqual 110, state.player.health
-  AssertEqual 120, state.player.getstat('health', 0)
+  AssertEqual 120, state.player.getmaxhealth()
   AssertEqual ['You gain <+20> to your maximum health permanently.'], state.log
 
 Execute (gainstr):

@@ -3,7 +3,7 @@ function! vimcastle#state#levelup#enter(state) abort
 
 	call a:state.actions().clear()
 
-	call s:addincreaseaction('1', a:state, 'health', 10)
+	call s:addincreaseaction('1', a:state, 'con', 1)
 	call s:addincreaseaction('2', a:state, 'str', 1)
 	call s:addincreaseaction('3', a:state, 'spd', 1)
 	call s:addincreaseaction('4', a:state, 'dex', 1)
@@ -27,8 +27,8 @@ function! s:action_incr_dex(state) abort
 	return s:action_incr(a:state, 'dex', 1)
 endfunction
 
-function! s:action_incr_health(state) abort
-	return s:action_incr(a:state, 'health', 10)
+function! s:action_incr_con(state) abort
+	return s:action_incr(a:state, 'con', 1)
 endfunction
 
 function! s:action_incr(state, stat, by) abort
@@ -38,7 +38,7 @@ function! s:action_incr(state, stat, by) abort
 endfunction
 
 function! s:action_continue(state) abort
-	let maxhealth = a:state.player.getstat('health', 1)
+	let maxhealth = a:state.player.getmaxhealth()
 	if(a:state.player.health < maxhealth)
 		let a:state.player.health = maxhealth
 	endif

@@ -4,14 +4,16 @@ Execute (empty character):
 Then (character has default stats):
   AssertEqual 0, player.getstat('con', 0)
   AssertEqual 0, player.getstat('str', 0)
+  AssertEqual 100, player.getmaxhealth()
 
 Execute (increase stats):
   call player.setstat('con', 2)
   call player.setstat('con', player.getstat('con', 0) + 3)
 
-Then (character has default stats):
+Then (character has updated stats):
   AssertEqual 5, player.getstat('con', 0), 'base'
   AssertEqual 5, player.getstat('con', 1), 'combined'
+  AssertEqual 150, player.getmaxhealth()
 
 Execute (character has equipment):
   let weapon = vimcastle#equippablegen#weapon('', '', 7, 12).stat('wil', 5).invoke()
@@ -22,6 +24,7 @@ Execute (character has equipment):
 Then (character has aggregated stats):
   AssertEqual 9, player.getstat('wil', 1)
   AssertEqual 11, player.getstat('con', 1)
+  AssertEqual 210, player.getmaxhealth()
 
 Execute (character picks up items):
   let item1 = {'label': '1'}

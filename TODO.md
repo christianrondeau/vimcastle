@@ -36,7 +36,7 @@
 * [ ] Tutorial (predetermined seq. of events) + Test that plays a complete game incl. menu
 * [ ] Flee combat
 * [ ] Spells (?) - multi turn casting + interruptions
-* [ ] con (health), wil (interrupt), spi (magic str)
+* [ ] wil (interrupt), spi (magic str)
 * [ ] Character class? (May provide special bonuses)
 * [ ] Create character (name, assign stats)
 * [ ] Keys (required to proceed to other scenes)

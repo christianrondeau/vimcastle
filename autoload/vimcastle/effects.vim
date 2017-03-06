@@ -2,7 +2,7 @@ function! vimcastle#effects#none(state, value) abort
 endfunction
 
 function! vimcastle#effects#heal(state, value) abort
-	let maxhealth = a:state.player.getstat('health', 1)
+	let maxhealth = a:state.player.getmaxhealth()
 
 	if(a:state.player.health >= maxhealth)
 		call a:state.addlog('Your health is already full!')
@@ -22,7 +22,7 @@ function! vimcastle#effects#heal(state, value) abort
 endfunction
 
 function! vimcastle#effects#gainhealth(state, value) abort
-	call s:incrstat(a:state, 'health', a:value)
+	let a:state.player.basehealth += a:value
 	let a:state.player.health  += a:value
 	call a:state.addlog('You gain <+' . a:value . '> to your maximum health permanently.')
 	return 1

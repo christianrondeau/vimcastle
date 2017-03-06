@@ -1,8 +1,9 @@
 Execute (test setup):
   let screen = { 'width': 30 }
   let state = vimcastle#state#create()
-  let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 70)
   let state.player.health = 80
+  call state.player.setstat('con', 3)
   call state.player.setstat('str', 4)
   call state.player.setstat('spd', 2)
   call state.player.equip(vimcastle#equippablegen#weapon('', '', 4, 7).stat('str', 2).invoke())
@@ -17,8 +18,10 @@ Expect (character screen):
 
   * Name: Player
   * Stats:
-    * health: 100
+    * health: 80/100
       Total damage you can receive before dying
+    * con: 3
+      Increases your base health
     * str: 4 [+2]
       Increases base attack damage
     * spd: 2

@@ -37,7 +37,7 @@ function! s:action_look(state) abort
 
 	call a:state.addlog('You look at %<enemy.name>')
 
-	call a:state.addlog('* Health: ' . a:state.enemy.health . '/' . a:state.enemy.getstat('health', 1))
+	call a:state.addlog('* Health: ' . a:state.enemy.health . '/' . a:state.enemy.getmaxhealth())
 
 	let weapon = a:state.enemy.equipment.weapon
 	call a:state.addlog('* Weapon: %<enemy.weapon> (' . weapon.dmg.min . '-' . weapon.dmg.max . ' dmg)')

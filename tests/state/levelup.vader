@@ -1,6 +1,7 @@
 Execute (setup):
   let state = vimcastle#state#create()
   let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 50)
+    \.setstat('con', 2)
     \.setstat('str', 3)
     \.setstat('spd', 4)
     \.setstat('dex', 5)
@@ -12,23 +13,24 @@ Execute (setup):
 Then (has actions):
   AssertEqual ['Your health was replenished! Select a skill to increase.'], state.log
   AssertEqual [
-    \ {'label': 'Increase health 50 -> 60', 'key': '1'},
+    \ {'label': 'Increase con 2 -> 3', 'key': '1'},
     \ {'label': 'Increase str 3 -> 4', 'key': '2'},
     \ {'label': 'Increase spd 4 -> 5', 'key': '3'},
     \ {'label': 'Increase dex 5 -> 6', 'key': '4'}
     \], state.actions().display
 
-Execute (increase health):
+Execute (increase con):
   call state.actions().invokeByKey('1', state)
 
 Then (health increases, another level):
   let player.level = 2
   let player.xp = 22
-  AssertEqual 60, player.getstat('health', 0)
-  AssertEqual 60, player.health
+  AssertEqual 3, player.getstat('con', 0)
+  AssertEqual 80, player.getmaxhealth()
+  AssertEqual 80, player.health
   AssertEqual ['Your health was replenished! Select a skill to increase.'], state.log
   AssertEqual [
-    \ {'label': 'Increase health 60 -> 70', 'key': '1'},
+    \ {'label': 'Increase con 3 -> 4', 'key': '1'},
     \ {'label': 'Increase str 3 -> 4', 'key': '2'},
     \ {'label': 'Increase spd 4 -> 5', 'key': '3'},
     \ {'label': 'Increase dex 5 -> 6', 'key': '4'}

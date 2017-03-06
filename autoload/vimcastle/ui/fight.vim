@@ -2,7 +2,7 @@ function! vimcastle#ui#fight#draw(screen, state) abort
 	call vimcastle#ui#common#drawtitle(a:screen, 'Fight!')
 
 	call s:drawsides(a:screen, a:state.player.name.short,a:state.enemy.name.short)
-	call s:drawbars(a:screen, a:state.player.health, a:state.player.getstat('health', 1), a:state.enemy.health, a:state.enemy.getstat('health', 1), '-')
+	call s:drawbars(a:screen, a:state.player.health, a:state.player.getmaxhealth(), a:state.enemy.health, a:state.enemy.getmaxhealth(), '-')
 	call append(line('$'), '')
 
 	if(len(a:state.log))
