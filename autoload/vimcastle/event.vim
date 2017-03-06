@@ -99,7 +99,9 @@ function! s:EventClass.invoke(state) dict abort
 		" NOTE: Cannot use arglist in 7.4
 		" call a:state.actions().add('e', self.action_enterscene_text, function('s:action_enterscene', [self.nextscene]))
 		let a:state.nextscene = self.nextscene
-		call a:state.actions().add('e', self.action_enterscene_text, function('s:action_enterscene'))
+		let sceneinfo = {}
+		execute 'let sceneinfo = vimcastle#stories#' . a:state.scene.story . '#' . a:state.nextscene . '#index#info()'
+		call a:state.actions().add('e', self.action_enterscene_text . ' (level ' . sceneinfo.level . ')', function('s:action_enterscene'))
 	endif
 
 	if(exists('a:state.ground_item'))

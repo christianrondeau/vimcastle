@@ -16,9 +16,10 @@ Execute (invoke all events):
   let state.scene = vimcastle#scene#loadintro(storyname)
   call state.scene.enter.invoke(state)
   for scenename in keys(scenes)
-    Log 'Scene: ' . scenename
+    let scene = scenes[scenename]
+    Log 'Scene: ' . scenename . ' (level ' . scene.info.level . ')'
     " EVENTS
-    for event in scenes[scenename].events.items
+    for event in scene.events.items
       try
         call event.value.invoke(state)
       catch
@@ -56,7 +57,7 @@ Execute (invoke all events):
       execute 'let repo = ' . f . '()'
       for monstergen in repo.items
         let monster = monstergen.value.invoke()
-        let tempstate = testutils.givenstate(storyname, monster.level)
+        let tempstate = testutils.givenstate(storyname, scene.info.level)
         let stats = testutils.autofight(tempstate, monster)
         if(tempstate.player.health <= 0)
           throw 'Scene "' . storyname . '/' . scenename . '" has a monster that is too difficult: ' . monster.name.long

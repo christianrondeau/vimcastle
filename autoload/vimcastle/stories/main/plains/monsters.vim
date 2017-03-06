@@ -34,7 +34,7 @@ endfunction
 
 function! s:monster_ogre() abort
 	return vimcastle#monstergen#create('Ogre', 'Ogre')
-				\.health(50)
+				\.health(40)
 				\.level(3)
 				\.xp(4)
 				\.stat('spd', 1)

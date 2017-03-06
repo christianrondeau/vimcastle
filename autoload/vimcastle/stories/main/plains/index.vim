@@ -1,5 +1,12 @@
+function! vimcastle#stories#main#plains#index#info() abort
+	return {
+				\  'label': 'Plains',
+				\  'level': 1
+				\}
+endfunction
+
 function! vimcastle#stories#main#plains#index#load(scene) abort
-	let a:scene.label = 'Plains'
+	let a:scene.info = vimcastle#stories#main#plains#index#info()
 	let a:scene.enter = s:event_enter()
 
 	call a:scene.events.add(30, s:event_nothing())

@@ -1,5 +1,5 @@
 function! vimcastle#ui#explore#draw(screen, state) abort
-	call vimcastle#ui#common#drawtitle(a:screen, a:state.scene.label)
+	call vimcastle#ui#common#drawtitle(a:screen, a:state.scene.info.label)
 
 	if(exists('a:state.player.health'))
 		call s:drawbar(a:screen, a:state.player.health, a:state.player.getmaxhealth())

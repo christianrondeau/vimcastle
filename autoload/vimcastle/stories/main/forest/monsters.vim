@@ -9,7 +9,7 @@ endfunction
 function! s:monster_wolf() abort
 	return vimcastle#monstergen#create('Wolf', 'Wolf')
 				\.health(30)
-				\.level(8)
+				\.level(6)
 				\.xp(12)
 				\.weapon(vimcastle#equippablegen#weapon('Paw', 'Paw', 8, 14))
 endfunction

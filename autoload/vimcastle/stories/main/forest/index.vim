@@ -1,5 +1,12 @@
+function! vimcastle#stories#main#forest#index#info() abort
+	return {
+				\  'label': 'Forest',
+				\  'level': 7
+				\}
+endfunction
+
 function! vimcastle#stories#main#forest#index#load(scene) abort
-	let a:scene.label = 'Forest'
+	let a:scene.info = vimcastle#stories#main#forest#index#info()
 	let a:scene.enter = s:event_enter()
 	call a:scene.events.add(30, s:event_nothing())
 	call a:scene.events.add(60, s:event_encounter())
