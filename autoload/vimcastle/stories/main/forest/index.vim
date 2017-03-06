@@ -32,7 +32,7 @@ function! s:event_encounter() abort
 				\ 'You hear a sound from behind a tree, and you see %<enemy.name>!',
 				\ 'Out of a hole, jumps %<enemy.name>!'
 				\])
-				\.fight('Fight!', vimcastle#stories#main#plains#monsters#get())
+				\.fight('Fight!', vimcastle#stories#main#forest#monsters#get())
 endfunction
 
 function! s:event_heal() abort

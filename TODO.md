@@ -9,7 +9,7 @@
 * [ ] Increase probabilities over time
 * [ ] Max inventory / drop items
 * [ ] Usable items (hurt enemy)
-* [ ] More effects (hurt and potentially die, win XP and potentially level up, gain stats e.g. +def, +dex)
+* [ ] More effects (hurt and potentially die, win XP and potentially level up, gain stats e.g. +def, +dex, +con)
 * [ ] Show enemy level in fights, your level and enter scene level
 * [ ] Allow specifying a 'next event' (e.g. after a boss, or logical sequence)
 * [ ] Teleport scroll

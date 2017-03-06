@@ -7,7 +7,7 @@ Execute (create event):
 
 Execute (event executes):
   call event.invoke(state)
-  AssertEqual [{'label': 'Fight', 'key': 'f'}], state.actions().display
+  AssertEqual [{'label': 'Fight (level 1)', 'key': 'f'}], state.actions().display
   AssertEqual ['There is a <Imp> before you!'], state.log
 
 Execute (fight):

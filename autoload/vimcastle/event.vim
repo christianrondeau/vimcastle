@@ -91,8 +91,8 @@ function! s:EventClass.invoke(state) dict abort
 
 	call a:state.actions().clear()
 
-	if(exists('self.action_fight_text'))
-		call a:state.actions().add('f', self.action_fight_text, function('s:action_fight'))
+	if(exists('self.action_fight_text') && exists('a:state.enemy'))
+		call a:state.actions().add('f', self.action_fight_text . ' (level ' . a:state.enemy.level . ')', function('s:action_fight'))
 	endif
 
 	if(exists('self.action_enterscene_text'))
