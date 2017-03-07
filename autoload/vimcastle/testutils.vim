@@ -118,7 +118,7 @@ function! s:VimcastleTestutilsClass.playfight(stats, state) dict abort
 		call add(a:stats.log, 'PLAY: c (fight complete)')
 		call a:state.actions().invokeByKey('c', a:state)
 	elseif(itemidx > -1 && a:state.player.health < (a:state.player.getmaxhealth() / 3))
-		call add(a:stats.log, 'PLAY: u' . itemidx . 'heal')
+		call add(a:stats.log, 'PLAY: u' . itemidx . ' (heal with item)')
 		call a:state.actions().invokeByKey('u', a:state)
 		call a:state.actions().invokeByKey(string(itemidx + 1), a:state)
 	else
