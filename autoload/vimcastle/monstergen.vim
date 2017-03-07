@@ -30,6 +30,11 @@ function! s:MonstergenClass.stat(name, value) dict abort
 	return self
 endfunction
 
+function! s:MonstergenClass.description(description) dict abort
+	let self.description = a:description
+	return self
+endfunction
+
 function! s:MonstergenClass.modifier(probabilities, prefixshort, prefixlong, healthmodifier) dict abort
 	if(!exists('self.modifiers'))
 		let self.modifiers = vimcastle#repository#create()
@@ -62,5 +67,8 @@ function! s:MonstergenClass.invoke() dict abort
 	endif
 	let monster.level = self.baselevel
 	let monster.xp = self.basexp
+	if(exists('self.description'))
+		let monster.description = self.description
+	endif
 	return monster
 endfunction

@@ -28,7 +28,6 @@
 
 ## Backlog
 
-* [ ] Look at enemy description
 * [ ] Auto combat (skip)
 * [ ] Custom text per weapon (slash, crush, aim and fire...)
 * [ ] Scene can depend on you being (str)ong enough, etc.

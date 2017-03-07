@@ -8,6 +8,7 @@ endfunction
 
 function! s:monster_rat() abort
 	return vimcastle#monstergen#create('Rat', 'Rat')
+				\.description('A small furry and furious creature.')
 				\.health(8)
 				\.level(1)
 				\.xp(1)
@@ -21,6 +22,7 @@ endfunction
 
 function! s:monster_goblin() abort
 	return vimcastle#monstergen#create('Goblin', 'Goblin')
+				\.description('Mischevious and quick little guy.')
 				\.health(20)
 				\.level(2)
 				\.xp(2)
@@ -34,6 +36,7 @@ endfunction
 
 function! s:monster_ogre() abort
 	return vimcastle#monstergen#create('Ogre', 'Ogre')
+				\.description('A large and angry-looking man-like creature.')
 				\.health(40)
 				\.level(3)
 				\.xp(4)

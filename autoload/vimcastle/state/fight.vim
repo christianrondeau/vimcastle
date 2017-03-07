@@ -37,6 +37,10 @@ function! s:action_look(state) abort
 
 	call a:state.addlog('You look at %<enemy.name>')
 
+	if(exists('a:state.enemy.description'))
+		call a:state.addlog('* ' . a:state.enemy.description)
+	endif
+
 	call a:state.addlog('* Health: ' . a:state.enemy.health . '/' . a:state.enemy.getmaxhealth())
 
 	let weapon = a:state.enemy.equipment.weapon
