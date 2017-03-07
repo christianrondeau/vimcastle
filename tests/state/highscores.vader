@@ -1,0 +1,9 @@
+Execute (setup):
+  let state = vimcastle#state#create()
+  call state.enter('highscores')
+
+Execute (menu):
+  call state.actions().invokeByKey('b', state)
+  
+Then (restarts game):
+  AssertEqual 'menu', state.screen

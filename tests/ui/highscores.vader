@@ -1,0 +1,15 @@
+Execute (test setup):
+  let screen = { 'width': 30 }
+  let state = vimcastle#state#create()
+  call state.actions().addNoop('x',  'Action')
+  let state.log = ['Scooores!']
+
+Execute (draw):
+  call vimcastle#ui#highscores#draw(screen, state)
+
+Expect (explore screen):
+  --------- High Scores --------
+  
+  Scooores!
+  
+  x) Action

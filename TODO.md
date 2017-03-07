@@ -2,7 +2,6 @@
 
 ## Game
 
-* [ ] Scene info (label, level)
 * [ ] High scores
 * [ ] Save/Load game. Remember only scene and player state. Overwrite on `q`
 * [ ] Animations: Fight (hurt), action
@@ -11,12 +10,11 @@
 * [ ] Usable items (hurt enemy)
 * [ ] More effects (hurt and potentially die, win XP and potentially level up, gain stats e.g. +def, +dex, +con)
 * [ ] Allow specifying a 'next event' (e.g. after a boss, or logical sequence)
-* [ ] Teleport scroll
 * [ ] Create some content
 
 ## Refactors
 
-* [ ] Test invoking all items and weapons
+* [ ] Single line breaks in look, inventory, sheet, etc.
 * [ ] Test all monsters w/ level (max dmg, max def, etc)
 * [ ] Are event name useful?
 * [ ] Avoid duplicating short names
@@ -30,6 +28,7 @@
 
 * [ ] Auto combat (skip)
 * [ ] Custom text per weapon (slash, crush, aim and fire...)
+* [ ] Teleport scroll
 * [ ] Scene can depend on you being (str)ong enough, etc.
 * [ ] Tutorial (predetermined seq. of events) + Test that plays a complete game incl. menu
 * [ ] Flee combat

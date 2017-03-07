@@ -3,10 +3,18 @@ Execute (setup):
   call state.enter('menu')
 
 Then (has actions):
-  AssertEqual [{'label': 'New Game', 'key': 'n'}, {'label': 'Help', 'key': 'h'}, {'label': 'Quit', 'key': 'q'}], state.actions().display
+  AssertEqual [{'label': 'New Game', 'key': 'n'}, {'label': 'High Scores', 'key': 's'}, {'label': 'Help', 'key': 'h'}, {'label': 'Quit', 'key': 'q'}], state.actions().display
 
 Execute (new game):
   call state.actions().invokeByKey('n', state)
 
 Then (enters main story):
+  AssertEqual 'explore', state.screen
   AssertEqual 'main', state.scene.story
+
+Execute (high scores):
+  call state.enter('menu')
+  call state.actions().invokeByKey('s', state)
+
+Then (enters high scores):
+  AssertEqual 'highscores', state.screen

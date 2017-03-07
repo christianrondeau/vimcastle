@@ -1,6 +1,7 @@
 function! vimcastle#state#menu#enter(state) abort
  	call a:state.actions().clear()
 	call a:state.actions().add('n', 'New Game', function('s:action_newgame'))
+	call a:state.actions().add('s', 'High Scores', function('s:action_highscores'))
 	call a:state.actions().add('h', 'Help', function('s:action_noop'))
 	call a:state.actions().add('q', 'Quit', function('s:action_noop'))
 
@@ -21,6 +22,10 @@ function! s:action_newgame(state) abort
 	let a:state.scene = vimcastle#scene#loadintro('main')
 	call a:state.enter('explore')
 	call a:state.scene.enter.invoke(a:state)
+endfunction
+
+function! s:action_highscores(state) abort
+	call a:state.enter('highscores')
 endfunction
 
 function! s:action_noop(state) abort
