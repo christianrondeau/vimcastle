@@ -43,11 +43,24 @@ function! s:StateClass.clearlog() dict abort
 	let self.log = []
 endfunction
 
+function! s:StateClass.addlogrnd(texts) dict abort
+	if(type(a:texts) != 3)
+		throw 'Randomized logs must be arrays: ' . string(texts)
+	endif
+	call add(self.log, self.msg(vimcastle#utils#oneof(a:texts)))
+endfunction
+
 function! s:StateClass.addlog(text) dict abort
 	if(type(a:text) == 3)
-		call add(self.log, self.msg(vimcastle#utils#oneof(a:text)))
-	else
+		let list = []
+		for line in a:text
+			call add(list, self.msg(line))
+		endfor
+		call add(self.log, list)
+	elseif(type(a:text) == 1)
 		call add(self.log, self.msg(a:text))
+	else
+		throw 'Invalid log type: ' . string(a:text)
 	endif
 endfunction
 

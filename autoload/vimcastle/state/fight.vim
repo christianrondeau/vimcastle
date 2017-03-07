@@ -12,7 +12,7 @@ function! vimcastle#state#fight#enter(state) abort
 		let a:state.enemy.fighting = 1
 		let a:state.log = []
 		if(a:state.player.getstat('spd', 1) >= a:state.enemy.getstat('spd', 1))
-			call a:state.addlog(['You attack first!', 'You have the opportunity!', 'You got the first strike!'])
+			call a:state.addlogrnd(['You attack first!', 'You have the opportunity!', 'You got the first strike!'])
 		else
 			call a:state.addlog('%<enemy.name> sees you first!')
 			call s:hit_receive(a:state)
@@ -37,18 +37,19 @@ function! s:action_look(state) abort
 
 	call a:state.addlog('You look at %<enemy.name>')
 
+	let text = []
 	if(exists('a:state.enemy.description'))
-		call a:state.addlog('* ' . a:state.enemy.description)
+		call add(text, '* ' . a:state.enemy.description)
 	endif
 
-	call a:state.addlog('* Health: ' . a:state.enemy.health . '/' . a:state.enemy.getmaxhealth())
+	call add(text, '* Health: ' . a:state.enemy.health . '/' . a:state.enemy.getmaxhealth())
 
 	let weapon = a:state.enemy.equipment.weapon
-	call a:state.addlog('* Weapon: %<enemy.weapon> (' . weapon.dmg.min . '-' . weapon.dmg.max . ' dmg)')
+	call add(text, '* Weapon: %<enemy.weapon> (' . weapon.dmg.min . '-' . weapon.dmg.max . ' dmg)')
 
-	if(s:hit_receive(a:state))
-		return
-	endif
+	call a:state.addlog(text)
+
+	call s:hit_receive(a:state)
 endfunction
 
 function! s:hit_send(state) abort
@@ -56,7 +57,7 @@ function! s:hit_send(state) abort
 	if(dmg > 0)
 		call a:state.addlog('You hit %<enemy.name> with %<player.weapon> for <' . dmg . '> damage!')
 	else
-		call a:state.addlog(['You miss!', 'You attack has no effect!'])
+		call a:state.addlogrnd(['You miss!', 'You attack has no effect!'])
 	endif
 
 	if(a:state.enemy.health <= 0)
@@ -73,7 +74,7 @@ function! s:hit_receive(state) abort
 	if(dmg > 0)
 		call a:state.addlog('%<enemy.name> hits you with %<enemy.weapon> for <' . dmg . '> damage!')
 	else
-		call a:state.addlog(['%<enemy.name> misses you!', '%<enemy.name> attack has no effect!'])
+		call a:state.addlogrnd(['%<enemy.name> misses you!', '%<enemy.name> attack has no effect!'])
 	endif
 
 	if(a:state.player.health <= 0)

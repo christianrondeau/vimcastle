@@ -14,7 +14,6 @@
 
 ## Refactors
 
-* [ ] Single line breaks in look, inventory, sheet, etc.
 * [ ] Test all monsters w/ level (max dmg, max def, etc)
 * [ ] Are event name useful?
 * [ ] Avoid duplicating short names

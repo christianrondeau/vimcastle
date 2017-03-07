@@ -29,13 +29,9 @@ Execute (look):
   call state.actions().invokeByKey('l', state)
 
 Then (enemy counterattacks):
-  AssertEqual [
-  \ 'You look at <Monster>',
-  \ '* This monster is a monsterly monster who monsters a lot.',
-  \ '* Health: 200/200',
-  \ '* Weapon: <Tentacle> (3-3 dmg)',
-  \ '<Monster> hits you with <Tentacle> for <6 critical> damage!'
-  \], state.log
+  AssertEqual 'You look at <Monster>', state.log[0]
+  AssertEqual ['* This monster is a monsterly monster who monsters a lot.', '* Health: 200/200', '* Weapon: <Tentacle> (3-3 dmg)'], state.log[1]
+  AssertEqual '<Monster> hits you with <Tentacle> for <6 critical> damage!', state.log[2]
   AssertEqual 97, player.health
   AssertEqual 200, enemy.health
 

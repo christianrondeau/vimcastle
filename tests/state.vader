@@ -46,3 +46,12 @@ Then (the state is clean):
   Assert !len(state.actions().display), 'actions are empty'
   Assert !len(state.actions().display), 'actions are empty'
 
+Execute (add logs):
+  call state.clearlog()
+  call state.addlog('Line 1')
+  call state.addlogrnd(['Line 2'])
+  call state.addlog(['Line 3', 'Line 4'])
+
+Then (logs are added):
+  AssertEqual ['Line 1', 'Line 2', ['Line 3', 'Line 4']], state.log
+

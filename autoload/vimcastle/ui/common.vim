@@ -49,7 +49,15 @@ function! vimcastle#ui#common#drawlog(log) abort
 	let i = 0
 	while(i < len(a:log))
 		let entry = a:log[i]
-		call append(line('$'), entry)
+		if(type(entry) == 1)
+			call append(line('$'), entry)
+		elseif(type(entry) == 3)
+			for line in entry
+				call append(line('$'), line)
+			endfor
+		else
+			throw 'Invalid log entry: ' . string(entry)
+		endif
 		call append(line('$'), '')
 		let i += 1
 	endwhile
