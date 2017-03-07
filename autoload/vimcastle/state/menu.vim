@@ -5,6 +5,7 @@ function! vimcastle#state#menu#enter(state) abort
 	call a:state.actions().add('h', 'Help', function('s:action_noop'))
 	call a:state.actions().add('q', 'Quit', function('s:action_noop'))
 
+	call a:state.clearlog()
 	call a:state.addlogrnd([
 				\'Adventure!',
 				\'Exciting!',

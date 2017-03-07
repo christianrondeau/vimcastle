@@ -1,14 +1,26 @@
+Before (test vimcastle folder):
+  call vimcastle#io#setfolder(expand('~/.vimcastle_tests'))
+
+After (restore vimcastle folder):
+  call vimcastle#io#restorefolder()
+
 Execute (setup):
+  let highscoresfile = vimcastle#io#path('highscores.csv')
+  if(filereadable(highscoresfile))
+    call delete(highscoresfile)
+    call writefile(['1,1,1,1'], highscoresfile)
+  endif
   let state = vimcastle#state#create()
   let state.stats = {
     \ 'events': 1,
-    \ 'scenes': 2,
-    \ 'fights': 3,
+    \ 'fights': 2,
+    \ 'scenes': 3,
     \}
   call state.enter('gameover')
 
-Then (score is calculated):
-  AssertEqual 72, state.stats.score
+Then (score is calculated and high score is saved):
+  AssertEqual 82, state.stats.score
+  AssertEqual ['82,1,2,3', '1,1,1,1'], readfile(highscoresfile)
 
 Execute (restart):
   call state.actions().invokeDefault(state)

@@ -1,7 +1,7 @@
 function! vimcastle#state#highscores#enter(state) abort
 	call a:state.clearlog()
 
-	call a:state.addlog('Events    Scenes    Fights    Score')
+	call a:state.addlog('Score     Events    Fights    Scenes')
 	call a:state.addlog(s:loadhighscores())
 
  	call a:state.actions().clear()

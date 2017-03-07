@@ -1,6 +1,11 @@
+Before (test vimcastle folder):
+  call vimcastle#io#setfolder(expand('~/.vimcastle_tests'))
+
+After (restore vimcastle folder):
+  call vimcastle#io#restorefolder()
+
 Execute (setup):
   let state = vimcastle#state#create()
-  call vimcastle#io#setup()
 
 Execute (no high scores):
   let highscoresfile = vimcastle#io#path('highscores.csv')
@@ -11,7 +16,7 @@ Execute (no high scores):
 
 Then (no high scores are shown):
   AssertEqual
-  \ 'Events    Scenes    Fights    Score',
+  \ 'Score     Events    Fights    Scenes',
   \state.log[0]
   AssertEqual [
   \ '-          -          -          -'
@@ -19,18 +24,18 @@ Then (no high scores are shown):
 
 Execute (some high scores):
   call writefile([
-      \'24,2,17,24311',
-      \'1,1,1,0'
+      \'24311,24,2,17',
+      \'1,1,1,1'
       \], highscoresfile)
   call state.enter('highscores')
 
 Then (high scores are shown):
   AssertEqual
-  \ 'Events    Scenes    Fights    Score',
+  \ 'Score     Events    Fights    Scenes',
   \state.log[0]
   AssertEqual [
-  \ '24        2         17        24311     ',
-  \ '1         1         1         0         '
+  \ '24311     24        2         17        ',
+  \ '1         1         1         1         '
   \], state.log[1]
 
 Execute (menu):

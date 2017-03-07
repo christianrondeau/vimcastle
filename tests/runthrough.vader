@@ -1,3 +1,9 @@
+Before (test vimcastle folder):
+  call vimcastle#io#setfolder(expand('~/.vimcastle_tests'))
+
+After (restore vimcastle folder):
+  call vimcastle#io#restorefolder()
+
 Execute (initialize stats):
   let maxplaythroughs = 30
   let maxturns = 400
