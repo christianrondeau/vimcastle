@@ -74,7 +74,7 @@ function! s:EventClass.invoke(state) dict abort
 		let a:state.ground_equippable = self.equippables.rnd().invoke()
 	endif
 
-	let a:state.log = []
+	call a:state.clearlog()
 	for lineoptions in self.texts
 		let line = vimcastle#utils#oneof(lineoptions)
 		call add(a:state.log, a:state.msg(line))

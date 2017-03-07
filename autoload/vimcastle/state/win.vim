@@ -1,6 +1,6 @@
 function! vimcastle#state#win#enter(state) abort
 	call a:state.actions().clear()
-	let a:state.log = []
+	call a:state.clearlog()
 	
 	let [ignored, nextlevelxp] = vimcastle#levelling#forxp(a:state.player.xp)
 

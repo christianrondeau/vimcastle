@@ -1,5 +1,5 @@
 function! vimcastle#state#gameover#enter(state) abort
-	let a:state.log = []
+	call a:state.clearlog()
  	call a:state.actions().clear()
 	call a:state.actions().addDefault('Restart', function('s:action_restart'))
 endfunction

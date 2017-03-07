@@ -10,7 +10,7 @@ function! vimcastle#state#fight#enter(state) abort
 		call s:hit_receive(a:state)
 	else
 		let a:state.enemy.fighting = 1
-		let a:state.log = []
+		call a:state.clearlog()
 		if(a:state.player.getstat('spd', 1) >= a:state.enemy.getstat('spd', 1))
 			call a:state.addlogrnd(['You attack first!', 'You have the opportunity!', 'You got the first strike!'])
 		else
@@ -21,7 +21,7 @@ function! vimcastle#state#fight#enter(state) abort
 endfunction
 
 function! s:action_hit(state) abort
-	let a:state.log = []
+	call a:state.clearlog()
 
 	if(s:hit_send(a:state))
 		return
@@ -33,7 +33,7 @@ function! s:action_hit(state) abort
 endfunction
 
 function! s:action_look(state) abort
-	let a:state.log = []
+	call a:state.clearlog()
 
 	call a:state.addlog('You look at %<enemy.name>')
 
