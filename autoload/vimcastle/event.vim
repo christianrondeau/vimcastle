@@ -92,7 +92,7 @@ function! s:EventClass.invoke(state) dict abort
 	call a:state.actions().clear()
 
 	if(exists('self.action_fight_text') && exists('a:state.enemy'))
-		call a:state.actions().add('f', self.action_fight_text . ' (level ' . a:state.enemy.level . ')', function('s:action_fight'))
+	call a:state.actions().add('fight', 'f', self.action_fight_text . ' (level ' . a:state.enemy.level . ')')
 	endif
 
 	if(exists('self.action_enterscene_text'))
@@ -101,25 +101,29 @@ function! s:EventClass.invoke(state) dict abort
 		let a:state.nextscene = self.nextscene
 		let sceneinfo = {}
 		execute 'let sceneinfo = vimcastle#stories#' . a:state.scene.story . '#' . a:state.nextscene . '#index#info()'
-		call a:state.actions().add('e', self.action_enterscene_text . ' (level ' . sceneinfo.level . ')', function('s:action_enterscene'))
+		call a:state.actions().add('enterscene', 'e', self.action_enterscene_text . ' (level ' . sceneinfo.level . ')')
 	endif
 
 	if(exists('a:state.ground_item'))
-		call a:state.actions().add('p', 'Pick up', function('s:action_pickup_item'))
+		call a:state.actions().add('pickup_item', 'p', 'Pick up')
 	endif
 
 	if(exists('a:state.ground_equippable'))
-		call a:state.actions().add('e', 'Equip', function('s:action_equip_equippable'))
+		call a:state.actions().add('equip_equippable', 'e', 'Equip')
 	endif
 
 	if(exists('self.action_explore_text'))
-		call a:state.actions().add('c', self.action_explore_text, function('s:action_explore'))
+		call a:state.actions().add('explore', 'c', self.action_explore_text)
 	endif
 
 	if(!exists('self.action_fight_text'))
-		call a:state.actions().add('i', 'Inventory', function('s:action_inventory'))
-		call a:state.actions().add('s', 'Character Sheet', function('s:action_character'))
+		call a:state.actions().add('inventory', 'i', 'Inventory')
+		call a:state.actions().add('character', 's', 'Character Sheet')
 	endif
+endfunction
+
+function! s:EventClass.action(name, state) abort
+	execute 'call s:action_' . a:name . '(a:state)'
 endfunction
 
 function! s:action_explore(state) abort
@@ -168,6 +172,10 @@ function! s:cleanup(state) abort
 
 	if(exists('a:state.ground_equippable'))
 		unlet a:state.ground_equippable
+	endif
+
+	if(exists('a:state.nextscene'))
+		unlet a:state.nextscene
 	endif
 endfunction
 

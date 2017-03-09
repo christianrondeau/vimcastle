@@ -6,15 +6,16 @@ function! vimcastle#bindings#create() abort
 	return instance
 endfunction
 
-function! s:BindingsClass.add(key, label) dict abort
+function! s:BindingsClass.add(name, key, label) dict abort
 	call add(self.display, {
+		\  'name': a:name,
 		\  'key': a:key,
 		\  'label': a:label
 		\})
 endfunction
 
-function! s:BindingsClass.addDefault(label) dict abort
-	call self.add('', a:label)
+function! s:BindingsClass.addDefault() dict abort
+	let self.default = 1
 endfunction
 
 function! s:BindingsClass.clear() dict abort
@@ -22,8 +23,20 @@ function! s:BindingsClass.clear() dict abort
 endfunction
 
 function! s:BindingsClass.invokeByKey(key, state) dict abort
-	execute 'let result = vimcastle#state#' . a:state.screen . '#action(a:key, a:state)'
-	return result
+	if(exists('self.default'))
+		execute 'call vimcastle#state#' . a:state.screen . '#action("", a:state)'
+		return 1
+	endif
+
+	" TODO: Rename display
+	for binding in self.display
+		if(binding.key ==# a:key)
+
+			execute 'call vimcastle#state#' . a:state.screen . '#action(binding.name, a:state)'
+			return 1
+		endif
+	endfor
+	return 0
 endfunction
 
 function! s:BindingsClass.invokeDefault(state) dict abort
