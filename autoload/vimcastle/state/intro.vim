@@ -1,9 +1,9 @@
 function! vimcastle#state#intro#enter(state) abort
  	call a:state.actions().clear()
-	call a:state.actions().addDefault('Start', function('s:action_start'))
+	call a:state.actions().addDefault('Start')
 endfunction
 
-function! s:action_start(state) abort
+function! vimcastle#state#intro#action(key, state) abort
 	call a:state.enter('menu')
 	return 1
 endfunction

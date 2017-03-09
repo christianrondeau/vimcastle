@@ -19,11 +19,7 @@ function! s:StateClass.actions() dict abort
 endfunction
 
 function! s:StateClass.action(key) dict abort
-	if(self.actions().invokeByKey(a:key, self))
-		return 1
-	else
-		return self.actions().invokeDefault(self)
-	endif
+	return self.actions().invokeByKey(a:key, self)
 endfunction
 
 function! s:StateClass.reset() dict abort

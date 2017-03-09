@@ -1,9 +1,9 @@
 function! vimcastle#state#menu#enter(state) abort
  	call a:state.actions().clear()
-	call a:state.actions().add('n', 'New Game', function('s:action_newgame'))
-	call a:state.actions().add('s', 'High Scores', function('s:action_highscores'))
-	call a:state.actions().add('h', 'Help', function('s:action_noop'))
-	call a:state.actions().add('q', 'Quit', function('s:action_noop'))
+	call a:state.actions().add('n', 'New Game')
+	call a:state.actions().add('s', 'High Scores')
+	call a:state.actions().add('h', 'Help')
+	call a:state.actions().add('q', 'Quit')
 
 	call a:state.clearlog()
 	call a:state.addlogrnd([
@@ -18,6 +18,18 @@ function! vimcastle#state#menu#enter(state) abort
 	call a:state.addlog('  - Christian')
 endfunction
 
+function! vimcastle#state#menu#action(key, state) abort
+	if(a:key ==# 'n')
+		call s:action_newgame(a:state)
+		return 1
+	elseif(a:key ==# 's')
+		call s:action_highscores(a:state)
+		return 1
+	else
+		return 0
+	endif
+endfunction
+
 function! s:action_newgame(state) abort
 	call a:state.reset()
 	let a:state.scene = vimcastle#scene#loadintro('main')
@@ -28,7 +40,3 @@ endfunction
 function! s:action_highscores(state) abort
 	call a:state.enter('highscores')
 endfunction
-
-function! s:action_noop(state) abort
-endfunction
-
