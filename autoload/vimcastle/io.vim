@@ -12,15 +12,19 @@ function! vimcastle#io#path(fname) abort
 	return s:homedir() . '/' . a:fname
 endfunction
 
-function! vimcastle#io#setfolder(path) abort
+function! s:homedir() abort
+	return expand(s:folder)
+endfunction
+
+" Test methods {{{
+
+function! vimcastle#io#before(path) abort
 	let s:folder = a:path
 	call vimcastle#io#setup()
 endfunction
 
-function! vimcastle#io#restorefolder() abort
+function! vimcastle#io#after() abort
 	let s:folder = s:originalfolder
 endfunction
 
-function! s:homedir() abort
-	return expand(s:folder)
-endfunction
+" }}}

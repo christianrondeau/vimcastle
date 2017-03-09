@@ -2,7 +2,6 @@
 
 ## Game
 
-* [ ] High scores
 * [ ] Save/Load game. Remember only scene and player state. Overwrite on `q`
 * [ ] Animations: Fight (hurt), action
 * [ ] Increase probabilities over time

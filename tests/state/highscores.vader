@@ -1,8 +1,8 @@
 Before (test vimcastle folder):
-  call vimcastle#io#setfolder(expand('~/.vimcastle_tests'))
+  call vimcastle#io#before(expand('~/.vimcastle_tests'))
 
 After (restore vimcastle folder):
-  call vimcastle#io#restorefolder()
+  call vimcastle#io#after()
 
 Execute (setup):
   let state = vimcastle#state#create()
