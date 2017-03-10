@@ -6,7 +6,7 @@ _Still under development, the game is not even fun yet!_
 
 Discover and conquer the lands, dongeons and mysteries of Vim Castle!
 
-[![asciicast](https://asciinema.org/a/99866.png)](https://asciinema.org/a/99866)
+[![asciicast](https://asciinema.org/a/106593.png)](https://asciinema.org/a/106593)
 
 ## Installation
 
@@ -17,6 +17,14 @@ If you can't install a Vim plugin yet, you are not ready for Vim Castle!
 * Launch with `:Vimcastle`
 * Launch in dedicated mode with `:Vimcastle!` (overrides display settings, quits with `q`)
 * Launch from command line: `vim -c 'Vimcastle!'`
+
+## Features
+
+* Randomly generated enemies, events, characters and weapons
+* Find weapons, armor, items along your way
+* Special events that may increase your health, your strength
+* Fight, use items, gain XP and level up
+* High scores
 
 ## Contributions
 
