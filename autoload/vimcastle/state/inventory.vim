@@ -2,11 +2,15 @@ function! vimcastle#state#inventory#enter(state) abort
  	call a:state.actions().clear()
 
 	if(exists('a:state.player.items') && len(a:state.player.items))
-		call a:state.actions().add('u', 'Use an item', function('s:action_use'))
+		call a:state.actions().add('use', 'u', 'Use an item')
 	endif
 
-	call a:state.actions().add('s', 'Character Sheet', function('s:action_character'))
-	call a:state.actions().add('b', 'Back', function('s:action_back'))
+	call a:state.actions().add('character', 's', 'Character Sheet')
+	call a:state.actions().add('back', 'b', 'Back')
+endfunction
+
+function! vimcastle#state#inventory#action(name, state) abort
+	execute 'call s:action_' . a:name . '(a:state)'
 endfunction
 
 function! s:action_use(state) abort

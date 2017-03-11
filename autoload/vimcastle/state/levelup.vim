@@ -9,10 +9,14 @@ function! vimcastle#state#levelup#enter(state) abort
 	call s:addincreaseaction('4', a:state, 'dex', 1)
 endfunction
 
+function! vimcastle#state#levelup#action(name, state) abort
+	execute 'call s:action_' . a:name . '(a:state)'
+endfunction
+
 function! s:addincreaseaction(index, state, stat, by) abort
 	let value = a:state.player.getstat(a:stat, 0)
 	let msg = 'Increase ' . a:stat . ' ' . value . ' -> ' . (value + a:by)
-	call a:state.actions().add(a:index, msg, function('s:action_incr_' . a:stat))
+	call a:state.actions().add('incr_' . a:stat, a:index, msg)
 endfunction
 
 function! s:action_incr_str(state) abort

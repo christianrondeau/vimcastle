@@ -2,6 +2,11 @@ function! vimcastle#state#use#enter(state) abort
 	call s:refresh_menu(a:state)
 endfunction
 
+function! vimcastle#state#use#action(name, state) abort
+	"TODO: Now we can call directly the right method
+	execute 'call s:action_' . a:name . '(a:state)'
+endfunction
+
 function! s:refresh_menu(state) abort
  	call a:state.actions().clear()
 
@@ -12,11 +17,11 @@ function! s:refresh_menu(state) abort
 			if(index > 9)
 				break
 			endif
-			call a:state.actions().add('' . index, 'Use <' . item.label . '>', function('s:action_use_' . index))
+			call a:state.actions().add('use_' . index, '' . index, 'Use <' . item.label . '>')
 		endfor
 	endif
 
-	call a:state.actions().add('b', 'Back', function('s:action_back'))
+	call a:state.actions().add('back', 'b', 'Back')
 endfunction
 
 " Maps from 1 - 9 {{{

@@ -14,10 +14,14 @@ function! vimcastle#state#win#enter(state) abort
 	call a:state.addlog('  * ' . xp . ' xp! (' . a:state.player.xp . '/' . nextlevelxp . ' xp)')
 
 	if(a:state.player.level < expectedlevel)
-		call a:state.actions().add('u', 'Level up!', function('s:action_levelup'))
+		call a:state.actions().add('levelup', 'u', 'Level up!')
 	else
-		call a:state.actions().add('c', 'Continue', function('s:action_continue'))
+		call a:state.actions().add('continue', 'c', 'Continue')
 	endif
+endfunction
+
+function! vimcastle#state#win#action(name, state) abort
+	execute 'call s:action_' . a:name . '(a:state)'
 endfunction
 
 function! s:action_continue(state) abort

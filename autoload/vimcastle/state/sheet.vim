@@ -1,7 +1,11 @@
 function! vimcastle#state#sheet#enter(state) abort
  	call a:state.actions().clear()
-	call a:state.actions().add('i', 'Inventory', function('s:action_inventory'))
-	call a:state.actions().add('b', 'Back', function('s:action_back'))
+	call a:state.actions().add('inventory', 'i', 'Inventory')
+	call a:state.actions().add('back', 'b', 'Back')
+endfunction
+
+function! vimcastle#state#sheet#action(name, state) abort
+	execute 'call s:action_' . a:name . '(a:state)'
 endfunction
 
 function! s:action_inventory(state) abort

@@ -2,6 +2,8 @@
 
 ## Game
 
+* [ ] Show when new high score
+* [ ] Use item should not use when health full
 * [ ] Save/Load game. Remember only scene and player state. Overwrite on `q`
 * [ ] Animations: Fight (hurt), action
 * [ ] Increase probabilities over time
@@ -13,6 +15,7 @@
 
 ## Refactors
 
+* [ ] Gens folder
 * [ ] Test all monsters w/ level (max dmg, max def, etc)
 * [ ] Are event name useful?
 * [ ] Avoid duplicating short names

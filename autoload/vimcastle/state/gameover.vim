@@ -4,7 +4,12 @@ function! vimcastle#state#gameover#enter(state) abort
 	call s:writehighscore(a:state.stats)
 
 	call a:state.clearlog()
-	call a:state.actions().addDefault('Restart', function('s:action_restart'))
+	call a:state.actions().addDefault()
+endfunction
+
+function! vimcastle#state#gameover#action(name, state) abort
+	call a:state.reset()
+	call a:state.enter('intro')
 endfunction
 
 function! s:computescore(stats) abort
@@ -36,9 +41,4 @@ endfunction
 
 function! s:tocsv(stats) abort
 	return join([a:stats.score, a:stats.events, a:stats.fights, a:stats.scenes], ',')
-endfunction
-
-function! s:action_restart(state) abort
-	call a:state.reset()
-	call a:state.enter('intro')
 endfunction

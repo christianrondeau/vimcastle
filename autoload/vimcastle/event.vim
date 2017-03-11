@@ -1,125 +1,8 @@
 let s:EventClass = {}
 
-function! vimcastle#event#create(name) abort
+function! vimcastle#event#create() abort
 	let event = copy(s:EventClass)
-	let event.name = a:name
-	let event.texts = []
 	return event
-endfunction
-
-function! s:EventClass.text(texts) dict abort
-	call add(self.texts, type(a:texts) == 1 ? [a:texts] : a:texts)
-	return self
-endfunction
-
-function! s:EventClass.explore(text) dict abort
-	let self.action_explore_text = a:text
-	return self
-endfunction
-
-function! s:EventClass.fight(text, monsters) dict abort
-	let self.monsters = a:monsters
-	let self.action_fight_text = a:text
-	return self
-endfunction
-
-function! s:EventClass.finditem(items) dict abort
-	let self.items = a:items
-	return self
-endfunction
-
-function! s:EventClass.findequippable(equippables) dict abort
-	let self.equippables = a:equippables
-	return self
-endfunction
-
-function! s:EventClass.enterscene(text, scene) dict abort
-	let self.nextscene = a:scene
-	let self.action_enterscene_text = a:text
-	return self
-endfunction
-
-function! s:EventClass.before(fn) dict abort
-	call vimcastle#utils#validate(a:fn, 2)
-	let self.before_fn = a:fn
-	return self
-endfunction
-
-function! s:EventClass.effect(name, value) dict abort
-	let self.effect_name = a:name
-	let self.effect_value = a:value
-	return self
-endfunction
-
-function! s:EventClass.invoke(state) dict abort
-	let a:state.stats.events += 1
-
-	if(exists('self.before_fn'))
-		try
-			call self.before_fn(a:state)
-		catch
-			throw 'There was an error in before fn of ' . a:state.scene.story . '/' . a:state.scene.name . '/' . self.name . ': ' . v:exception
-		endtry
-	endif
-
-	if(exists('self.monsters'))
-		let a:state.enemy = self.monsters.rnd().invoke()
-	endif
-
-	if(exists('self.items'))
-		let a:state.ground_item = self.items.rnd()
-	endif
-
-	if(exists('self.equippables'))
-		let a:state.ground_equippable = self.equippables.rnd().invoke()
-	endif
-
-	call a:state.clearlog()
-	for lineoptions in self.texts
-		let line = vimcastle#utils#oneof(lineoptions)
-		call add(a:state.log, a:state.msg(line))
-	endfor
-
-	if(exists('a:state.ground_equippable'))
-		call s:showequippablediff(a:state)
-	endif
-
-	if(exists('self.effect_name'))
-		let effect_value = exists('self.effect_value') ? self.effect_value : 0
-		execute 'call vimcastle#effects#' . self.effect_name . '(a:state, effect_value)'
-	endif
-
-	call a:state.actions().clear()
-
-	if(exists('self.action_fight_text') && exists('a:state.enemy'))
-	call a:state.actions().add('fight', 'f', self.action_fight_text . ' (level ' . a:state.enemy.level . ')')
-	endif
-
-	if(exists('self.action_enterscene_text'))
-		" NOTE: Cannot use arglist in 7.4
-		" call a:state.actions().add('e', self.action_enterscene_text, function('s:action_enterscene', [self.nextscene]))
-		let a:state.nextscene = self.nextscene
-		let sceneinfo = {}
-		execute 'let sceneinfo = vimcastle#stories#' . a:state.scene.story . '#' . a:state.nextscene . '#index#info()'
-		call a:state.actions().add('enterscene', 'e', self.action_enterscene_text . ' (level ' . sceneinfo.level . ')')
-	endif
-
-	if(exists('a:state.ground_item'))
-		call a:state.actions().add('pickup_item', 'p', 'Pick up')
-	endif
-
-	if(exists('a:state.ground_equippable'))
-		call a:state.actions().add('equip_equippable', 'e', 'Equip')
-	endif
-
-	if(exists('self.action_explore_text'))
-		call a:state.actions().add('explore', 'c', self.action_explore_text)
-	endif
-
-	if(!exists('self.action_fight_text'))
-		call a:state.actions().add('inventory', 'i', 'Inventory')
-		call a:state.actions().add('character', 's', 'Character Sheet')
-	endif
 endfunction
 
 function! s:EventClass.action(name, state) abort
@@ -128,7 +11,7 @@ endfunction
 
 function! s:action_explore(state) abort
 	call s:cleanup(a:state)
-	call a:state.scene.events.rnd().invoke(a:state)
+	let a:state.event = a:state.scene.events.rnd().invoke(a:state)
 endfunction
 
 function! s:action_fight(state) abort
@@ -139,10 +22,10 @@ function! s:action_fight(state) abort
 endfunction
 
 function! s:action_enterscene(state) abort
-	call s:cleanup(a:state)
 	let a:state.stats.scenes += 1
 	let a:state.scene = vimcastle#scene#load(a:state.scene.story, a:state.nextscene)
-	call a:state.scene.enter.invoke(a:state)
+	call s:cleanup(a:state)
+	let a:state.event = a:state.scene.enter.invoke(a:state)
 endfunction
 
 function! s:action_inventory(state) abort
