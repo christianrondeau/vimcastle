@@ -28,6 +28,7 @@
 ## Backlog
 
 * [ ] Auto combat (skip)
+* [ ] Show dmg, hit %, flee% in fight
 * [ ] Custom text per weapon (slash, crush, aim and fire...)
 * [ ] Teleport scroll
 * [ ] Scene can depend on you being (str)ong enough, etc.
