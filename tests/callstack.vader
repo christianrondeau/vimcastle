@@ -1,0 +1,48 @@
+Execute (setup):
+  let result = []
+
+Execute (simple stack trace):
+  call callstack#init()
+  try
+    throw 'error'
+  catch
+    Log 'Original: ' . v:exception . ' in ' . v:throwpoint
+    let result = callstack#parse(v:exception, v:throwpoint)
+  endtry
+
+Then (call stack is extracted):
+  Log 'Result: ' . string(result)
+  Assert match(result, '\v.+\.tmp, line [0-9]+') > -1
+
+Execute (with script functions):
+  call callstack#init()
+  function s:private() abort
+    throw 'test'
+  endfunction
+  try
+    call s:private()
+  catch
+    Log 'Original: ' . v:exception . ' in ' . v:throwpoint
+    let result = callstack#parse(v:exception, v:throwpoint)
+  endtry
+
+Then (script name is extracted):
+  Log 'Result: ' . string(result)
+  Assert match(result, '\v.+\.tmp s:private, line [0-9]+') > -1
+
+Execute (with script dict):
+  call callstack#init()
+  let s:d = {}
+  function s:d.private() abort
+    throw 'test'
+  endfunction
+  try
+    call s:d.private()
+  catch
+    Log 'Original: ' . v:exception . ' in ' . v:throwpoint
+    let result = callstack#parse(v:exception, v:throwpoint)
+  endtry
+
+Then (call stack is extracted):
+  Log 'Result: ' . string(result)
+  Assert match(result, '\v.+\.tmp function [0-9]+\(\) abort dict | 1 throw') > -1
