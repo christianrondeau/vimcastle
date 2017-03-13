@@ -27,7 +27,7 @@ function! s:writehighscore(stats) abort
 		let highscores = readfile(highscoresfile)
 	endif
 	call add(highscores, s:tocsv(a:stats))
-	call reverse(sort(highscores, 'N'))
+	call reverse(sort(highscores, 'n'))
 	call writefile(highscores[0:9], highscoresfile)
 endfunction
 
