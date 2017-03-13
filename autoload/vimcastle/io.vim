@@ -3,9 +3,15 @@ let s:folder = s:originalfolder
 
 function! vimcastle#io#setup() abort
 	let homedir = s:homedir()
-	if(!isdirectory(homedir))
-		call mkdir(homedir, '')
-	endif
+	try
+		if(!isdirectory(homedir))
+			call mkdir(homedir, '')
+		endif
+		return 1
+	catch
+		echom 'Cannot access "' . homedir . '": ' . v:exception
+		return 0
+	endtry
 endfunction
 
 function! vimcastle#io#path(fname) abort

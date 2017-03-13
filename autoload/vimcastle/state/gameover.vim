@@ -20,15 +20,16 @@ function! s:computescore(stats) abort
 endfunction
 
 function! s:writehighscore(stats) abort
-	call vimcastle#io#setup()
-	let highscoresfile = vimcastle#io#path('highscores.csv')
-	let highscores = []
-	if(filereadable(highscoresfile))
-		let highscores = readfile(highscoresfile)
+	if(vimcastle#io#setup())
+		let highscoresfile = vimcastle#io#path('highscores.csv')
+		let highscores = []
+		if(filereadable(highscoresfile))
+			let highscores = readfile(highscoresfile)
+		endif
+		call add(highscores, s:tocsv(a:stats))
+		call reverse(sort(highscores, 'n'))
+		call writefile(highscores[0:9], highscoresfile)
 	endif
-	call add(highscores, s:tocsv(a:stats))
-	call reverse(sort(highscores, 'n'))
-	call writefile(highscores[0:9], highscoresfile)
 endfunction
 
 function! s:tocsv(stats) abort
