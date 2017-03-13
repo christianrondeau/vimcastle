@@ -3,7 +3,7 @@ Execute (setup):
 
 Execute (centered title):
   let screen.width = 30
-  call vimcastle#ui#common#drawtitle(screen, 'Test')
+  call vimcastle#screens#common#drawtitle(screen, 'Test')
 
 Expect (centered title):
   ------------ Test ------------
@@ -11,7 +11,7 @@ Expect (centered title):
 
 Execute (title too large):
   let screen.width = 10
-  call vimcastle#ui#common#drawtitle(screen, 'This title is long!')
+  call vimcastle#screens#common#drawtitle(screen, 'This title is long!')
 
 Expect (title too large):
   This title
@@ -22,7 +22,7 @@ Given (empty):
 Execute (screen center):
   let screen.width = 30
   let screen.height = 5
-  call vimcastle#ui#common#drawscreencenter(screen, ['abc', 'def', 'ghi'])
+  call vimcastle#screens#common#drawscreencenter(screen, ['abc', 'def', 'ghi'])
 
 Expect (screen center):
   
@@ -33,9 +33,9 @@ Expect (screen center):
 Given (empty):
 
 Execute (bars):
-  call setline(1, vimcastle#ui#common#getbar(6, 100, 100, '-'))
-  call append(1, vimcastle#ui#common#getbar(4, -5, 17, '-'))
-  call append(2, vimcastle#ui#common#getbar(8, 7, 14, '+'))
+  call setline(1, vimcastle#screens#common#getbar(6, 100, 100, '-'))
+  call append(1, vimcastle#screens#common#getbar(4, -5, 17, '-'))
+  call append(2, vimcastle#screens#common#getbar(8, 7, 14, '+'))
 
 Expect (bars):
   [------]

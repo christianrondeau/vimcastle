@@ -2,7 +2,7 @@ After (clean random):
   call vimcastle#utils#resetrnd()
 
 Execute (setup):
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   let playerweapon = vimcastle#equippablegen#weapon('Weap.', 'Weapon', 4, 4)
   let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
     \.setstat('spd', 5)

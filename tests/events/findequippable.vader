@@ -1,5 +1,5 @@
 Execute (create event):
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   let playerequippable = vimcastle#equippablegen#weapon('Stick', 'Stick', 5, 17).stat('old', 5).stat('chg', 4)
   let state.player = vimcastle#character#create({'short':'', 'long':''}, 100).equip(playerequippable.invoke())
   let weapons = vimcastle#repository#create()

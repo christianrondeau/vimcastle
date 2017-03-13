@@ -2,85 +2,86 @@ let s:EventClass = {}
 
 function! vimcastle#event#create() abort
 	let event = copy(s:EventClass)
+	let event.actions = vimcastle#bindings#create()
 	return event
 endfunction
 
-function! s:EventClass.action(name, state) abort
-	execute 'call s:action_' . a:name . '(a:state)'
+function! s:EventClass.action(name, game) abort
+	execute 'return s:action_' . a:name . '(a:game)'
 endfunction
 
-function! s:action_explore(state) abort
-	call s:cleanup(a:state)
-	let a:state.event = a:state.scene.events.rnd().invoke(a:state)
+function! s:action_explore(game) abort
+	call s:cleanup(a:game)
+	let a:game.event = a:game.scene.events.rnd().invoke(a:game)
 endfunction
 
-function! s:action_fight(state) abort
-	let a:state.stats.fights += 1
-	let a:state.nextaction = function('s:action_explore')
-	call s:cleanup(a:state)
-	call a:state.enter('fight')
+function! s:action_fight(game) abort
+	let a:game.stats.fights += 1
+	let a:game.nextaction = function('s:action_explore')
+	call s:cleanup(a:game)
+	call a:game.enter('fight')
 endfunction
 
-function! s:action_enterscene(state) abort
-	let a:state.stats.scenes += 1
-	let a:state.scene = vimcastle#scene#load(a:state.scene.story, a:state.nextscene)
-	call s:cleanup(a:state)
-	let a:state.event = a:state.scene.enter.invoke(a:state)
+function! s:action_enterscene(game) abort
+	let a:game.stats.scenes += 1
+	let a:game.scene = vimcastle#scene#load(a:game.scene.story, a:game.nextscene)
+	call s:cleanup(a:game)
+	let a:game.event = a:game.scene.enter.invoke(a:game)
 endfunction
 
-function! s:action_inventory(state) abort
-	call a:state.enter('inventory')
+function! s:action_inventory(game) abort
+	call a:game.enter('inventory')
 endfunction
 
-function! s:action_character(state) abort
-	call a:state.enter('sheet')
+function! s:action_character(game) abort
+	call a:game.enter('sheet')
 endfunction
 
-function! s:action_pickup_item(state) abort
-	call a:state.player.pickup(a:state.ground_item)
-	call s:cleanup(a:state)
-	call a:state.scene.events.rnd().invoke(a:state)
+function! s:action_pickup_item(game) abort
+	call a:game.player.pickup(a:game.ground_item)
+	call s:cleanup(a:game)
+	call a:game.scene.events.rnd().invoke(a:game)
 endfunction
 
-function! s:action_equip_equippable(state) abort
-	call a:state.player.equip(a:state.ground_equippable)
-	call s:cleanup(a:state)
-	call a:state.scene.events.rnd().invoke(a:state)
+function! s:action_equip_equippable(game) abort
+	call a:game.player.equip(a:game.ground_equippable)
+	call s:cleanup(a:game)
+	call a:game.scene.events.rnd().invoke(a:game)
 endfunction
 
-function! s:cleanup(state) abort
-	if(exists('a:state.ground_item'))
-		unlet a:state.ground_item
+function! s:cleanup(game) abort
+	if(exists('a:game.ground_item'))
+		unlet a:game.ground_item
 	endif
 
-	if(exists('a:state.ground_equippable'))
-		unlet a:state.ground_equippable
+	if(exists('a:game.ground_equippable'))
+		unlet a:game.ground_equippable
 	endif
 
-	if(exists('a:state.nextscene'))
-		unlet a:state.nextscene
+	if(exists('a:game.nextscene'))
+		unlet a:game.nextscene
 	endif
 endfunction
 
-function! s:showequippablediff(state) abort
-	if(has_key(a:state.player.equipment, a:state.ground_equippable.slot))
-		let current = a:state.player.equipment[a:state.ground_equippable.slot]
+function! s:showequippablediff(game) abort
+	if(has_key(a:game.player.equipment, a:game.ground_equippable.slot))
+		let current = a:game.player.equipment[a:game.ground_equippable.slot]
 	else
-		let current = vimcastle#equippablegen#create(a:state.ground_equippable.slot, 0, 0)
+		let current = vimcastle#equippablegen#create(a:game.ground_equippable.slot, 0, 0)
 	endif
 
-	if(a:state.ground_equippable.slot ==# 'weapon')
-		call s:showequippabledmg(a:state, current, a:state.ground_equippable)
+	if(a:game.ground_equippable.slot ==# 'weapon')
+		call s:showequippabledmg(a:game, current, a:game.ground_equippable)
 	endif
-	call s:showequippablestats(a:state, current, a:state.ground_equippable)
+	call s:showequippablestats(a:game, current, a:game.ground_equippable)
 endfunction
 
-function! s:showequippabledmg(state, current, ground) abort
+function! s:showequippabledmg(game, current, ground) abort
 	let msg = '  * dmg: ' . s:getdiff(a:current['dmg'].min, a:ground['dmg'].min) . ' - ' . s:getdiff(a:current['dmg'].max, a:ground['dmg'].max)
-	call add(a:state.log, msg)
+	call add(a:game.log, msg)
 endfunction
 
-function! s:showequippablestats(state, current, ground) abort
+function! s:showequippablestats(game, current, ground) abort
 	let allstats = copy(a:ground.stats)
 	for curkey in keys(a:current.stats)
 		if(!has_key(allstats, curkey))
@@ -91,7 +92,7 @@ function! s:showequippablestats(state, current, ground) abort
 		let currentval = has_key(a:current.stats, name) ? a:current.stats[name] : 0
 		let groundval = has_key(a:ground.stats, name) ? a:ground.stats[name] : 0
 		let msg = '  * ' . name . ': ' . s:getdiff(currentval, groundval)
-	call add(a:state.log, msg)
+	call add(a:game.log, msg)
 	endfor
 endfunction
 

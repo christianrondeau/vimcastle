@@ -1,5 +1,5 @@
 Execute (setup):
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   call state.enter('sheet')
 
 Then (has actions):

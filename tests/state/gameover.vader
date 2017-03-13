@@ -10,7 +10,7 @@ Execute (setup):
     call delete(highscoresfile)
     call writefile(['1,1,1,1'], highscoresfile)
   endif
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   let state.stats = {
     \ 'events': 1,
     \ 'fights': 2,

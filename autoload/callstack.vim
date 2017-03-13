@@ -50,19 +50,34 @@ function! s:tryparsesnr(result, throwline)
 endfunction
 
 function! s:tryparsedictfunc(result, throwline)
-	let num = matchstrpos(a:throwline, '\vfunction [0-9]+')
-	if(num[0] != '')
-		let l:fnid = str2nr(num[0][9:])
-		redir => l:fnref
-		execute 'silent! verbose function {' . l:fnid . '}'
-		redir END
-		let l:fnreflines = split(l:fnref, "\n")
-		let l:lastset = l:fnreflines[1]
-		let l:lastset = l:lastset[matchend(l:lastset, 'Last set from '):]
-		let l:fnref = join([l:fnreflines[0]] + l:fnreflines[2:], ' | ')
-		let l:fnref = substitute(l:fnref, '\v(\t+| +)', ' ', 'ge')
-		let l:fnref = substitute(l:fnref, '\v^[\t ]', '', 'e')
-		call add(a:result, l:lastset . ' ' . l:fnref[0:60] . '...')
-		return 1
+	let l:fnid = ''
+
+	if(l:fnid == '')
+		let num = matchstrpos(a:throwline, '\vfunction [0-9]+')
+		if(num[0] != '')
+			let l:fnid = str2nr(num[0][9:])
+		endif
 	endif
+
+	if(l:fnid == '')
+		let num = matchstrpos(a:throwline, '\v^[0-9]+')
+		if(num[0] != '')
+			let l:fnid = str2nr(num[0])
+		endif
+	endif
+
+	if(l:fnid == '')
+		return 0
+	endif
+
+	redir => l:fnref
+	execute 'silent! verbose function {' . l:fnid . '}'
+	redir END
+	let l:fnreflines = split(l:fnref, "\n")
+	let l:lastset = l:fnreflines[1]
+	let l:lastset = l:lastset[matchend(l:lastset, 'Last set from '):]
+	let l:fnref = join([l:fnreflines[0]] + l:fnreflines[2:], ' | ')
+	let l:fnref = substitute(l:fnref, '\v(\t+| +)', ' ', 'ge')
+	let l:fnref = substitute(l:fnref, '\v^[\t ]', '', 'e')
+	call add(a:result, l:lastset . ' ' . l:fnref[0:60] . '...')
 endfunction

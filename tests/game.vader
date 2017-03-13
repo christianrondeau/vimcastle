@@ -1,5 +1,5 @@
 Execute (setup state):
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
 
 Execute (enter):
   call state.enter('test')

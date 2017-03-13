@@ -1,5 +1,5 @@
 Execute (create event):
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   let state.player = vimcastle#character#create({'short':'', 'long':''}, 1)
   let monsters = vimcastle#repository#create()
   call monsters.add(1, vimcastle#monstergen#create('Imp', 'Imp'))

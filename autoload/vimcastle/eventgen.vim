@@ -51,102 +51,106 @@ function! s:EventgenClass.effect(name, value) dict abort
 	return self
 endfunction
 
-function! s:EventgenClass.invoke(state) dict abort
-	let a:state.stats.events += 1
+function! s:EventgenClass.invoke(game) dict abort
+	let a:game.stats.events += 1
 	let event = vimcastle#event#create()
 
 	if(exists('self.before_fn'))
 		try
-			call self.before_fn(a:state)
+			call self.before_fn(a:game)
 		catch
-			throw 'There was an error in before fn of ' . a:state.scene.story . '/' . a:state.scene.name . '/' . self.name . ': ' . v:exception
+			throw 'There was an error in before fn of ' . a:game.scene.story . '/' . a:game.scene.name . '/' . self.name . ': ' . v:exception
 		endtry
 	endif
 
 	" TODO: On event instead
 	if(exists('self.monsters'))
-		let a:state.enemy = self.monsters.rnd().invoke()
+		let a:game.enemy = self.monsters.rnd().invoke()
 	endif
 
 	" TODO: On event instead
 	if(exists('self.items'))
-		let a:state.ground_item = self.items.rnd()
+		let a:game.ground_item = self.items.rnd()
 	endif
 
 	" TODO: On event instead
 	if(exists('self.equippables'))
-		let a:state.ground_equippable = self.equippables.rnd().invoke()
+		let a:game.ground_equippable = self.equippables.rnd().invoke()
 	endif
 
-	call a:state.clearlog()
+	call a:game.clearlog()
 	for lineoptions in self.texts
 		let line = vimcastle#utils#oneof(lineoptions)
-		call add(a:state.log, a:state.msg(line))
+		call add(a:game.log, a:game.msg(line))
 	endfor
 
-	if(exists('a:state.ground_equippable'))
-		call s:showequippablediff(a:state)
+	if(exists('a:game.ground_equippable'))
+		call s:showequippablediff(a:game)
 	endif
 
 	if(exists('self.effect_name'))
 		let effect_value = exists('self.effect_value') ? self.effect_value : 0
-		execute 'call vimcastle#effects#' . self.effect_name . '(a:state, effect_value)'
+		execute 'call vimcastle#effects#' . self.effect_name . '(a:game, effect_value)'
 	endif
 
-	call a:state.actions().clear()
-
-	if(exists('self.action_fight_text') && exists('a:state.enemy'))
-	call a:state.actions().add('fight', 'f', self.action_fight_text . ' (level ' . a:state.enemy.level . ')')
-	endif
-
-	if(exists('self.action_enterscene_text'))
-		" NOTE: Cannot use arglist in 7.4
-		" call a:state.actions().add('e', self.action_enterscene_text, function('s:action_enterscene', [self.nextscene]))
-		let a:state.nextscene = self.nextscene
-		let sceneinfo = {}
-		execute 'let sceneinfo = vimcastle#stories#' . a:state.scene.story . '#' . a:state.nextscene . '#index#info()'
-		call a:state.actions().add('enterscene', 'e', self.action_enterscene_text . ' (level ' . sceneinfo.level . ')')
-	endif
-
-	if(exists('a:state.ground_item'))
-		call a:state.actions().add('pickup_item', 'p', 'Pick up')
-	endif
-
-	if(exists('a:state.ground_equippable'))
-		call a:state.actions().add('equip_equippable', 'e', 'Equip')
-	endif
-
-	if(exists('self.action_explore_text'))
-		call a:state.actions().add('explore', 'c', self.action_explore_text)
-	endif
-
-	if(!exists('self.action_fight_text'))
-		call a:state.actions().add('inventory', 'i', 'Inventory')
-		call a:state.actions().add('character', 's', 'Character Sheet')
-	endif
+	let event.actions = self.createactions(a:game)
 
 	return event
 endfunction
 
-function! s:showequippablediff(state) abort
-	if(has_key(a:state.player.equipment, a:state.ground_equippable.slot))
-		let current = a:state.player.equipment[a:state.ground_equippable.slot]
+function! s:EventgenClass.createactions(game) abort dict
+	let actions = vimcastle#bindings#create()
+
+	if(exists('self.action_fight_text') && exists('a:game.enemy'))
+	call actions.add('fight', 'f', self.action_fight_text . ' (level ' . a:game.enemy.level . ')')
+	endif
+
+	if(exists('self.action_enterscene_text'))
+		let a:game.nextscene = self.nextscene
+		let sceneinfo = {}
+		execute 'let sceneinfo = vimcastle#stories#' . a:game.scene.story . '#' . a:game.nextscene . '#index#info()'
+		call actions.add('enterscene', 'e', self.action_enterscene_text . ' (level ' . sceneinfo.level . ')')
+	endif
+
+	if(exists('a:game.ground_item'))
+		call actions.add('pickup_item', 'p', 'Pick up')
+	endif
+
+	if(exists('a:game.ground_equippable'))
+		call actions.add('equip_equippable', 'e', 'Equip')
+	endif
+
+	if(exists('self.action_explore_text'))
+		call actions.add('explore', 'c', self.action_explore_text)
+	endif
+
+	if(!exists('self.action_fight_text'))
+		call actions.add('inventory', 'i', 'Inventory')
+		call actions.add('character', 's', 'Character Sheet')
+	endif
+
+	return actions
+endfunction
+
+function! s:showequippablediff(game) abort
+	if(has_key(a:game.player.equipment, a:game.ground_equippable.slot))
+		let current = a:game.player.equipment[a:game.ground_equippable.slot]
 	else
-		let current = vimcastle#equippablegen#create(a:state.ground_equippable.slot, 0, 0)
+		let current = vimcastle#equippablegen#create(a:game.ground_equippable.slot, 0, 0)
 	endif
 
-	if(a:state.ground_equippable.slot ==# 'weapon')
-		call s:showequippabledmg(a:state, current, a:state.ground_equippable)
+	if(a:game.ground_equippable.slot ==# 'weapon')
+		call s:showequippabledmg(a:game, current, a:game.ground_equippable)
 	endif
-	call s:showequippablestats(a:state, current, a:state.ground_equippable)
+	call s:showequippablestats(a:game, current, a:game.ground_equippable)
 endfunction
 
-function! s:showequippabledmg(state, current, ground) abort
+function! s:showequippabledmg(game, current, ground) abort
 	let msg = '  * dmg: ' . s:getdiff(a:current['dmg'].min, a:ground['dmg'].min) . ' - ' . s:getdiff(a:current['dmg'].max, a:ground['dmg'].max)
-	call add(a:state.log, msg)
+	call add(a:game.log, msg)
 endfunction
 
-function! s:showequippablestats(state, current, ground) abort
+function! s:showequippablestats(game, current, ground) abort
 	let allstats = copy(a:ground.stats)
 	for curkey in keys(a:current.stats)
 		if(!has_key(allstats, curkey))
@@ -157,7 +161,7 @@ function! s:showequippablestats(state, current, ground) abort
 		let currentval = has_key(a:current.stats, name) ? a:current.stats[name] : 0
 		let groundval = has_key(a:ground.stats, name) ? a:ground.stats[name] : 0
 		let msg = '  * ' . name . ': ' . s:getdiff(currentval, groundval)
-	call add(a:state.log, msg)
+	call add(a:game.log, msg)
 	endfor
 endfunction
 

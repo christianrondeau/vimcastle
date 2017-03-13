@@ -1,9 +1,9 @@
-function! vimcastle#ui#common#drawtitle(screen, title) abort
+function! vimcastle#screens#common#drawtitle(screen, title) abort
 	call setline(line('$'), s:getcentered(a:screen.width, a:title, '-'))
 		call append(line('$'), '')
 endfunction
 
-function! vimcastle#ui#common#drawcenter(screen, text) abort
+function! vimcastle#screens#common#drawcenter(screen, text) abort
 	call append(line('$'), s:getcentered(a:screen.width, a:text, ' '))
 endfunction
 
@@ -18,7 +18,7 @@ function! s:getcentered(width, title, pad) abort
 	return line
 endfunction
 
-function! vimcastle#ui#common#drawscreencenter(screen, img) abort
+function! vimcastle#screens#common#drawscreencenter(screen, img) abort
 	let w = strlen(a:img[0])
 	let h = len(a:img)
 	let y = (a:screen.height - h) / 2
@@ -35,7 +35,7 @@ function! vimcastle#ui#common#drawscreencenter(screen, img) abort
 	endwhile
 endfunction
 
-function! vimcastle#ui#common#getbar(barwidth, val, max, char) abort
+function! vimcastle#screens#common#getbar(barwidth, val, max, char) abort
 	if(a:val > 0 && a:max > 0)
 		let filled = (a:val > a:max ? a:max : a:val) * a:barwidth / a:max
 	else
@@ -45,7 +45,7 @@ function! vimcastle#ui#common#getbar(barwidth, val, max, char) abort
 	return bar
 endfunction
 
-function! vimcastle#ui#common#drawlog(log) abort
+function! vimcastle#screens#common#drawlog(log) abort
 	let i = 0
 	while(i < len(a:log))
 		let entry = a:log[i]

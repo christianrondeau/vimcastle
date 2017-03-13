@@ -1,4 +1,4 @@
-function! vimcastle#state#gameover#enter(state) abort
+function! vimcastle#states#gameover#enter(state) abort
 	let a:state.stats.score = s:computescore(a:state.stats)
 
 	call s:writehighscore(a:state.stats)
@@ -7,7 +7,7 @@ function! vimcastle#state#gameover#enter(state) abort
 	call a:state.actions().addDefault()
 endfunction
 
-function! vimcastle#state#gameover#action(name, state) abort
+function! vimcastle#states#gameover#action(name, state) abort
 	call a:state.reset()
 	call a:state.enter('intro')
 endfunction

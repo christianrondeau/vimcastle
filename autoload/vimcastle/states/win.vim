@@ -1,4 +1,4 @@
-function! vimcastle#state#win#enter(state) abort
+function! vimcastle#states#win#enter(state) abort
 	call a:state.actions().clear()
 	call a:state.clearlog()
 	
@@ -20,7 +20,7 @@ function! vimcastle#state#win#enter(state) abort
 	endif
 endfunction
 
-function! vimcastle#state#win#action(name, state) abort
+function! vimcastle#states#win#action(name, state) abort
 	execute 'call s:action_' . a:name . '(a:state)'
 endfunction
 

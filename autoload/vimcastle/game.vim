@@ -1,28 +1,39 @@
-let s:StateClass = {}
-
-function! vimcastle#state#create() abort
-	let state = copy(s:StateClass)
-	call state.reset()
-	return state
+function! vimcastle#game#create() abort
+	let game = {}
+	"TODO: Group log functions in a log object?
+	"TODO: Potentially useless methods?
+	let game.enter = function('s:enter')
+	let game.action = function('s:action')
+	let game.reset = function('s:reset')
+	let game.clearlog = function('s:clearlog')
+	let game.addlogrnd = function('s:addlogrnd')
+	let game.addlog = function('s:addlog')
+	let game.msg = function('s:msg')
+	call game.reset()
+	return game
 endfunction
 
-function! s:StateClass.enter(name) dict abort
+function! s:enter(name) dict abort
+	execute 'let self.state = vimcastle#states#' . a:name . '#create()'
+	"TODO: Let the state decide which screen to use
 	let self.screen = a:name
-	execute 'call vimcastle#state#' . a:name . '#enter(self)'
+	return self.state.enter(self)
 endfunction
 
-function! s:StateClass.actions() dict abort
-	if(!has_key(self.screenactions, self.screen))
-		let self.screenactions[self.screen] = vimcastle#bindings#create()
+function! s:action(key) dict abort
+	"TODO: Instead of relying on .enter, return a 'new state'
+	let name = self.actions.keyToName(a:key)
+	if(name == '')
+		return 0
 	endif
-	return self.screenactions[self.screen]
+	let self.actions = self.state.action(name, self)
+	if(!exists('self.actions.display'))
+		throw 'State "' . a:name . '" does not define actions'
+	endif
+	return 1
 endfunction
 
-function! s:StateClass.action(key) dict abort
-	return self.actions().invokeByKey(a:key, self)
-endfunction
-
-function! s:StateClass.reset() dict abort
+function! s:reset() dict abort
 	if(exists('self.enemy'))
 		unlet self.enemy
 	endif
@@ -35,18 +46,18 @@ function! s:StateClass.reset() dict abort
 	let self.stats = { 'events': 0, 'fights': 0, 'scenes': 0 }
 endfunction
 
-function! s:StateClass.clearlog() dict abort
+function! s:clearlog() dict abort
 	let self.log = []
 endfunction
 
-function! s:StateClass.addlogrnd(texts) dict abort
+function! s:addlogrnd(texts) dict abort
 	if(type(a:texts) != 3)
 		throw 'Randomized logs must be arrays: ' . string(texts)
 	endif
 	call add(self.log, self.msg(vimcastle#utils#oneof(a:texts)))
 endfunction
 
-function! s:StateClass.addlog(text) dict abort
+function! s:addlog(text) dict abort
 	if(type(a:text) == 3)
 		let list = []
 		for line in a:text
@@ -60,7 +71,7 @@ function! s:StateClass.addlog(text) dict abort
 	endif
 endfunction
 
-function! s:StateClass.msg(text) dict abort
+function! s:msg(text) dict abort
 	let text = a:text
 
 	if(exists('self.enemy.name.long'))

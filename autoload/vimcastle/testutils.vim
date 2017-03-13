@@ -11,7 +11,7 @@ function! vimcastle#testutils#noop(...) abort
 endfunction
 
 function! s:VimcastleTestutilsClass.givenstate(story, level) dict abort
-	let state = vimcastle#state#create()
+	let state = vimcastle#states#create()
   let state.scene = vimcastle#scene#loadintro(a:story)
   call state.scene.enter.invoke(state)
 	if(a:level > 1)
@@ -64,7 +64,7 @@ function! s:VimcastleTestutilsClass.playgame(maxturns) dict abort
 	let stats.turns = 0
 	let stats.log = []
 
-	let state = vimcastle#state#create()
+	let state = vimcastle#states#create()
 	let state.scene = vimcastle#scene#loadintro('main')
 	call state.enter('explore')
 	call state.scene.enter.invoke(state)

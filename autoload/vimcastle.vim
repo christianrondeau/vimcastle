@@ -1,28 +1,38 @@
-let s:state = {}
-
-function! vimcastle#action(key) abort
-	if(exists('s:state') && s:state.action(a:key))
-		call vimcastle#ui#draw(s:state)
-	endif
-endfunction
+let s:game = {}
 
 function! vimcastle#start(dedicated) abort
 	if(!has('patch-7.4.849'))
 		throw 'Requires at least vim 7.4.849'
 	endif
-	let s:state = vimcastle#state#create()
-	call vimcastle#ui#init(a:dedicated)
-	call vimcastle#mappings#init()
-	call s:state.enter('intro')
-	call vimcastle#ui#draw(s:state)
 
-	augroup Vimcastle_ui
-		autocmd!
-		autocmd VimResized <buffer> call vimcastle#ui#updatescreen() | call vimcastle#ui#draw(s:state)
-	augroup END
+	call callstack#init()
+	try
+		let s:game = vimcastle#game#create()
+		call vimcastle#ui#init(a:dedicated)
+		call vimcastle#mappings#init()
+		let s:game.actions = s:game.enter('intro')
+		call vimcastle#ui#draw(s:game)
 
-	execute 'nnoremap <silent> <buffer> q :call vimcastle#quit(' . a:dedicated . ')<CR>'
-	execute 'nnoremap <silent> <buffer> h :call vimcastle#help()<CR>'
+		augroup Vimcastle_ui
+			autocmd!
+			autocmd VimResized <buffer> call vimcastle#ui#updatescreen() | call vimcastle#ui#draw(s:game)
+		augroup END
+
+		execute 'nnoremap <silent> <buffer> q :call vimcastle#quit(' . a:dedicated . ')<CR>'
+		execute 'nnoremap <silent> <buffer> h :call vimcastle#help()<CR>'
+	catch
+		throw callstack#rethrow(v:exception, v:throwpoint)
+	endtry
+endfunction
+
+function! vimcastle#action(key) abort
+	try
+		if(exists('s:game') && s:game.action(a:key))
+			call vimcastle#ui#draw(s:game)
+		endif
+	catch
+		throw callstack#rethrow(v:exception, v:throwpoint)
+	endtry
 endfunction
 
 function! vimcastle#help() abort
@@ -41,6 +51,7 @@ function! vimcastle#quit(dedicated) abort
 		return
 	endif
 
-	let s:state = {}
+	let s:game = {}
 	call vimcastle#ui#quit(a:dedicated)
 endfunction
+

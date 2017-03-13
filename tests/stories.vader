@@ -12,7 +12,7 @@ Execute (initialize):
 
 Execute (invoke all events):
   call vimcastle#utils#setnextrnd(2)
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   let state.scene = vimcastle#scene#loadintro(storyname)
   call state.scene.enter.invoke(state)
   for scenename in keys(scenes)

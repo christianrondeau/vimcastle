@@ -1,5 +1,5 @@
 Execute (create event):
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   let state.scene = vimcastle#scene#loadintro('main')
   call state.scene.enter.invoke(state)
   let event = vimcastle#event#create('test')

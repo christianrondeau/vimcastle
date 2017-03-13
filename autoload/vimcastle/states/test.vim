@@ -1,4 +1,4 @@
-function! vimcastle#state#test#enter(state) abort
+function! vimcastle#states#test#enter(state) abort
  	call a:state.actions().clear()
 	call a:state.actions().add('1', 'Test Action', function('s:action_test_1'))
 	call a:state.actions().add('any', 'Test Action', function('s:action_test_any'))

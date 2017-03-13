@@ -1,5 +1,5 @@
 Execute (under level setup):
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
   let player.level = 1
   let player.xp = 5

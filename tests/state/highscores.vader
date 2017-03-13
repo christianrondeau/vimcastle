@@ -5,7 +5,7 @@ After (restore vimcastle folder):
   call vimcastle#io#after()
 
 Execute (setup):
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
 
 Execute (no high scores):
   let highscoresfile = vimcastle#io#path('highscores.csv')

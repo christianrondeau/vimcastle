@@ -1,8 +1,8 @@
-function! vimcastle#state#use#enter(state) abort
+function! vimcastle#states#use#enter(state) abort
 	call s:refresh_menu(a:state)
 endfunction
 
-function! vimcastle#state#use#action(name, state) abort
+function! vimcastle#states#use#action(name, state) abort
 	"TODO: Now we can call directly the right method
 	execute 'call s:action_' . a:name . '(a:state)'
 endfunction

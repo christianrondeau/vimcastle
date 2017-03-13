@@ -1,6 +1,6 @@
 Execute (test setup):
   let screen = { 'width': 30 }
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 70)
   let state.player.level = 3
   let state.player.xp = 26
@@ -13,7 +13,7 @@ Execute (test setup):
   call state.actions().addNoop('b',  'Back')
 
 Execute (draw):
-  call vimcastle#ui#sheet#draw(screen, state)
+  call vimcastle#screens#sheet#draw(screen, state)
 
 Expect (character screen):
   ------- Character Sheet ------

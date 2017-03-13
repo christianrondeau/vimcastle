@@ -1,6 +1,6 @@
 Execute (test setup):
   let screen = { 'width': 30 }
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
   let state.player.level = 6
   let state.log = ['Woot!']
@@ -8,7 +8,7 @@ Execute (test setup):
   call state.actions().addNoop('2',  'Increase dex 2 -> 3')
 
 Execute (draw):
-  call vimcastle#ui#levelup#draw(screen, state)
+  call vimcastle#screens#levelup#draw(screen, state)
 
 Expect (levelup screen):
   ---------- Level up! ---------

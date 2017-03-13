@@ -33,13 +33,14 @@ function! vimcastle#ui#draw(state) abort
 	setlocal modifiable
 	silent %delete
 
-	execute 'call vimcastle#ui#' . a:state.screen . '#draw(s:screen, a:state)'
+	execute 'call vimcastle#screens#' . a:state.screen . '#draw(s:screen, a:state)'
 
 	call cursor(1, 1)
 	setlocal nomodifiable
 endfunction
 
 function! s:opengamebuffer(dedicated) abort
+	"TODO: Remove l/col indicator in Ubuntu?
 	let l:winnr = bufwinnr('^' . s:bufname . '$')
 	if (l:winnr >= 0)
 		execute l:winnr . 'wincmd w'

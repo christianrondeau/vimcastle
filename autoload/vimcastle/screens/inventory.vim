@@ -1,29 +1,29 @@
-function! vimcastle#ui#inventory#draw(screen, state) abort
-	call vimcastle#ui#common#drawtitle(a:screen, 'Inventory')
+function! vimcastle#screens#inventory#draw(screen, game) abort
+	call vimcastle#screens#common#drawtitle(a:screen, 'Inventory')
 
-	if(exists('a:state.player.equipment.weapon'))
-		let weapon = a:state.player.equipment.weapon
+	if(exists('a:game.player.equipment.weapon'))
+		let weapon = a:game.player.equipment.weapon
 		call s:showitemname(weapon)
 		call s:showitemdmg(weapon)
 		call s:showitemstats(weapon)
 	endif
 
-	if(exists('a:state.player.equipment.armor'))
-		let armor = a:state.player.equipment.armor
+	if(exists('a:game.player.equipment.armor'))
+		let armor = a:game.player.equipment.armor
 		call s:showitemname(armor)
 		call s:showitemstats(armor)
 	endif
 
-	if(exists('a:state.player.items') && len(a:state.player.items))
+	if(exists('a:game.player.items') && len(a:game.player.items))
 		call append(line('$'), '* Items')
-		for item in a:state.player.items
+		for item in a:game.player.items
 			call append(line('$'), '  * ' . item.label)
 		endfor
 	endif
 
 	call append(line('$'), '')
 
-	call vimcastle#ui#actions#draw(a:state.actions())
+	call vimcastle#screens#actions#draw(a:game.actions)
 endfunction
 
 function! s:showitemname(item) abort

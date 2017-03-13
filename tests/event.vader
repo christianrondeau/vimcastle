@@ -1,5 +1,5 @@
 Execute (state mock):
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
 
 Execute (create simple event):
   let event = vimcastle#event#create('test')

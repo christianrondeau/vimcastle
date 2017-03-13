@@ -1,4 +1,4 @@
-function! vimcastle#ui#intro#draw(screen, state) abort
+function! vimcastle#screens#intro#draw(screen, state) abort
 	call s:drawframe(a:screen, [
 		\ '__   ___',
 		\ '\ \ /  /',
@@ -64,5 +64,6 @@ function! s:drawframe(screen, img) abort
 	redraw
 	sleep 200m
 	silent %delete
-	call vimcastle#ui#common#drawscreencenter(a:screen, a:img)
+	call vimcastle#screens#common#drawscreencenter(a:screen, a:img)
 endfunction
+

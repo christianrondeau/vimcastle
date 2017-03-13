@@ -1,4 +1,4 @@
-function! vimcastle#ui#actions#draw(bindings) abort
+function! vimcastle#screens#actions#draw(bindings) abort
 	let i = 0
 	while(i < len(a:bindings.display))
 		let binding = a:bindings.display[i]

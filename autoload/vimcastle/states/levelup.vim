@@ -1,4 +1,4 @@
-function! vimcastle#state#levelup#enter(state) abort
+function! vimcastle#states#levelup#enter(state) abort
 	let a:state.log = ['Your health was replenished! Select a skill to increase.']
 
 	call a:state.actions().clear()
@@ -9,7 +9,7 @@ function! vimcastle#state#levelup#enter(state) abort
 	call s:addincreaseaction('4', a:state, 'dex', 1)
 endfunction
 
-function! vimcastle#state#levelup#action(name, state) abort
+function! vimcastle#states#levelup#action(name, state) abort
 	execute 'call s:action_' . a:name . '(a:state)'
 endfunction
 

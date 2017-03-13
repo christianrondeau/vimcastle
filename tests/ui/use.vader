@@ -1,10 +1,10 @@
 Execute (test setup):
   let screen = { 'width': 30 }
-  let state = vimcastle#state#create()
+  let state = vimcastle#states#create()
   call state.actions().addNoop('b',  'Back')
 
 Execute (draw):
-  call vimcastle#ui#use#draw(screen, state)
+  call vimcastle#screens#use#draw(screen, state)
 
 Expect (use screen):
   ------------- Use ------------
@@ -15,7 +15,7 @@ Expect (use screen):
 
 Execute (with log):
   call state.addlog('You feel better!')
-  call vimcastle#ui#use#draw(screen, state)
+  call vimcastle#screens#use#draw(screen, state)
 
 Expect (use screen):
   ------------- Use ------------
