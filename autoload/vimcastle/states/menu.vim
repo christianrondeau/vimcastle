@@ -18,7 +18,7 @@ function! s:enter(game) abort dict
 	call a:game.addlog('Please share your ideas and feedback at <https://github.com/christianrondeau/vimcastle>')
 	call a:game.addlog('  - Christian')
 	
-	return vimcastle#bindings#create()
+	call a:game.actions
 				\.add('newgame', 'n', 'New Game')
 				\.add('highscores', 's', 'High Scores')
 				\.add('', 'h', 'Help')

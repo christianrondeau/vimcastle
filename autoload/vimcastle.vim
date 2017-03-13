@@ -10,7 +10,7 @@ function! vimcastle#start(dedicated) abort
 		let s:game = vimcastle#game#create()
 		call vimcastle#ui#init(a:dedicated)
 		call vimcastle#mappings#init()
-		let s:game.actions = s:game.enter('intro')
+		call s:game.enter('intro')
 		call vimcastle#ui#draw(s:game)
 
 		augroup Vimcastle_ui

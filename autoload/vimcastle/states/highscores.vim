@@ -11,7 +11,7 @@ function! s:enter(game) abort dict
 	call a:game.addlog('Score     Events    Fights    Scenes')
 	call a:game.addlog(s:loadhighscores())
 
-	return vimcastle#bindings#create()
+	call a:game.actions
 				\.add('back', 'b', 'Menu')
 endfunction
 

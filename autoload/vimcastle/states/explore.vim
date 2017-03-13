@@ -6,11 +6,10 @@ function! vimcastle#states#explore#create() abort
 endfunction
 
 function! s:enter(game) abort dict
-	return a:game.event.actions
+	return a:game.event.enter(a:game)
 endfunction
 
 function! s:action(name, game) abort
-	call a:game.event.action(a:name, a:game)
-	return a:game.event.actions
+	return a:game.event.action(a:name, a:game)
 endfunction
 

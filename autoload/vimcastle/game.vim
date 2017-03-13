@@ -9,6 +9,7 @@ function! vimcastle#game#create() abort
 	let game.addlogrnd = function('s:addlogrnd')
 	let game.addlog = function('s:addlog')
 	let game.msg = function('s:msg')
+	let game.actions = vimcastle#bindings#create()
 	call game.reset()
 	return game
 endfunction
@@ -26,10 +27,9 @@ function! s:action(key) dict abort
 	if(name == '')
 		return 0
 	endif
-	let self.actions = self.state.action(name, self)
-	if(!exists('self.actions.display'))
-		throw 'State "' . a:name . '" does not define actions'
-	endif
+	call self.actions.clear()
+	call self.clearlog()
+	call self.state.action(name, self)
 	return 1
 endfunction
 
@@ -41,8 +41,8 @@ function! s:reset() dict abort
 		unlet self.player
 	endif
 	let self.screen = 'undefined'
-	let self.log = []
-	let self.screenactions = {}
+	let self.clearlog()
+	let self.actions.clear()
 	let self.stats = { 'events': 0, 'fights': 0, 'scenes': 0 }
 endfunction
 

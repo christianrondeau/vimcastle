@@ -6,7 +6,7 @@ function! vimcastle#states#intro#create() abort
 endfunction
 
 function! s:enter(game) abort dict
-	return vimcastle#bindings#default()
+	call a:game.actions.addDefault()
 endfunction
 
 function! s:action(name, game) abort dict

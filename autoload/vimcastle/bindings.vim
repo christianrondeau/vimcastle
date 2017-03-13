@@ -1,14 +1,9 @@
 let s:BindingsClass = {}
 
+" TODO: Rename actions"
 function! vimcastle#bindings#create() abort
 	let instance = copy(s:BindingsClass)
 	call instance.clear()
-	return instance
-endfunction
-
-function! vimcastle#bindings#default() abort
-	let instance = vimcastle#bindings#create()
-	call instance.addDefault()
 	return instance
 endfunction
 
@@ -26,13 +21,14 @@ function! s:BindingsClass.addDefault() dict abort
 	return self
 endfunction
 
-"TODO: This will become useless
 function! s:BindingsClass.clear() dict abort
+	let self.default = 0
 	let self.display = []
+	return self
 endfunction
 
 function! s:BindingsClass.keyToName(key) dict abort
-	if(exists('self.default'))
+	if(self.default)
 		return 'default'
 	endif
 
@@ -42,26 +38,4 @@ function! s:BindingsClass.keyToName(key) dict abort
 		endif
 	endfor
 	return ''
-endfunction
-
-"TODO: Remove this
-function! s:BindingsClass.invokeByKey(key, state) dict abort
-	if(exists('self.default'))
-		execute 'call vimcastle#states#' . a:state.screen . '#action("", a:state)'
-		return 1
-	endif
-
-	" TODO: Rename display
-	for binding in self.display
-		if(binding.key ==# a:key)
-
-			execute 'call vimcastle#states#' . a:state.screen . '#action(binding.name, a:state)'
-			return 1
-		endif
-	endfor
-	return 0
-endfunction
-
-function! s:BindingsClass.invokeDefault(state) dict abort
-	return self.invokeByKey('', a:state)
 endfunction

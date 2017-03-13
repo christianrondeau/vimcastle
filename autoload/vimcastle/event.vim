@@ -1,12 +1,18 @@
 let s:EventClass = {}
 
 function! vimcastle#event#create() abort
-	let event = copy(s:EventClass)
-	let event.actions = vimcastle#bindings#create()
-	return event
+	let instance = {}
+	let instance.enter = function('s:enter')
+	let instance.action = function('s:action')
+	let instance.actions = vimcastle#bindings#create()
+	return instance
 endfunction
 
-function! s:EventClass.action(name, game) abort
+function! s:enter(game) abort dict
+	let a:game.actions.display = self.actions.display
+endfunction
+
+function! s:action(name, game) abort dict
 	execute 'return s:action_' . a:name . '(a:game)'
 endfunction
 
@@ -19,7 +25,7 @@ function! s:action_fight(game) abort
 	let a:game.stats.fights += 1
 	let a:game.nextaction = function('s:action_explore')
 	call s:cleanup(a:game)
-	call a:game.enter('fight')
+	return a:game.enter('fight')
 endfunction
 
 function! s:action_enterscene(game) abort
