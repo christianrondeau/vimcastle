@@ -20,7 +20,9 @@ Execute (setup):
 
 Then (score is calculated and high score is saved):
   AssertEqual 82, state.stats.score
-  AssertEqual ['82,1,2,3', '1,1,1,1'], readfile(highscoresfile)
+  if(has('patch-7.4.341'))
+    AssertEqual ['82,1,2,3', '1,1,1,1'], readfile(highscoresfile)
+  endif
 
 Execute (restart):
   call state.actions().invokeDefault(state)
