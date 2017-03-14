@@ -1,7 +1,8 @@
 function! vimcastle#states#win#create() abort
 	let instance = {}
 	let instance.enter = function('s:enter')
-	let instance.action = function('s:action')
+	let instance.action_levelup = function('s:action_levelup')
+	let instance.action_continue = function('s:action_continue')
 	return instance
 endfunction
 
@@ -24,18 +25,14 @@ function! s:enter(game) abort dict
 	endif
 endfunction
 
-function! s:action(name, game) abort dict
-	execute 'call s:action_' . a:name . '(a:game)'
+function! s:action_levelup(game) abort
+	call a:game.enter('levelup')
+	return 1
 endfunction
 
 function! s:action_continue(game) abort
 	call a:game.enter('explore')
 	let a:game.event = a:game.scene.events.rnd().invoke(a:game)
 	call a:game.event.enter(a:game)
-	return 1
-endfunction
-
-function! s:action_levelup(game) abort
-	call a:game.enter('levelup')
 	return 1
 endfunction

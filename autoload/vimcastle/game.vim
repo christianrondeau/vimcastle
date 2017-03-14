@@ -15,17 +15,13 @@ endfunction
 
 function! s:enter(name) dict abort
 	execute 'let self.state = vimcastle#states#' . a:name . '#create()'
-	call s:validatestate(a:name, self.state)
+	if(!exists('self.state.enter'))
+		throw 'State "' . a:name . '" does not define an enter event'
+	endif
 	let self.screen = a:name
 	call self.actions.clear()
 	call self.clearlog()
 	return self.state.enter(self)
-endfunction
-
-function! s:validatestate(name, state) abort
-	if(!exists('a:state.enter'))
-		throw 'State "' . a:name . '" does not define an enter event'
-	endif
 endfunction
 
 function! s:action(key) dict abort
@@ -35,8 +31,18 @@ function! s:action(key) dict abort
 	endif
 	call self.actions.clear()
 	call self.clearlog()
-	call self.state.action(name, self)
-	return 1
+
+	if(exists('self.state.action_' . name))
+		execute 'call self.state.action_' . name . '(self)'
+		return 1
+	endif
+
+	if(exists('self.state.action'))
+		execute 'call self.state.action(name, self)'
+		return 1
+	endif
+
+	throw 'No action_' . name . ' nor action on state ' . self.screen . ' but bound to ' . a:key
 endfunction
 
 function! s:reset() dict abort

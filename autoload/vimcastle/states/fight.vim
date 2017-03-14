@@ -1,7 +1,11 @@
 function! vimcastle#states#fight#create() abort
 	let instance = {}
 	let instance.enter = function('s:enter')
-	let instance.action = function('s:action')
+	let instance.action_hit = function('s:action_hit')
+	let instance.action_look = function('s:action_look')
+	let instance.action_use = function('s:action_use')
+	let instance.action_win = function('s:action_win')
+	let instance.action_gameover = function('s:action_gameover')
 	return instance
 endfunction
 
@@ -21,11 +25,6 @@ function! s:enter(game) abort dict
 	endif
 endfunction
 
-function! s:action(name, game) abort dict
-	call s:setupactions(a:game)
-	execute 'return s:action_' . a:name . '(a:game)'
-endfunction
-
 function! s:setupactions(game) abort
 	if(exists('a:game.player.equipment.weapon'))
 		call a:game.actions.add('hit', 'a', 'Attack with <' . a:game.player.equipment.weapon.name.short . '>')
@@ -35,6 +34,8 @@ function! s:setupactions(game) abort
 endfunction
 
 function! s:action_hit(game) abort
+	call s:setupactions(a:game)
+	
 	if(s:hit_send(a:game))
 		return
 	endif
@@ -45,6 +46,8 @@ function! s:action_hit(game) abort
 endfunction
 
 function! s:action_look(game) abort
+	call s:setupactions(a:game)
+	
 	call a:game.addlog('You look at %<enemy.name>')
 
 	let text = []
@@ -96,14 +99,13 @@ function! s:hit_receive(game) abort
 endfunction
 
 function! s:action_use(game) abort
-	call a:game.clearlog()
 	return a:game.enter('use')
 endfunction
 
 function! s:action_win(game) abort
-		return a:game.enter('win')
+	return a:game.enter('win')
 endfunction
 
 function! s:action_gameover(game) abort
-		return a:game.enter('gameover')
+	return a:game.enter('gameover')
 endfunction

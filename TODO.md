@@ -15,6 +15,7 @@
 
 ## Refactors
 
+* [ ] Rename tests/state to states
 * [ ] Remove line/col indicators in bash-invoked vim
 * [ ] Directly invoke action_something on the event instead of implementing .action()
 * [ ] Never use game.nextaction; instead decide which event id to invoke

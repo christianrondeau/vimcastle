@@ -1,7 +1,9 @@
 function! vimcastle#states#inventory#create() abort
 	let instance = {}
 	let instance.enter = function('s:enter')
-	let instance.action = function('s:action')
+	let instance.action_use = function('s:action_use')
+	let instance.action_character = function('s:action_character')
+	let instance.action_back = function('s:action_back')
 	return instance
 endfunction
 
@@ -13,10 +15,6 @@ function! s:enter(game) abort dict
 	call a:game.actions
 				\.add('character', 's', 'Character Sheet')
 				\.add('back', 'b', 'Back')
-endfunction
-
-function! s:action(name, game) abort dict
-	execute 'return s:action_' . a:name . '(a:game)'
 endfunction
 
 function! s:action_use(game) abort

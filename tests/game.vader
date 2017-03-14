@@ -12,7 +12,7 @@ Execute (action):
   call game.action('1')
 
 Then (the action is called):
-  AssertEqual ['action', 'action_test_1'], game.log
+  AssertEqual ['action_test_1'], game.log
 
 Execute (properties than can be included in tests):
   let game.player = {}

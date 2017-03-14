@@ -1,7 +1,7 @@
 function! vimcastle#states#gameover#create() abort
 	let instance = {}
 	let instance.enter = function('s:enter')
-	let instance.action = function('s:action')
+	let instance.action_default = function('s:action_default')
 	return instance
 endfunction
 
@@ -13,7 +13,7 @@ function! s:enter(game) abort
 	call a:game.actions.addDefault()
 endfunction
 
-function! s:action(name, game) abort
+function! s:action_default(game) abort
 	call a:game.reset()
 	return a:game.enter('intro')
 endfunction

@@ -1,6 +1,7 @@
 function! vimcastle#states#use#create() abort
 	let instance = {}
 	let instance.enter = function('s:enter')
+	let instance.action_back = function('s:action_back')
 	let instance.action = function('s:action')
 	return instance
 endfunction
@@ -10,7 +11,7 @@ function! s:enter(game) abort
 endfunction
 
 function! s:action(name, game) abort
-	execute 'call s:action_' . a:name . '(a:game)'
+	call s:use(a:game, str2nr(a:name[4:]))
 endfunction
 
 function! s:generate_menu(game) abort
@@ -31,15 +32,7 @@ function! s:generate_menu(game) abort
 	call a:game.actions.add('back', 'b', 'Back')
 endfunction
 
-" Maps from 1 - 9 {{{
-" NOTE: Cannot use arglist in 7.4
-" call a:game.actions.add('' . index, '...', function('s:action_use', [index]))
-for i in range(9)
-	execute 'function! s:action_use_' . (i+1) . "(game) abort\ncall s:action_use(a:game, " . (i+1) . ")\nendfunction"
-endfor
-" }}}
-
-function! s:action_use(game, index) abort
+function! s:use(game, index) abort
 	let item = a:game.player.items[a:index - 1]
 
 	if(!exists('item.effect'))

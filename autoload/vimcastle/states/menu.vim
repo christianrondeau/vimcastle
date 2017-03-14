@@ -1,7 +1,8 @@
 function! vimcastle#states#menu#create() abort
 	let instance = {}
 	let instance.enter = function('s:enter')
-	let instance.action = function('s:action')
+	let instance.action_newgame = function('s:action_newgame')
+	let instance.action_highscores = function('s:action_highscores')
 	return instance
 endfunction
 
@@ -23,10 +24,6 @@ function! s:enter(game) abort dict
 				\.add('highscores', 's', 'High Scores')
 				\.add('', 'h', 'Help')
 				\.add('', 'q', 'Quit')
-endfunction
-
-function! s:action(name, game) abort
-	execute 'return s:action_' . a:name . '(a:game)'
 endfunction
 
 function! s:action_newgame(game) abort
