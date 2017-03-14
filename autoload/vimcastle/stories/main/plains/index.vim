@@ -11,6 +11,7 @@ function! vimcastle#stories#main#plains#index#load(scene) abort
 
 	call a:scene.events.add(30, s:event_nothing())
 	call a:scene.events.add(20, s:event_encounter())
+	call a:scene.events.add(10, s:event_encounter_opt())
 	call a:scene.events.add(3, s:event_heal())
 	call a:scene.events.add(2, s:event_findweapon())
 	call a:scene.events.add(2, s:event_findarmor())
@@ -37,7 +38,11 @@ function! s:event_nothing() abort
 				\ 'You wander aimlessly...',
 				\ 'You walk around...',
 				\ 'You see... nothing.',
-				\ 'Nope. Nothing.'
+				\ 'You walk past a beautiful river.',
+				\ 'A frighten deer runs past you.',
+				\ 'You continue walking...',
+				\ 'Another adventurer walks by you, says hi and continues on her way.',
+				\ 'You yawn... boooring!',
 				\])
 				\.explore('Continue')
 endfunction
@@ -107,6 +112,15 @@ function! s:event_encounter() abort
 				\ '%<enemy.name> suddenly jumps from behind a tree!'
 				\])
 				\.fight('Fight!', vimcastle#stories#main#plains#monsters#get())
+endfunction
+
+function! s:event_encounter_opt() abort
+	return vimcastle#eventgen#create('encounter')
+				\.text([
+				\ 'You see %<enemy.name>, but it did not see you yet.',
+				\])
+				\.fight('Fight!', vimcastle#stories#main#plains#monsters#get())
+				\.explore('Avoid the fight')
 endfunction
 
 function! s:event_boss() abort
