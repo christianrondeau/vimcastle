@@ -6,15 +6,13 @@ function! vimcastle#states#inventory#create() abort
 endfunction
 
 function! s:enter(game) abort dict
-	let actions = vimcastle#bindings#create()
-
 	if(exists('a:game.player.items') && len(a:game.player.items))
-		call actions.add('use', 'u', 'Use an item')
+		call a:game.actions.add('use', 'u', 'Use an item')
 	endif
 
-	call actions.add('character', 's', 'Character Sheet')
-	call actions.add('back', 'b', 'Back')
-	return actions
+	call a:game.actions
+				\.add('character', 's', 'Character Sheet')
+				\.add('back', 'b', 'Back')
 endfunction
 
 function! s:action(name, game) abort dict

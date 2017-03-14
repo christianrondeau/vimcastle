@@ -1,37 +1,42 @@
-function! vimcastle#states#win#enter(state) abort
-	call a:state.actions().clear()
-	call a:state.clearlog()
-	
-	let [ignored, nextlevelxp] = vimcastle#levelling#forxp(a:state.player.xp)
+function! vimcastle#states#win#create() abort
+	let instance = {}
+	let instance.enter = function('s:enter')
+	let instance.action = function('s:action')
+	return instance
+endfunction
 
-	let xp = a:state.enemy.xp
-	let a:state.player.xp += xp
-	unlet a:state.enemy
+function! s:enter(game) abort dict
+	let [ignored, nextlevelxp] = vimcastle#levelling#forxp(a:game.player.xp)
 
-	let [expectedlevel, ignored] = vimcastle#levelling#forxp(a:state.player.xp)
+	let xp = a:game.enemy.xp
+	let a:game.player.xp += xp
+	unlet a:game.enemy
 
-	call a:state.addlog('You gained:')
-	call a:state.addlog('  * ' . xp . ' xp! (' . a:state.player.xp . '/' . nextlevelxp . ' xp)')
+	let [expectedlevel, ignored] = vimcastle#levelling#forxp(a:game.player.xp)
 
-	if(a:state.player.level < expectedlevel)
-		call a:state.actions().add('levelup', 'u', 'Level up!')
+	call a:game.addlog('You gained:')
+	call a:game.addlog('  * ' . xp . ' xp! (' . a:game.player.xp . '/' . nextlevelxp . ' xp)')
+
+	if(a:game.player.level < expectedlevel)
+		call a:game.actions.add('levelup', 'u', 'Level up!')
 	else
-		call a:state.actions().add('continue', 'c', 'Continue')
+		call a:game.actions.add('continue', 'c', 'Continue')
 	endif
 endfunction
 
-function! vimcastle#states#win#action(name, state) abort
-	execute 'call s:action_' . a:name . '(a:state)'
+"TODO: Why not instead just do the call instance.action_whatever?
+function! s:action(name, game) abort dict
+	execute 'call s:action_' . a:name . '(a:game)'
 endfunction
 
-function! s:action_continue(state) abort
-	call a:state.enter('explore')
-	call a:state.nextaction(a:state)
-	unlet a:state.nextaction
+function! s:action_continue(game) abort
+	call a:game.enter('explore')
+	call a:game.nextaction(a:game)
+	unlet a:game.nextaction
 	return 1
 endfunction
 
-function! s:action_levelup(state) abort
-	call a:state.enter('levelup')
+function! s:action_levelup(game) abort
+	call a:game.enter('levelup')
 	return 1
 endfunction

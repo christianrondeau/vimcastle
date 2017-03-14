@@ -1,60 +1,68 @@
-function! vimcastle#states#levelup#enter(state) abort
-	let a:state.log = ['Your health was replenished! Select a skill to increase.']
-
-	call a:state.actions().clear()
-
-	call s:addincreaseaction('1', a:state, 'con', 1)
-	call s:addincreaseaction('2', a:state, 'str', 1)
-	call s:addincreaseaction('3', a:state, 'spd', 1)
-	call s:addincreaseaction('4', a:state, 'dex', 1)
+function! vimcastle#states#levelup#create() abort
+	let instance = {}
+	let instance.enter = function('s:enter')
+	let instance.action = function('s:action')
+	return instance
 endfunction
 
-function! vimcastle#states#levelup#action(name, state) abort
-	execute 'call s:action_' . a:name . '(a:state)'
+function! s:enter(game) abort
+	let a:game.log = ['Your health was replenished! Select a skill to increase.']
+
+	call a:game.actions.clear()
+
+	call s:addincreaseaction('1', a:game, 'con', 1)
+	call s:addincreaseaction('2', a:game, 'str', 1)
+	call s:addincreaseaction('3', a:game, 'spd', 1)
+	call s:addincreaseaction('4', a:game, 'dex', 1)
 endfunction
 
-function! s:addincreaseaction(index, state, stat, by) abort
-	let value = a:state.player.getstat(a:stat, 0)
+function! s:action(name, game) abort
+	execute 'call s:action_' . a:name . '(a:game)'
+endfunction
+
+function! s:addincreaseaction(index, game, stat, by) abort
+	let value = a:game.player.getstat(a:stat, 0)
 	let msg = 'Increase ' . a:stat . ' ' . value . ' -> ' . (value + a:by)
-	call a:state.actions().add('incr_' . a:stat, a:index, msg)
+	call a:game.actions.add('incr_' . a:stat, a:index, msg)
 endfunction
 
-function! s:action_incr_str(state) abort
-	return s:action_incr(a:state, 'str', 1)
+function! s:action_incr_str(game) abort
+	return s:action_incr(a:game, 'str', 1)
 endfunction
 
-function! s:action_incr_spd(state) abort
-	return s:action_incr(a:state, 'spd', 1)
+function! s:action_incr_spd(game) abort
+	return s:action_incr(a:game, 'spd', 1)
 endfunction
 
-function! s:action_incr_dex(state) abort
-	return s:action_incr(a:state, 'dex', 1)
+function! s:action_incr_dex(game) abort
+	return s:action_incr(a:game, 'dex', 1)
 endfunction
 
-function! s:action_incr_con(state) abort
-	return s:action_incr(a:state, 'con', 1)
+function! s:action_incr_con(game) abort
+	return s:action_incr(a:game, 'con', 1)
 endfunction
 
-function! s:action_incr(state, stat, by) abort
-	let value = a:state.player.getstat(a:stat, 0)
-	call a:state.player.setstat(a:stat, value + a:by)
-	call s:action_continue(a:state)
+function! s:action_incr(game, stat, by) abort
+	let value = a:game.player.getstat(a:stat, 0)
+	call a:game.player.setstat(a:stat, value + a:by)
+	call s:action_continue(a:game)
 endfunction
 
-function! s:action_continue(state) abort
-	let maxhealth = a:state.player.getmaxhealth()
-	if(a:state.player.health < maxhealth)
-		let a:state.player.health = maxhealth
+function! s:action_continue(game) abort
+	let maxhealth = a:game.player.getmaxhealth()
+	if(a:game.player.health < maxhealth)
+		let a:game.player.health = maxhealth
 	endif
 
-	let a:state.player.level += 1
+	let a:game.player.level += 1
 
-	let [expectedlevel, ignored] = vimcastle#levelling#forxp(a:state.player.xp)
-	if(a:state.player.level < expectedlevel)
-		call a:state.enter('levelup')
+	let [expectedlevel, ignored] = vimcastle#levelling#forxp(a:game.player.xp)
+	if(a:game.player.level < expectedlevel)
+		return a:game.enter('levelup')
 	else
-		call a:state.enter('explore')
-		call a:state.nextaction(a:state)
-		unlet a:state.nextaction
+		"TODO: Do not use a func to drive next steps
+		call a:game.nextaction(a:game)
+		unlet a:game.nextaction
+		return a:game.enter('explore')
 	endif
 endfunction

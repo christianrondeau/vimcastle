@@ -1,15 +1,21 @@
-function! vimcastle#states#gameover#enter(state) abort
-	let a:state.stats.score = s:computescore(a:state.stats)
-
-	call s:writehighscore(a:state.stats)
-
-	call a:state.clearlog()
-	call a:state.actions().addDefault()
+function! vimcastle#states#gameover#create() abort
+	let instance = {}
+	let instance.enter = function('s:enter')
+	let instance.action = function('s:action')
+	return instance
 endfunction
 
-function! vimcastle#states#gameover#action(name, state) abort
-	call a:state.reset()
-	call a:state.enter('intro')
+function! s:enter(game) abort
+	let a:game.stats.score = s:computescore(a:game.stats)
+
+	call s:writehighscore(a:game.stats)
+
+	call a:game.actions.addDefault()
+endfunction
+
+function! s:action(name, game) abort
+	call a:game.reset()
+	return a:game.enter('intro')
 endfunction
 
 function! s:computescore(stats) abort

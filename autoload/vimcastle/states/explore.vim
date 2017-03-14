@@ -10,6 +10,6 @@ function! s:enter(game) abort dict
 endfunction
 
 function! s:action(name, game) abort
-	return a:game.event.action(a:name, a:game)
+	call a:game.event.action(a:name, a:game)
 endfunction
 

@@ -1,5 +1,3 @@
-"TODO: Cleanup all this
-
 function! vimcastle#states#fight#create() abort
 	let instance = {}
 	let instance.enter = function('s:enter')
@@ -8,51 +6,45 @@ function! vimcastle#states#fight#create() abort
 endfunction
 
 function! s:enter(game) abort dict
-	let actions = vimcastle#bindings#create()
-	if(exists('a:game.player.equipment.weapon'))
-		call actions.add('hit', 'a', 'Attack with <' . a:game.player.equipment.weapon.name.short . '>')
-	endif
-	call actions.add('look', 'l', 'Look at <' . a:game.enemy.name.short . '>')
-	call actions.add('use', 'u', 'Use an item')
+	call s:setupactions(a:game)
 
 	if(exists('a:game.enemy.fighting'))
-		call s:hit_receive(a:game, actions)
+		call s:hit_receive(a:game)
 	else
 		let a:game.enemy.fighting = 1
-		call a:game.clearlog()
 		if(a:game.player.getstat('spd', 1) >= a:game.enemy.getstat('spd', 1))
 			call a:game.addlogrnd(['You attack first!', 'You have the opportunity!', 'You got the first strike!'])
 		else
 			call a:game.addlog('%<enemy.name> sees you first!')
-			call s:hit_receive(a:game, actions)
+			call s:hit_receive(a:game)
 		endif
 	endif
-	return actions
 endfunction
 
 function! s:action(name, game) abort dict
+	call s:setupactions(a:game)
 	execute 'return s:action_' . a:name . '(a:game)'
 endfunction
 
+function! s:setupactions(game) abort
+	if(exists('a:game.player.equipment.weapon'))
+		call a:game.actions.add('hit', 'a', 'Attack with <' . a:game.player.equipment.weapon.name.short . '>')
+	endif
+	call a:game.actions.add('look', 'l', 'Look at <' . a:game.enemy.name.short . '>')
+	call a:game.actions.add('use', 'u', 'Use an item')
+endfunction
+
 function! s:action_hit(game) abort
-	let actions = vimcastle#bindings#create()
-	call a:game.clearlog()
-
-	if(s:hit_send(a:game, actions))
-		return actions
+	if(s:hit_send(a:game))
+		return
 	endif
 
-	if(s:hit_receive(a:game, actions))
-		return actions
+	if(s:hit_receive(a:game))
+		return
 	endif
-
-	return actions
 endfunction
 
 function! s:action_look(game) abort
-	let actions = vimcastle#bindings#create()
-	call a:game.clearlog()
-
 	call a:game.addlog('You look at %<enemy.name>')
 
 	let text = []
@@ -67,12 +59,10 @@ function! s:action_look(game) abort
 
 	call a:game.addlog(text)
 
-	call s:hit_receive(a:game, actions)
-
-	return actions
+	call s:hit_receive(a:game)
 endfunction
 
-function! s:hit_send(game, actions) abort
+function! s:hit_send(game) abort
 	let dmg = vimcastle#resolver#hit(a:game.player, a:game.enemy)
 	if(dmg > 0)
 		call a:game.addlog('You hit %<enemy.name> with %<player.weapon> for <' . dmg . '> damage!')
@@ -82,13 +72,13 @@ function! s:hit_send(game, actions) abort
 
 	if(a:game.enemy.health <= 0)
 		call a:game.addlog('%<enemy.name> has been defeated!')
-		call a:actions.clear()
-		call a:actions.add('win', 'c', 'Continue')
+		call a:game.actions.clear()
+		call a:game.actions.add('win', 'c', 'Continue')
 		return 1
 	endif
 endfunction
 
-function! s:hit_receive(game, actions) abort
+function! s:hit_receive(game) abort
 	let dmg = vimcastle#resolver#hit(a:game.enemy, a:game.player)
 
 	if(dmg > 0)
@@ -99,8 +89,8 @@ function! s:hit_receive(game, actions) abort
 
 	if(a:game.player.health <= 0)
 		call add(a:game.log, 'You are dead.')
-		call a:actions.clear()
-		call a:actions.add('gameover', 'c', 'Continue')
+		call a:game.actions.clear()
+		call a:game.actions.add('gameover', 'c', 'Continue')
 		return 1
 	endif
 endfunction

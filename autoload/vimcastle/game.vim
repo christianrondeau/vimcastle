@@ -18,6 +18,8 @@ function! s:enter(name) dict abort
 	execute 'let self.state = vimcastle#states#' . a:name . '#create()'
 	"TODO: Let the state decide which screen to use
 	let self.screen = a:name
+	call self.actions.clear()
+	call self.clearlog()
 	return self.state.enter(self)
 endfunction
 
@@ -41,8 +43,8 @@ function! s:reset() dict abort
 		unlet self.player
 	endif
 	let self.screen = 'undefined'
-	let self.clearlog()
-	let self.actions.clear()
+	call self.clearlog()
+	call self.actions.clear()
 	let self.stats = { 'events': 0, 'fights': 0, 'scenes': 0 }
 endfunction
 

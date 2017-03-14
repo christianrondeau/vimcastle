@@ -1,66 +1,72 @@
-function! vimcastle#states#use#enter(state) abort
-	call s:refresh_menu(a:state)
+function! vimcastle#states#use#create() abort
+	let instance = {}
+	let instance.enter = function('s:enter')
+	let instance.action = function('s:action')
+	return instance
 endfunction
 
-function! vimcastle#states#use#action(name, state) abort
-	"TODO: Now we can call directly the right method
-	execute 'call s:action_' . a:name . '(a:state)'
+function! s:enter(game) abort
+	call s:generate_menu(a:game)
 endfunction
 
-function! s:refresh_menu(state) abort
- 	call a:state.actions().clear()
+function! s:action(name, game) abort
+	execute 'call s:action_' . a:name . '(a:game)'
+endfunction
 
-	if(exists('a:state.player.items') && len(a:state.player.items))
+function! s:generate_menu(game) abort
+	if(exists('a:game.player.items') && len(a:game.player.items))
+		call a:game.addlog('Select an item to use:')
 		let index = 0
-		for item in a:state.player.items
+		for item in a:game.player.items
 			let index += 1
 			if(index > 9)
 				break
 			endif
-			call a:state.actions().add('use_' . index, '' . index, 'Use <' . item.label . '>')
+			call a:game.actions.add('use_' . index, '' . index, 'Use <' . item.label . '>')
 		endfor
+	else
+		call a:game.addlog('Your inventory is empty!')
 	endif
 
-	call a:state.actions().add('back', 'b', 'Back')
+	call a:game.actions.add('back', 'b', 'Back')
 endfunction
 
 " Maps from 1 - 9 {{{
 " NOTE: Cannot use arglist in 7.4
-" call a:state.actions().add('' . index, '...', function('s:action_use', [index]))
+" call a:game.actions.add('' . index, '...', function('s:action_use', [index]))
 for i in range(9)
-	execute 'function! s:action_use_' . (i+1) . "(state) abort\ncall s:action_use(a:state, " . (i+1) . ")\nendfunction"
+	execute 'function! s:action_use_' . (i+1) . "(game) abort\ncall s:action_use(a:game, " . (i+1) . ")\nendfunction"
 endfor
 " }}}
 
-function! s:action_use(state, index) abort
-	call a:state.clearlog()
-	let item = a:state.player.items[a:index - 1]
+function! s:action_use(game, index) abort
+	let item = a:game.player.items[a:index - 1]
 
 	if(!exists('item.effect'))
 		throw 'Item <' . item.label . '> has no effect configured'
 	endif
 
-	call a:state.addlog('Use: <' . item.label . '>')
+	call a:game.addlog('Use: <' . item.label . '>')
 
 	let effect_value = exists('item.value') ? item.value : 0
 	let result = 0
-	execute 'let result = vimcastle#effects#' . item.effect . '(a:state, effect_value)'
+	execute 'let result = vimcastle#effects#' . item.effect . '(a:game, effect_value)'
 
 	if(result)
-		call remove(a:state.player.items, a:index - 1)
+		call remove(a:game.player.items, a:index - 1)
 	endif
 
-	if(exists('a:state.enemy'))
-		call a:state.enter('fight')
+	if(exists('a:game.enemy'))
+		call a:game.actions.add('back', 'b', 'Return to fight')
 	else
-		call s:refresh_menu(a:state)
+		call s:generate_menu(a:game)
 	endif
 endfunction
 
-function! s:action_back(state) abort
-	if(exists('a:state.enemy'))
-		call a:state.enter('fight')
+function! s:action_back(game) abort
+	if(exists('a:game.enemy'))
+		return a:game.enter('fight')
 	else
-		call a:state.enter('inventory')
+		return a:game.enter('inventory')
 	endif
 endfunction

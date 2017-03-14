@@ -6,7 +6,7 @@ function! vimcastle#states#sheet#create() abort
 endfunction
 
 function! s:enter(game) abort dict
- 	return vimcastle#bindings#create()
+ 	call a:game.actions
 				\.add('inventory', 'i', 'Inventory')
 				\.add('back', 'b', 'Back')
 endfunction

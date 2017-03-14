@@ -78,14 +78,13 @@ function! s:EventgenClass.invoke(game) dict abort
 		let a:game.ground_equippable = self.equippables.rnd().invoke()
 	endif
 
-	call a:game.clearlog()
 	for lineoptions in self.texts
 		let line = vimcastle#utils#oneof(lineoptions)
-		call add(a:game.log, a:game.msg(line))
+		call add(event.log, a:game.msg(line))
 	endfor
 
 	if(exists('a:game.ground_equippable'))
-		call s:showequippablediff(a:game)
+		call s:showequippablediff(event.log, a:game)
 	endif
 
 	if(exists('self.effect_name'))
@@ -93,6 +92,7 @@ function! s:EventgenClass.invoke(game) dict abort
 		execute 'call vimcastle#effects#' . self.effect_name . '(a:game, effect_value)'
 	endif
 
+	" Backup to reload
 	let event.actions = self.createactions(a:game)
 
 	return event
@@ -132,7 +132,7 @@ function! s:EventgenClass.createactions(game) abort dict
 	return actions
 endfunction
 
-function! s:showequippablediff(game) abort
+function! s:showequippablediff(log, game) abort
 	if(has_key(a:game.player.equipment, a:game.ground_equippable.slot))
 		let current = a:game.player.equipment[a:game.ground_equippable.slot]
 	else
@@ -140,17 +140,17 @@ function! s:showequippablediff(game) abort
 	endif
 
 	if(a:game.ground_equippable.slot ==# 'weapon')
-		call s:showequippabledmg(a:game, current, a:game.ground_equippable)
+		call s:showequippabledmg(a:log, a:game, current, a:game.ground_equippable)
 	endif
-	call s:showequippablestats(a:game, current, a:game.ground_equippable)
+	call s:showequippablestats(a:log, a:game, current, a:game.ground_equippable)
 endfunction
 
-function! s:showequippabledmg(game, current, ground) abort
+function! s:showequippabledmg(log, game, current, ground) abort
 	let msg = '  * dmg: ' . s:getdiff(a:current['dmg'].min, a:ground['dmg'].min) . ' - ' . s:getdiff(a:current['dmg'].max, a:ground['dmg'].max)
-	call add(a:game.log, msg)
+	call add(a:log, msg)
 endfunction
 
-function! s:showequippablestats(game, current, ground) abort
+function! s:showequippablestats(log, game, current, ground) abort
 	let allstats = copy(a:ground.stats)
 	for curkey in keys(a:current.stats)
 		if(!has_key(allstats, curkey))
@@ -161,7 +161,7 @@ function! s:showequippablestats(game, current, ground) abort
 		let currentval = has_key(a:current.stats, name) ? a:current.stats[name] : 0
 		let groundval = has_key(a:ground.stats, name) ? a:ground.stats[name] : 0
 		let msg = '  * ' . name . ': ' . s:getdiff(currentval, groundval)
-	call add(a:game.log, msg)
+	call add(a:log, msg)
 	endfor
 endfunction
 

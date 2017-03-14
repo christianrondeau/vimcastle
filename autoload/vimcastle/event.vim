@@ -5,11 +5,13 @@ function! vimcastle#event#create() abort
 	let instance.enter = function('s:enter')
 	let instance.action = function('s:action')
 	let instance.actions = vimcastle#bindings#create()
+	let instance.log = []
 	return instance
 endfunction
 
 function! s:enter(game) abort dict
 	let a:game.actions.display = self.actions.display
+	let a:game.log = self.log
 endfunction
 
 function! s:action(name, game) abort dict
@@ -19,6 +21,7 @@ endfunction
 function! s:action_explore(game) abort
 	call s:cleanup(a:game)
 	let a:game.event = a:game.scene.events.rnd().invoke(a:game)
+	call a:game.event.enter(a:game)
 endfunction
 
 function! s:action_fight(game) abort
@@ -32,7 +35,9 @@ function! s:action_enterscene(game) abort
 	let a:game.stats.scenes += 1
 	let a:game.scene = vimcastle#scene#load(a:game.scene.story, a:game.nextscene)
 	call s:cleanup(a:game)
+	"TODO: Rename entryevent?
 	let a:game.event = a:game.scene.enter.invoke(a:game)
+	call a:game.event.enter(a:game)
 endfunction
 
 function! s:action_inventory(game) abort
@@ -46,13 +51,13 @@ endfunction
 function! s:action_pickup_item(game) abort
 	call a:game.player.pickup(a:game.ground_item)
 	call s:cleanup(a:game)
-	call a:game.scene.events.rnd().invoke(a:game)
+	call s:action_explore(a:game)
 endfunction
 
 function! s:action_equip_equippable(game) abort
 	call a:game.player.equip(a:game.ground_equippable)
 	call s:cleanup(a:game)
-	call a:game.scene.events.rnd().invoke(a:game)
+	call s:action_explore(a:game)
 endfunction
 
 function! s:cleanup(game) abort
