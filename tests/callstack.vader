@@ -14,7 +14,7 @@ Execute (simple stack trace):
 Then (call stack is extracted):
   Log 'Result: ' . string(result)
   if(enabled)
-    Assert match(result, '\v.+\.tmp, line [0-9]+') > -1
+    Assert match(result, '\v.+[0-9]+(\.tmp)?, line [0-9]+') > -1
   endif
 
 Execute (with script functions):
@@ -32,7 +32,7 @@ Execute (with script functions):
 Then (script name is extracted):
   Log 'Result: ' . string(result)
   if(enabled)
-    Assert match(result, '\v.+\.tmp s:private, line [0-9]+') > -1
+    Assert match(result, '\v.+[0-9]+(\.tmp)? s:private, line [0-9]+') > -1
   endif
 
 Execute (with script dict):
@@ -51,5 +51,5 @@ Execute (with script dict):
 Then (call stack is extracted):
   Log 'Result: ' . string(result)
   if(enabled)
-    Assert match(result, '\v.+\.tmp function [0-9]+\(\) abort dict | 1 throw') > -1
+    Assert match(result, '\v.+[0-9]+(\.tmp)? function [0-9]+\(\) abort dict | 1 throw') > -1
   endif
