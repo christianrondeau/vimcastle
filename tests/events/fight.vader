@@ -16,11 +16,11 @@ Then (result):
   \  {'label': 'Fight (level 1)', 'name': 'fight', 'key': 'f'}
   \], event.actions.bindings
   AssertEqual ['There is a <Imp> before you!'], event.log
-  AssertEqual 'Imp', game.enemy.name.short
 
 Execute (fight):
   call event.action('fight', game)
 
 Then (change to fight screen):
+  AssertEqual 'Imp', game.enemy.name.short
   AssertEqual 1, game.stats.fights
   AssertEqual 'fight', game.screen

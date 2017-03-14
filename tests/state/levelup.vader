@@ -36,13 +36,9 @@ Then (health increases, another level):
     \ {'name': 'incr_dex', 'label': 'Increase dex 5 -> 6', 'key': '4'}
     \], game.actions.bindings
 
-Execute (prepare next action):
-  function! Vimcastle_test_continue(game)
-    let a:game.called = 1
-  endfunction
-  let game.nextaction = function('Vimcastle_test_continue')
-
 Execute (increase dex):
+  let game.scene = {}
+  let game.scene.events = vimcastle#repository#create().add(1, vimcastle#eventgen#create('empty'))
   let game.event = vimcastle#eventgen#create('test').invoke(game)
   call game.action('4')
 
@@ -50,5 +46,4 @@ Then (dex increases, return to explore):
   let player.level = 3
   let player.xp = 22
   AssertEqual 6, player.getstat('dex', 0)
-  AssertEqual 1, game.called
   AssertEqual 'explore', game.screen

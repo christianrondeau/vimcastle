@@ -15,7 +15,12 @@
 
 ## Refactors
 
+* [ ] Remove line/col indicators in bash-invoked vim
+* [ ] Directly invoke action_something on the event instead of implementing .action()
+* [ ] Never use game.nextaction; instead decide which event id to invoke
 * [ ] Gens folder
+* [ ] Confusion between the game.screen that represents which state, and screens which are ui renderers
+* [ ] Create a log utility to hide complexity away from game
 * [ ] Test all monsters w/ level (max dmg, max def, etc)
 * [ ] Are event name useful?
 * [ ] Avoid duplicating short names

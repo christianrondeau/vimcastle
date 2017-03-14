@@ -14,6 +14,7 @@ function! s:VimcastleTestutilsClass.givengame(story, level) dict abort
 	let game = vimcastle#game#create()
   let game.scene = vimcastle#scene#loadintro(a:story)
 	let game.event = game.scene.enter.invoke(game)
+  let game.scene.events = vimcastle#repository#create().add(1, vimcastle#eventgen#create('empty'))
 	call game.enter('explore')
 	if(a:level > 1)
 		call game.player.equip(vimcastle#equippablegen#weapon('T. Weap.', 'Test Weapon', a:level * 5 / 3, a:level * 5 / 3).invoke())
@@ -22,7 +23,6 @@ function! s:VimcastleTestutilsClass.givengame(story, level) dict abort
 			let next = vimcastle#levelling#forxp(game.player.xp)
 			let game.player.xp = next[1]
 			call game.enter('levelup')
-			let game.nextaction = function('vimcastle#testutils#noop')
 			call self.playlevelup({'log': []}, game)
 		endwhile
 	endif
@@ -31,7 +31,6 @@ endfunction
 
 function! s:VimcastleTestutilsClass.autofight(game, monster) dict abort
 	let a:game.enemy = a:monster
-	let a:game.nextaction = function('vimcastle#testutils#noop')
 	call a:game.enter('fight')
 	let stats = {'log': []}
 	let turns = 0
@@ -96,7 +95,7 @@ function! s:VimcastleTestutilsClass.playgame(maxturns) dict abort
 endfunction
 
 function! s:VimcastleTestutilsClass.playauto(stats, game) dict abort
-		if(exists('a:game.ground_equippable'))
+		if(exists('a:game.event.equippable'))
 			call self.playfindequippable(a:stats, a:game)
 		elseif(a:game.screen ==# 'fight')
 			call self.playfight(a:stats, a:game)
@@ -151,7 +150,7 @@ function! s:VimcastleTestutilsClass.playlevelup(stats, game) dict abort
 endfunction
 
 function! s:VimcastleTestutilsClass.playfindequippable(stats, game) dict abort
-	if(a:game.ground_equippable.score > a:game.player.equipment.weapon.score)
+	if(a:game.event.equippable.score > a:game.player.equipment.weapon.score)
 		call add(a:stats.log, 'PLAY: e (better equipment)')
 		call a:game.action('e')
 	else

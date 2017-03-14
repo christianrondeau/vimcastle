@@ -17,15 +17,12 @@ Then (has actions, log and xp):
   Assert !has_key(game, 'enemy')
 
 Execute (continue):
-  function! Vimcastle_test_continue(game)
-    let a:game.called = 1
-  endfunction
-  let game.nextaction = function('Vimcastle_test_continue')
+  let game.scene = {}
+  let game.scene.events = vimcastle#repository#create().add(1, vimcastle#eventgen#create('empty'))
   let game.event = vimcastle#eventgen#create('test').invoke(game)
   call game.action('c')
 
 Then (next action is invoked):
-  AssertEqual 1, game.called
   AssertEqual 'explore', game.screen
 
 Execute (over level setup):

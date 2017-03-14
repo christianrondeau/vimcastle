@@ -40,7 +40,6 @@ function! vimcastle#ui#draw(state) abort
 endfunction
 
 function! s:opengamebuffer(dedicated) abort
-	"TODO: Remove l/col indicator in Ubuntu?
 	let l:winnr = bufwinnr('^' . s:bufname . '$')
 	if (l:winnr >= 0)
 		execute l:winnr . 'wincmd w'

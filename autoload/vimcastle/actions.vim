@@ -1,6 +1,5 @@
 let s:ActionsClass = {}
 
-" TODO: Rename actions"
 function! vimcastle#actions#create() abort
 	let instance = copy(s:ActionsClass)
 	call instance.clear()

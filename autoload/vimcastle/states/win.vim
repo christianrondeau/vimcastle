@@ -24,15 +24,14 @@ function! s:enter(game) abort dict
 	endif
 endfunction
 
-"TODO: Why not instead just do the call instance.action_whatever?
 function! s:action(name, game) abort dict
 	execute 'call s:action_' . a:name . '(a:game)'
 endfunction
 
 function! s:action_continue(game) abort
 	call a:game.enter('explore')
-	call a:game.nextaction(a:game)
-	unlet a:game.nextaction
+	let a:game.event = a:game.scene.events.rnd().invoke(a:game)
+	call a:game.event.enter(a:game)
 	return 1
 endfunction
 

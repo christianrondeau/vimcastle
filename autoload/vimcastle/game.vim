@@ -1,7 +1,5 @@
 function! vimcastle#game#create() abort
 	let game = {}
-	"TODO: Group log functions in a log object?
-	"TODO: Potentially useless methods?
 	let game.enter = function('s:enter')
 	let game.action = function('s:action')
 	let game.reset = function('s:reset')
@@ -9,6 +7,7 @@ function! vimcastle#game#create() abort
 	let game.addlogrnd = function('s:addlogrnd')
 	let game.addlog = function('s:addlog')
 	let game.msg = function('s:msg')
+	let game.msgevent = function('s:msgevent')
 	let game.actions = vimcastle#actions#create()
 	call game.reset()
 	return game
@@ -17,7 +16,6 @@ endfunction
 function! s:enter(name) dict abort
 	execute 'let self.state = vimcastle#states#' . a:name . '#create()'
 	call s:validatestate(a:name, self.state)
-	"TODO: Let the state decide which screen to use
 	let self.screen = a:name
 	call self.actions.clear()
 	call self.clearlog()
@@ -31,7 +29,6 @@ function! s:validatestate(name, state) abort
 endfunction
 
 function! s:action(key) dict abort
-	"TODO: Instead of relying on .enter, return a 'new state'
 	let name = self.actions.keyToName(a:key)
 	if(name == '')
 		return 0
@@ -87,20 +84,30 @@ function! s:msg(text) dict abort
 		let text = substitute(text, '%<enemy.name>', '<' . self.enemy.name.long . '>', 'ge')
 	endif
 
-	if(exists('self.ground_item'))
-		let text = substitute(text, '%<ground>', '<' . self.ground_item.label . '>', 'ge')
-	endif
-
-	if(exists('self.ground_equippable'))
-		let text = substitute(text, '%<ground>', '<' . self.ground_equippable.name.long . '>', 'ge')
-	endif
-
 	if(exists('self.enemy.equipment.weapon.name.long'))
 		let text = substitute(text, '%<enemy.weapon>', '<' . self.enemy.equipment.weapon.name.long . '>', 'ge')
 	endif
 
 	if(exists('self.player.equipment.weapon.name.long'))
 		let text = substitute(text, '%<player.weapon>', '<' . self.player.equipment.weapon.name.long . '>', 'ge')
+	endif
+
+	return text
+endfunction
+
+function! s:msgevent(text, event) dict abort
+	let text = self.msg(a:text)
+
+	if(exists('a:event.enemy.name.long'))
+		let text = substitute(text, '%<enemy.name>', '<' . a:event.enemy.name.long . '>', 'ge')
+	endif
+
+	if(exists('a:event.item'))
+		let text = substitute(text, '%<ground>', '<' . a:event.item.label . '>', 'ge')
+	endif
+
+	if(exists('a:event.equippable'))
+		let text = substitute(text, '%<ground>', '<' . a:event.equippable.name.long . '>', 'ge')
 	endif
 
 	return text

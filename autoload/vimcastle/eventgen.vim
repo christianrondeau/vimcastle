@@ -63,27 +63,26 @@ function! s:EventgenClass.invoke(game) dict abort
 		endtry
 	endif
 
-	" TODO: On event instead
 	if(exists('self.monsters'))
-		let a:game.enemy = self.monsters.rnd().invoke()
+		let event.enemy = self.monsters.rnd().invoke()
 	endif
 	" TODO: On event instead
 	if(exists('self.items'))
-		let a:game.ground_item = self.items.rnd()
+		let event.item = self.items.rnd()
 	endif
 
 	" TODO: On event instead
 	if(exists('self.equippables'))
-		let a:game.ground_equippable = self.equippables.rnd().invoke()
+		let event.equippable = self.equippables.rnd().invoke()
 	endif
 
 	for lineoptions in self.texts
 		let line = vimcastle#utils#oneof(lineoptions)
-		call add(event.log, a:game.msg(line))
+		call add(event.log, a:game.msgevent(line, event))
 	endfor
 
-	if(exists('a:game.ground_equippable'))
-		call s:showequippablediff(event.log, a:game)
+	if(exists('event.equippable'))
+		call s:showequippablediff(event.log, a:game, event)
 	endif
 
 	if(exists('self.effect_name'))
@@ -94,30 +93,30 @@ function! s:EventgenClass.invoke(game) dict abort
 	endif
 
 	" Backup to reload
-	let event.actions = self.createactions(a:game)
+	let event.actions = self.createactions(event, a:game)
 
 	return event
 endfunction
 
-function! s:EventgenClass.createactions(game) abort dict
+function! s:EventgenClass.createactions(event, game) abort dict
 	let actions = vimcastle#actions#create()
 
-	if(exists('self.action_fight_text') && exists('a:game.enemy'))
-	call actions.add('fight', 'f', self.action_fight_text . ' (level ' . a:game.enemy.level . ')')
+	if(exists('self.action_fight_text') && exists('a:event.enemy'))
+	call actions.add('fight', 'f', self.action_fight_text . ' (level ' . a:event.enemy.level . ')')
 	endif
 
 	if(exists('self.action_enterscene_text'))
-		let a:game.nextscene = self.nextscene
+		let a:event.nextscene = self.nextscene
 		let sceneinfo = {}
-		execute 'let sceneinfo = vimcastle#stories#' . a:game.scene.story . '#' . a:game.nextscene . '#index#info()'
+		execute 'let sceneinfo = vimcastle#stories#' . a:game.scene.story . '#' . a:event.nextscene . '#index#info()'
 		call actions.add('enterscene', 'e', self.action_enterscene_text . ' (level ' . sceneinfo.level . ')')
 	endif
 
-	if(exists('a:game.ground_item'))
+	if(exists('a:event.item'))
 		call actions.add('pickup', 'p', 'Pick up')
 	endif
 
-	if(exists('a:game.ground_equippable'))
+	if(exists('a:event.equippable'))
 		call actions.add('equip', 'e', 'Equip')
 	endif
 
@@ -133,17 +132,17 @@ function! s:EventgenClass.createactions(game) abort dict
 	return actions
 endfunction
 
-function! s:showequippablediff(log, game) abort
-	if(has_key(a:game.player.equipment, a:game.ground_equippable.slot))
-		let current = a:game.player.equipment[a:game.ground_equippable.slot]
+function! s:showequippablediff(log, game, event) abort
+	if(has_key(a:game.player.equipment, a:event.equippable.slot))
+		let current = a:game.player.equipment[a:event.equippable.slot]
 	else
-		let current = vimcastle#equippablegen#create(a:game.ground_equippable.slot, 0, 0)
+		let current = vimcastle#equippablegen#create(a:event.equippable.slot, 0, 0)
 	endif
 
-	if(a:game.ground_equippable.slot ==# 'weapon')
-		call s:showequippabledmg(a:log, a:game, current, a:game.ground_equippable)
+	if(a:event.equippable.slot ==# 'weapon')
+		call s:showequippabledmg(a:log, a:game, current, a:event.equippable)
 	endif
-	call s:showequippablestats(a:log, a:game, current, a:game.ground_equippable)
+	call s:showequippablestats(a:log, a:game, current, a:event.equippable)
 endfunction
 
 function! s:showequippabledmg(log, game, current, ground) abort

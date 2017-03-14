@@ -31,7 +31,6 @@ endfunction
 
 function! s:action_newgame(game) abort
 	call a:game.reset()
-	"TODO: There must be a better way...
 	let a:game.scene = vimcastle#scene#loadintro('main')
 	let a:game.event = a:game.scene.enter.invoke(a:game)
 	return a:game.enter('explore')

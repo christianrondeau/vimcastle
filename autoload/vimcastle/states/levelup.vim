@@ -60,9 +60,8 @@ function! s:action_continue(game) abort
 	if(a:game.player.level < expectedlevel)
 		return a:game.enter('levelup')
 	else
-		"TODO: Do not use a func to drive next steps
-		call a:game.nextaction(a:game)
-		unlet a:game.nextaction
+		let a:game.event = a:game.scene.events.rnd().invoke(a:game)
+		call a:game.event.enter(a:game)
 		return a:game.enter('explore')
 	endif
 endfunction
