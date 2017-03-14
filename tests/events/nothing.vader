@@ -17,11 +17,11 @@ Then (result):
 
 Execute (access inventory):
   let event = eventgen.invoke(game)
-  let result = event.action('inventory', game)
+  call event.action('inventory', game)
   AssertEqual 'inventory', game.screen
 
 Execute (access character sheet):
   call eventgen.invoke(game)
-  let result = event.action('character', game)
+  call event.action('character', game)
   AssertEqual 'sheet', game.screen
 

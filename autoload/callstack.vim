@@ -14,6 +14,9 @@ endfunction
 
 function! callstack#parse(exception, throwpoint) abort
 	let originalstack = split(a:throwpoint, '\.\.')
+	if(!has('patch-7.4.1685'))
+		return originalstack
+	endif
 	let result = []
 	for originalline in originalstack
 		if(s:tryparsesnr(result, originalline))

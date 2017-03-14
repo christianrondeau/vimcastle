@@ -9,10 +9,9 @@ Then (screen is updated):
   AssertEqual 'Test Action', game.actions.bindings[0].label, 'game impl is called'
 
 Execute (action):
-  let result = game.action('1')
+  call game.action('1')
 
 Then (the action is called):
-  Assert result
   AssertEqual ['action', 'action_test_1'], game.log
 
 Execute (properties than can be included in tests):

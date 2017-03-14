@@ -2,9 +2,9 @@ After (clean random):
   call vimcastle#utils#resetrnd()
 
 Execute (rnd):
-  let result = vimcastle#utils#rnd(10)
-  Assert result > -1
-  Assert result < 10
+  let value = vimcastle#utils#rnd(10)
+  Assert value > -1
+  Assert value < 10
 
 Execute (fakernd setup):
   call vimcastle#utils#setnextrnd([2, 3, 4])

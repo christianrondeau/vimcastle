@@ -1,4 +1,5 @@
 Execute (setup):
+  let enabled = has('patch-7.4.1685')
   let result = []
 
 Execute (simple stack trace):
@@ -12,7 +13,9 @@ Execute (simple stack trace):
 
 Then (call stack is extracted):
   Log 'Result: ' . string(result)
-  Assert match(result, '\v.+\.tmp, line [0-9]+') > -1
+  if(enabled)
+    Assert match(result, '\v.+\.tmp, line [0-9]+') > -1
+  endif
 
 Execute (with script functions):
   call callstack#init()
@@ -28,7 +31,9 @@ Execute (with script functions):
 
 Then (script name is extracted):
   Log 'Result: ' . string(result)
-  Assert match(result, '\v.+\.tmp s:private, line [0-9]+') > -1
+  if(enabled)
+    Assert match(result, '\v.+\.tmp s:private, line [0-9]+') > -1
+  endif
 
 Execute (with script dict):
   call callstack#init()
@@ -45,4 +50,6 @@ Execute (with script dict):
 
 Then (call stack is extracted):
   Log 'Result: ' . string(result)
-  Assert match(result, '\v.+\.tmp function [0-9]+\(\) abort dict | 1 throw') > -1
+  if(enabled)
+    Assert match(result, '\v.+\.tmp function [0-9]+\(\) abort dict | 1 throw') > -1
+  endif

@@ -19,7 +19,7 @@ Then (result):
   AssertEqual 'Imp', game.enemy.name.short
 
 Execute (fight):
-  let result = event.action('fight', game)
+  call event.action('fight', game)
 
 Then (change to fight screen):
   AssertEqual 1, game.stats.fights
