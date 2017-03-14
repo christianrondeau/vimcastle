@@ -1,39 +1,34 @@
-function! vimcastle#effects#none(state, value) abort
+function! vimcastle#effects#none(game, value) abort
 endfunction
 
-function! vimcastle#effects#heal(state, value) abort
-	let maxhealth = a:state.player.getmaxhealth()
+function! vimcastle#effects#heal(game, value) abort
+	let maxhealth = a:game.player.getmaxhealth()
 
-	if(a:state.player.health >= maxhealth)
-		call a:state.addlog('Your health is already full!')
-		return 0
+	if(a:game.player.health >= maxhealth)
+		return [0, 'Your health is already full!']
 	endif
 
-	let a:state.player.health += a:value
+	let a:game.player.health += a:value
 
-	if(a:state.player.health >= maxhealth)
-		let a:state.player.health = maxhealth
-		call a:state.addlog('Your health is fully replenished!')
+	if(a:game.player.health >= maxhealth)
+		let a:game.player.health = maxhealth
+		return [1, 'Your health is fully replenished!']
 	else
-		call a:state.addlog('You gain <+' . a:value . '> health.')
+		return [1, 'You gain <+' . a:value . '> health.']
 	endif
-
-	return 1
 endfunction
 
-function! vimcastle#effects#gainhealth(state, value) abort
-	let a:state.player.basehealth += a:value
-	let a:state.player.health  += a:value
-	call a:state.addlog('You gain <+' . a:value . '> to your maximum health permanently.')
-	return 1
+function! vimcastle#effects#gainhealth(game, value) abort
+	let a:game.player.basehealth += a:value
+	let a:game.player.health  += a:value
+	return [1, 'You gain <+' . a:value . '> to your maximum health permanently.']
 endfunction
 
-function! vimcastle#effects#gainstr(state, value) abort
-	call s:incrstat(a:state, 'str', a:value)
-	call a:state.addlog('You feel stronger! gain <+' . a:value . '> to your strength permanently.')
-	return 1
+function! vimcastle#effects#gainstr(game, value) abort
+	call s:incrstat(a:game, 'str', a:value)
+	return [1, 'You feel stronger! gain <+' . a:value . '> to your strength permanently.']
 endfunction
 
-function! s:incrstat(state, stat, value) abort
-	call a:state.player.setstat(a:stat, a:state.player.getstat(a:stat, 0) + a:value)
+function! s:incrstat(game, stat, value) abort
+	call a:game.player.setstat(a:stat, a:game.player.getstat(a:stat, 0) + a:value)
 endfunction

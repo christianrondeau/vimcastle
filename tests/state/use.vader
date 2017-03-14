@@ -1,53 +1,60 @@
 Execute (setup):
-  let state = vimcastle#states#create()
-  call state.enter('use')
+  let game = vimcastle#game#create()
+  call game.enter('use')
 
 Then (has actions):
-  AssertEqual [{'label': 'Back', 'key': 'b'}], state.actions().display
+  AssertEqual [{'name': 'back', 'label': 'Back', 'key': 'b'}], game.actions.bindings
 
 Execute (go back):
-  let result = state.actions().invokeByKey('b', state)
+  let result = game.action('b')
   Assert result, 'Action was not called'
-  AssertEqual 'inventory', state.screen
+  AssertEqual 'inventory', game.screen
 
 Execute (setup with items):
-  let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
-  let state.player.items = [
+  let game.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  let game.player.items = [
   \  {'label': 'Potion of DOOM', 'effect': 'heal', 'value': 5}, 
   \  {'label': 'Scroll of zoom', 'effect': 'none'}
   \]
-  call state.enter('use')
+  call game.enter('use')
 
 Then (has actions):
   AssertEqual [
-  \  {'label': 'Use <Potion of DOOM>', 'key': '1'}, 
-  \  {'label': 'Use <Scroll of zoom>', 'key': '2'}, 
-  \  {'label': 'Back', 'key': 'b'}
-  \], state.actions().display
-  AssertEqual [], state.log
+  \  {'name': 'use_1', 'label': 'Use <Potion of DOOM>', 'key': '1'}, 
+  \  {'name': 'use_2', 'label': 'Use <Scroll of zoom>', 'key': '2'}, 
+  \  {'name': 'back', 'label': 'Back', 'key': 'b'}
+  \], game.actions.bindings
+  AssertEqual ['Select an item to use:'], game.log
 
 Execute (use item keeps if unusable):
-  let result = state.actions().invokeByKey('1', state)
+  let result = game.action('1')
   Assert result, 'Action was not called'
-  AssertEqual 'use', state.screen
-  AssertEqual 2, len(state.player.items)
-  AssertEqual ['Use: <Potion of DOOM>', 'Your health is already full!'], state.log
+  AssertEqual 'use', game.screen
+  AssertEqual 2, len(game.player.items)
+  AssertEqual ['Use: <Potion of DOOM>', 'Your health is already full!', 'Select an item to use:'], game.log
 
 Execute (use item removes if usable):
-  let state.player.health = 10
-  let result = state.actions().invokeByKey('1', state)
+  let game.player.health = 10
+  let result = game.action('1')
   Assert result, 'Action was not called'
-  AssertEqual 'use', state.screen
-  AssertEqual 1, len(state.player.items)
-  AssertEqual 'Scroll of zoom', state.player.items[0].label
-  AssertEqual ['Use: <Potion of DOOM>', 'You gain <+5> health.'], state.log
+  AssertEqual 'use', game.screen
+  AssertEqual 1, len(game.player.items)
+  AssertEqual 'Scroll of zoom', game.player.items[0].label
+  AssertEqual ['Use: <Potion of DOOM>', 'You gain <+5> health.', 'Select an item to use:'], game.log
 
 Execute (item returns to fight if enemy):
-  let state.enemy = vimcastle#monstergen#create('Mon.', 'Monster').invoke()
-  let result = state.actions().invokeByKey('1', state)
-  AssertEqual 'fight', state.screen
+  let game.enemy = vimcastle#monstergen#create('Mon.', 'Monster').invoke()
+  let result = game.action('1')
+  AssertEqual [
+  \  {'name': 'back', 'label': 'Return to fight', 'key': 'b'}
+  \], game.actions.bindings
+  call game.action('b')
+  AssertEqual 'fight', game.screen
 
-Execute (back returns to fight if enemy):
-  call state.enter('use')
-  let result = state.actions().invokeByKey('b', state)
-  AssertEqual 'fight', state.screen
+Execute (back returns to inventory if no enemy):
+  unlet game.enemy
+  let game.event = vimcastle#eventgen#create('test').invoke(game)
+  call game.enter('use')
+  let result = game.action('b')
+  AssertEqual 'inventory', game.screen
+

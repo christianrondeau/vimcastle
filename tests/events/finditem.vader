@@ -1,22 +1,22 @@
 Execute (create event):
-  let state = vimcastle#states#create()
-  let state.player = vimcastle#character#create({'short':'', 'long':''}, 100)
+  let game = vimcastle#game#create()
+  let game.player = vimcastle#character#create({'short':'', 'long':''}, 100)
   let items = vimcastle#repository#create()
   call items.add(1, {'label': 'Potion of DOOM', 'effect': 'heal', 'value': 5})
-  let event = vimcastle#event#create('test')
+  let eventgen = vimcastle#eventgen#create('test')
     \.finditem(items)
     \.text('You see a %<ground> lying on the floor')
 
-Execute (invoke):
-  call event.invoke(state)
+Execute (event executes):
+  let event = eventgen.invoke(game)
 
-Then (state is updated):
-  AssertEqual ['You see a <Potion of DOOM> lying on the floor'], state.log
+Then (result):
+  AssertEqual ['You see a <Potion of DOOM> lying on the floor'], event.log
 
 Execute (pickup item):
-  let state.scene = vimcastle#scene#create()
-  call state.scene.events.add(1, event)
-  call state.actions().invokeByKey('p', state)
+  let game.scene = vimcastle#scene#create()
+  call game.scene.events.add(1, eventgen)
+  call event.action('pickup', game)
 
 Then (item is picked up):
-  AssertEqual 'Potion of DOOM', state.player.items[0].label
+  AssertEqual 'Potion of DOOM', game.player.items[0].label

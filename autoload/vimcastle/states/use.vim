@@ -49,10 +49,11 @@ function! s:action_use(game, index) abort
 	call a:game.addlog('Use: <' . item.label . '>')
 
 	let effect_value = exists('item.value') ? item.value : 0
-	let result = 0
+	let result = []
 	execute 'let result = vimcastle#effects#' . item.effect . '(a:game, effect_value)'
+	call a:game.addlog(result[1])
 
-	if(result)
+	if(result[0])
 		call remove(a:game.player.items, a:index - 1)
 	endif
 

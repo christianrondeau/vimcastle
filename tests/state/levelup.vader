@@ -1,5 +1,5 @@
 Execute (setup):
-  let state = vimcastle#states#create()
+  let game = vimcastle#game#create()
   let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 50)
     \.setstat('con', 2)
     \.setstat('str', 3)
@@ -7,20 +7,20 @@ Execute (setup):
     \.setstat('dex', 5)
   let player.level = 1
   let player.xp = 22
-  let state.player = player
-  call state.enter('levelup')
+  let game.player = player
+  call game.enter('levelup')
 
 Then (has actions):
-  AssertEqual ['Your health was replenished! Select a skill to increase.'], state.log
+  AssertEqual ['Your health was replenished! Select a skill to increase.'], game.log
   AssertEqual [
-    \ {'label': 'Increase con 2 -> 3', 'key': '1'},
-    \ {'label': 'Increase str 3 -> 4', 'key': '2'},
-    \ {'label': 'Increase spd 4 -> 5', 'key': '3'},
-    \ {'label': 'Increase dex 5 -> 6', 'key': '4'}
-    \], state.actions().display
+    \ {'name': 'incr_con', 'label': 'Increase con 2 -> 3', 'key': '1'},
+    \ {'name': 'incr_str', 'label': 'Increase str 3 -> 4', 'key': '2'},
+    \ {'name': 'incr_spd', 'label': 'Increase spd 4 -> 5', 'key': '3'},
+    \ {'name': 'incr_dex', 'label': 'Increase dex 5 -> 6', 'key': '4'}
+    \], game.actions.bindings
 
 Execute (increase con):
-  call state.actions().invokeByKey('1', state)
+  call game.action('1')
 
 Then (health increases, another level):
   let player.level = 2
@@ -28,26 +28,27 @@ Then (health increases, another level):
   AssertEqual 3, player.getstat('con', 0)
   AssertEqual 65, player.getmaxhealth()
   AssertEqual 65, player.health
-  AssertEqual ['Your health was replenished! Select a skill to increase.'], state.log
+  AssertEqual ['Your health was replenished! Select a skill to increase.'], game.log
   AssertEqual [
-    \ {'label': 'Increase con 3 -> 4', 'key': '1'},
-    \ {'label': 'Increase str 3 -> 4', 'key': '2'},
-    \ {'label': 'Increase spd 4 -> 5', 'key': '3'},
-    \ {'label': 'Increase dex 5 -> 6', 'key': '4'}
-    \], state.actions().display
+    \ {'name': 'incr_con', 'label': 'Increase con 3 -> 4', 'key': '1'},
+    \ {'name': 'incr_str', 'label': 'Increase str 3 -> 4', 'key': '2'},
+    \ {'name': 'incr_spd', 'label': 'Increase spd 4 -> 5', 'key': '3'},
+    \ {'name': 'incr_dex', 'label': 'Increase dex 5 -> 6', 'key': '4'}
+    \], game.actions.bindings
 
 Execute (prepare next action):
-  function! Vimcastle_test_continue(state)
-    let a:state.called = 1
+  function! Vimcastle_test_continue(game)
+    let a:game.called = 1
   endfunction
-  let state.nextaction = function('Vimcastle_test_continue')
+  let game.nextaction = function('Vimcastle_test_continue')
 
 Execute (increase dex):
-  call state.actions().invokeByKey('4', state)
+  let game.event = vimcastle#eventgen#create('test').invoke(game)
+  call game.action('4')
 
 Then (dex increases, return to explore):
   let player.level = 3
   let player.xp = 22
   AssertEqual 6, player.getstat('dex', 0)
-  AssertEqual 1, state.called
-  AssertEqual 'explore', state.screen
+  AssertEqual 1, game.called
+  AssertEqual 'explore', game.screen

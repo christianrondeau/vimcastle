@@ -4,13 +4,13 @@ function! vimcastle#event#create() abort
 	let instance = {}
 	let instance.enter = function('s:enter')
 	let instance.action = function('s:action')
-	let instance.actions = vimcastle#bindings#create()
+	let instance.actions = vimcastle#actions#create()
 	let instance.log = []
 	return instance
 endfunction
 
 function! s:enter(game) abort dict
-	let a:game.actions.display = self.actions.display
+	let a:game.actions.bindings = self.actions.bindings
 	let a:game.log = self.log
 endfunction
 
@@ -48,13 +48,13 @@ function! s:action_character(game) abort
 	call a:game.enter('sheet')
 endfunction
 
-function! s:action_pickup_item(game) abort
+function! s:action_pickup(game) abort
 	call a:game.player.pickup(a:game.ground_item)
 	call s:cleanup(a:game)
 	call s:action_explore(a:game)
 endfunction
 
-function! s:action_equip_equippable(game) abort
+function! s:action_equip(game) abort
 	call a:game.player.equip(a:game.ground_equippable)
 	call s:cleanup(a:game)
 	call s:action_explore(a:game)

@@ -1,12 +1,14 @@
 Execute (create event):
-  let state = vimcastle#states#create()
-  let state.player = vimcastle#character#create({'short':'', 'long':''}, 100)
-  let state.player.health = 50
-  let event = vimcastle#event#create('test')
+  let game = vimcastle#game#create()
+  let game.player = vimcastle#character#create({'short':'', 'long':''}, 100)
+  let game.player.health = 50
+  let eventgen = vimcastle#eventgen#create('test')
     \.text('Heal!')
     \.effect('heal', 40)
 
 Execute (effect applies):
-  call event.invoke(state)
-  AssertEqual 90, state.player.health
-  AssertEqual ['Heal!', 'You gain <+40> health.'], state.log
+  let event = eventgen.invoke(game)
+
+Then (result):
+  AssertEqual 90, game.player.health
+  AssertEqual ['Heal!', 'You gain <+40> health.'], event.log

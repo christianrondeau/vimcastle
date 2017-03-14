@@ -1,20 +1,25 @@
 Execute (setup):
-  let state = vimcastle#states#create()
-  call state.enter('menu')
+  let game = vimcastle#game#create()
+  call game.enter('menu')
 
 Then (has actions):
-  AssertEqual [{'label': 'New Game', 'key': 'n'}, {'label': 'High Scores', 'key': 's'}, {'label': 'Help', 'key': 'h'}, {'label': 'Quit', 'key': 'q'}], state.actions().display
+  AssertEqual [
+  \  {'label': 'New Game', 'name': 'newgame', 'key': 'n'},
+  \  {'label': 'High Scores', 'name': 'highscores', 'key': 's'},
+  \  {'label': 'Help', 'name': '', 'key': 'h'},
+  \  {'label': 'Quit', 'name': '', 'key': 'q'}
+  \], game.actions.bindings
 
 Execute (new game):
-  call state.actions().invokeByKey('n', state)
+  call game.action('n')
 
 Then (enters main story):
-  AssertEqual 'explore', state.screen
-  AssertEqual 'main', state.scene.story
+  AssertEqual 'explore', game.screen
+  AssertEqual 'main', game.scene.story
 
 Execute (high scores):
-  call state.enter('menu')
-  call state.actions().invokeByKey('s', state)
+  call game.enter('menu')
+  call game.action('s')
 
 Then (enters high scores):
-  AssertEqual 'highscores', state.screen
+  AssertEqual 'highscores', game.screen

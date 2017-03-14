@@ -10,23 +10,23 @@ Execute (setup):
     call delete(highscoresfile)
     call writefile(['1,1,1,1'], highscoresfile)
   endif
-  let state = vimcastle#states#create()
-  let state.stats = {
+  let game = vimcastle#game#create()
+  let game.stats = {
     \ 'events': 1,
     \ 'fights': 2,
     \ 'scenes': 3,
     \}
-  call state.enter('gameover')
+  call game.enter('gameover')
 
 Then (score is calculated and high score is saved):
-  AssertEqual 82, state.stats.score
+  AssertEqual 82, game.stats.score
   if(has('patch-7.4.341'))
     AssertEqual ['82,1,2,3', '1,1,1,1'], readfile(highscoresfile)
   endif
 
 Execute (restart):
-  call state.actions().invokeDefault(state)
+  call game.action('default')
 
 Then (restarts game):
-  AssertEqual 'intro', state.screen
-  Assert !exists('state.player')
+  AssertEqual 'intro', game.screen
+  Assert !exists('game.player')

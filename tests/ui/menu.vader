@@ -1,11 +1,11 @@
 Execute (test setup):
   let screen = { 'width': 30 }
-  let state = vimcastle#states#create()
-  call state.actions().addNoop('x',  'Action')
-  let state.log = ['This is a menu!']
+  let game = vimcastle#game#create()
+  call game.actions.add('noop', 'x',  'Action')
+  let game.log = ['This is a menu!']
 
 Execute (draw):
-  call vimcastle#screens#menu#draw(screen, state)
+  call vimcastle#screens#menu#draw(screen, game)
 
 Expect (explore screen):
   ---------- Vimcastle ---------

@@ -1,30 +1,37 @@
 Execute (create event):
-  let state = vimcastle#states#create()
-  let playerequippable = vimcastle#equippablegen#weapon('Stick', 'Stick', 5, 17).stat('old', 5).stat('chg', 4)
-  let state.player = vimcastle#character#create({'short':'', 'long':''}, 100).equip(playerequippable.invoke())
+  let game = vimcastle#game#create()
+  let playerequippable = vimcastle#equippablegen#weapon('Stick', 'Stick', 5, 17)
+    \.stat('old', 5)
+    \.stat('chg', 4)
+  let game.player = vimcastle#character#create({'short':'', 'long':''}, 100)
+    \.equip(playerequippable.invoke())
   let weapons = vimcastle#repository#create()
-  let groundequippable = vimcastle#equippablegen#weapon('Mace', 'Mace', 15, 16).stat('new', 9).stat('chg', 7)
+  let groundequippable = vimcastle#equippablegen#weapon('Mace', 'Mace', 15, 16)
+    \.stat('new', 9)
+    \.stat('chg', 7)
   call weapons.add(1, groundequippable)
-  let event = vimcastle#event#create('test')
+  let eventgen = vimcastle#eventgen#create('test')
     \.findequippable(weapons)
     \.text('You see a weapon rack with a %<ground>')
 
-Execute (invoke):
-  call event.invoke(state)
+Execute (event executes):
+  let event = eventgen.invoke(game)
 
-Then (state is updated):
+Then (result):
   AssertEqual [
   \ 'You see a weapon rack with a <Mace>',
   \ '  * dmg: 15 (+10) - 16 (-1)',
   \ '  * chg: 7 (+3)',
   \ '  * new: 9 (+9)',
   \ '  * old: 0 (-5)',
-  \], state.log
+  \], event.log
+
+Execute (setup follow-up event):
+  let game.scene = vimcastle#scene#create()
+  call game.scene.events.add(1, eventgen)
 
 Execute (equip weapon):
-  let state.scene = vimcastle#scene#create()
-  call state.scene.events.add(1, event)
-  call state.actions().invokeByKey('e', state)
+  call event.action('equip', game)
 
 Then (weapon is equipped):
-  AssertEqual 'Mace', state.player.equipment.weapon.name.long
+  AssertEqual 'Mace', game.player.equipment.weapon.name.long

@@ -10,31 +10,37 @@ endfunction
 function! vimcastle#testutils#noop(...) abort
 endfunction
 
-function! s:VimcastleTestutilsClass.givenstate(story, level) dict abort
-	let state = vimcastle#states#create()
-  let state.scene = vimcastle#scene#loadintro(a:story)
-  call state.scene.enter.invoke(state)
+function! s:VimcastleTestutilsClass.givengame(story, level) dict abort
+	let game = vimcastle#game#create()
+  let game.scene = vimcastle#scene#loadintro(a:story)
+	let game.event = game.scene.enter.invoke(game)
+	call game.enter('explore')
 	if(a:level > 1)
-		call state.player.equip(vimcastle#equippablegen#weapon('T. Weap.', 'Test Weapon', a:level * 5 / 3, a:level * 5 / 3).invoke())
-		call state.player.equip(vimcastle#equippablegen#armor('T. Arm.', 'Test Armor', a:level * 3 / 2).invoke())
-		while(state.player.level < a:level)
-			let next = vimcastle#levelling#forxp(state.player.xp)
-			let state.player.xp = next[1]
-			call state.enter('levelup')
-			let state.nextaction = function('vimcastle#testutils#noop')
-			call self.playlevelup({'log': []}, state)
+		call game.player.equip(vimcastle#equippablegen#weapon('T. Weap.', 'Test Weapon', a:level * 5 / 3, a:level * 5 / 3).invoke())
+		call game.player.equip(vimcastle#equippablegen#armor('T. Arm.', 'Test Armor', a:level * 3 / 2).invoke())
+		while(game.player.level < a:level)
+			let next = vimcastle#levelling#forxp(game.player.xp)
+			let game.player.xp = next[1]
+			call game.enter('levelup')
+			let game.nextaction = function('vimcastle#testutils#noop')
+			call self.playlevelup({'log': []}, game)
 		endwhile
 	endif
-	return state
+	return game
 endfunction
 
-function! s:VimcastleTestutilsClass.autofight(state, monster) dict abort
-	let a:state.enemy = a:monster
-	let a:state.nextaction = function('vimcastle#testutils#noop')
-	call a:state.enter('fight')
+function! s:VimcastleTestutilsClass.autofight(game, monster) dict abort
+	let a:game.enemy = a:monster
+	let a:game.nextaction = function('vimcastle#testutils#noop')
+	call a:game.enter('fight')
 	let stats = {'log': []}
-	while(a:state.player.health > 0 && a:state.enemy.health > 0)
-		call self.playfight(stats, a:state)
+	let turns = 0
+	while(a:game.player.health > 0 && a:game.enemy.health > 0)
+		let turns += 1
+		call self.playfight(stats, a:game)
+		if(turns > 100)
+			throw 'Infinite loop: ' . string(stats.log)
+		endif
 	endwhile
 	return stats
 endfunction
@@ -64,73 +70,72 @@ function! s:VimcastleTestutilsClass.playgame(maxturns) dict abort
 	let stats.turns = 0
 	let stats.log = []
 
-	let state = vimcastle#states#create()
-	let state.scene = vimcastle#scene#loadintro('main')
-	call state.enter('explore')
-	call state.scene.enter.invoke(state)
-	let stats.log += state.log
+	let game = vimcastle#game#create()
+	let game.scene = vimcastle#scene#loadintro('main')
+	let game.event = game.scene.enter.invoke(game)
+	call game.enter('explore')
+	let stats.log += game.log
 
-	while stats.turns < a:maxturns && state.screen !=# 'gameover'
+	while stats.turns < a:maxturns && game.screen !=# 'gameover'
 		let stats.turns += 1
 		call add(stats.log, '---- TURN ' . stats.turns)
-		let health = state.player.health
+		let health = game.player.health
 
-		call self.playauto(stats, state)
+		call self.playauto(stats, game)
 
-		let stats.log += state.log
-		if(health != state.player.health)
-			call add(stats.log, 'HEALTH: ' . state.player.health)
+		let stats.log += game.log
+		if(health != game.player.health)
+			call add(stats.log, 'HEALTH: ' . game.player.health)
 		endif
-		let actionsshort = ''
-		for a in state.actions().display
-			let actionsshort .= a.key
-		endfor
-		call add(stats.log, 'ACTIONS: ' . actionsshort)
+		call add(stats.log, 'ACTIONS: ' . join(game.actions.names(), ', '))
 	endwhile
 
-	let stats.level = state.player.level
+	let stats.level = game.player.level
 
 	return stats
 endfunction
 
-function! s:VimcastleTestutilsClass.playauto(stats, state) dict abort
-		if(exists('state.ground_equippable'))
-			call self.playfindequippable(a:stats, a:state)
-		elseif(a:state.screen ==# 'fight')
-			call self.playfight(a:stats, a:state)
-		elseif(a:state.screen ==# 'levelup')
-			call self.playlevelup(a:stats, a:state)
+function! s:VimcastleTestutilsClass.playauto(stats, game) dict abort
+		if(exists('a:game.ground_equippable'))
+			call self.playfindequippable(a:stats, a:game)
+		elseif(a:game.screen ==# 'fight')
+			call self.playfight(a:stats, a:game)
+		elseif(a:game.screen ==# 'levelup')
+			call self.playlevelup(a:stats, a:game)
 		else
-			call self.playdefault(a:stats, a:state)
+			call self.playdefault(a:stats, a:game)
 		endif
 endfunction
 
-function! s:VimcastleTestutilsClass.playdefault(stats, state) dict abort
-		let actions = a:state.actions()
-		let key = actions.display[0].key
-		call add(a:stats.log, 'PLAY: ' . key . ' (default)')
-		call actions.invokeByKey(key, a:state)
+function! s:VimcastleTestutilsClass.playdefault(stats, game) dict abort
+		let action = a:game.actions.keys()[0]
+		call add(a:stats.log, 'PLAY: ' . action . ' (default)')
+		call a:game.action(action)
 endfunction
 
-function! s:VimcastleTestutilsClass.playfight(stats, state) dict abort
-	let itemidx = s:indexofitemwitheffect(a:state.player.items, 'heal')
-	if(a:state.actions().display[0].key ==# 'c')
+function! s:VimcastleTestutilsClass.playfight(stats, game) dict abort
+	let itemidx = s:indexofitemwitheffect(a:game.player.items, 'heal')
+	let actions = a:game.actions.keys()
+	if(actions[0] ==# 'c')
 		call add(a:stats.log, 'PLAY: c (fight complete)')
-		call a:state.actions().invokeByKey('c', a:state)
-	elseif(itemidx > -1 && a:state.player.health < (a:state.player.getmaxhealth() / 3))
-		call add(a:stats.log, 'PLAY: u' . itemidx . ' (heal with item)')
-		call a:state.actions().invokeByKey('u', a:state)
-		call a:state.actions().invokeByKey(string(itemidx + 1), a:state)
+		call a:game.action('c')
+	elseif(itemidx > -1 && a:game.player.health < (a:game.player.getmaxhealth() / 3))
+		let itemn = itemidx + 1
+		call add(a:stats.log, 'PLAY: u, ' . itemn . ', b (heal with item)')
+		call a:game.action('u')
+		call a:game.action('' . itemn)
+		call a:game.action('b')
 	else
 		call add(a:stats.log, 'PLAY: a (can attack)')
-		call a:state.actions().invokeByKey('a', a:state)
+		call a:game.action('a')
+		call add(a:stats.log, 'RESULT: player: ' . a:game.player.health . ', enemy: ' . a:game.enemy.health)
 	endif
 endfunction
 
-function! s:VimcastleTestutilsClass.playlevelup(stats, state) dict abort
+function! s:VimcastleTestutilsClass.playlevelup(stats, game) dict abort
 	let minvalue = 999999
 	let minaction = {}
-	for action in a:state.actions().display
+	for action in a:game.actions.bindings
 		let value = matchstr(action.label, '\v[0-9]+') + 0
 		if(value < minvalue)
 			let minvalue = value
@@ -139,19 +144,19 @@ function! s:VimcastleTestutilsClass.playlevelup(stats, state) dict abort
 	endfor
 	if(exists('minaction.key'))
 		call add(a:stats.log, 'PLAY: ' . minaction.key . ' (lowest stat)')
-		call a:state.actions().invokeByKey(minaction.key, a:state)
+		call a:game.action(minaction.key)
 	else
-		call self.playdefault(a:stats, a:state)
+		call self.playdefault(a:stats, a:game)
 	endif
 endfunction
 
-function! s:VimcastleTestutilsClass.playfindequippable(stats, state) dict abort
-	if(a:state.ground_equippable.score > a:state.player.equipment.weapon.score)
+function! s:VimcastleTestutilsClass.playfindequippable(stats, game) dict abort
+	if(a:game.ground_equippable.score > a:game.player.equipment.weapon.score)
 		call add(a:stats.log, 'PLAY: e (better equipment)')
-		call a:state.actions().invokeByKey('e', a:state)
+		call a:game.action('e')
 	else
 		call add(a:stats.log, 'PLAY: c (worse equipment)')
-		call a:state.actions().invokeByKey('c', a:state)
+		call a:game.action('c')
 	endif
 endfunction
 

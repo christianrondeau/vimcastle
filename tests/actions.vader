@@ -1,0 +1,35 @@
+Execute (setup actions):
+  let actions = vimcastle#actions#create()
+
+Then (key not found):
+  AssertEqual [], actions.bindings
+  AssertEqual '', actions.keyToName('z'), 'Key not found should return 0'
+  AssertEqual [], actions.names()
+  AssertEqual [], actions.keys()
+
+Execute (add):
+  call actions.add('do', 'x', 'Do it!')
+
+Then (has actions info):
+  AssertEqual [{ 'name': 'do', 'key': 'x', 'label': 'Do it!'}], actions.bindings
+  AssertEqual ['do'], actions.names()
+  AssertEqual ['x'], actions.keys()
+
+Execute (key found):
+  AssertEqual 'do', actions.keyToName('x')
+  AssertEqual '', actions.keyToName('y')
+
+Execute (clear):
+  call actions.clear()
+
+Then (key not found):
+  AssertEqual [], actions.bindings
+  AssertEqual '', actions.keyToName('x')
+
+Execute (addDefault):
+  call actions.addDefault()
+
+Execute (default key):
+  AssertEqual 'default', actions.keyToName('anything')
+  AssertEqual ['default'], actions.names()
+  AssertEqual ['default'], actions.keys()

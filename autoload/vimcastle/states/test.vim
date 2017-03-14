@@ -1,14 +1,20 @@
-function! vimcastle#states#test#enter(state) abort
- 	call a:state.actions().clear()
-	call a:state.actions().add('1', 'Test Action', function('s:action_test_1'))
-	call a:state.actions().add('any', 'Test Action', function('s:action_test_any'))
+function! vimcastle#states#test#create() abort
+	let instance = {}
+	let instance.enter = function('s:enter')
+	let instance.action = function('s:action')
+	return instance
 endfunction
 
-function! s:action_test_1(state) abort
-	let a:state.log = ['test log 1']
+function! s:enter(game) abort
+	call a:game.actions.add('test_1', '1', 'Test Action')
+	call a:game.addlog('enter')
 endfunction
 
-function! s:action_test_any(state) abort
-	let a:state.log = ['test log any']
+function! s:action(name, game) abort
+	call a:game.addlog('action')
+	execute 'call s:action_' . a:name . '(a:game)'
 endfunction
 
+function! s:action_test_1(game) abort
+	call a:game.addlog('action_test_1')
+endfunction

@@ -1,46 +1,47 @@
 Execute (under level setup):
-  let state = vimcastle#states#create()
+  let game = vimcastle#game#create()
   let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
   let player.level = 1
   let player.xp = 5
-  let state.player = player
+  let game.player = player
   let enemy = vimcastle#monstergen#create('Mon.', 'Monster')
   let enemy.xp = 4
-  let state.enemy = enemy
-  call state.enter('win')
+  let game.enemy = enemy
+  call game.enter('win')
 
 Then (has actions, log and xp):
-  AssertEqual ['You gained:', '  * 4 xp! (9/10 xp)'], state.log
-  AssertEqual [{'label': 'Continue', 'key': 'c'}], state.actions().display
+  AssertEqual ['You gained:', '  * 4 xp! (9/10 xp)'], game.log
+  AssertEqual [{'label': 'Continue', 'name': 'continue', 'key': 'c'}], game.actions.bindings
   AssertEqual 9, player.xp
   AssertEqual 1, player.level
-  Assert !has_key(state, 'enemy')
+  Assert !has_key(game, 'enemy')
 
 Execute (continue):
-  function! Vimcastle_test_continue(state)
-    let a:state.called = 1
+  function! Vimcastle_test_continue(game)
+    let a:game.called = 1
   endfunction
-  let state.nextaction = function('Vimcastle_test_continue')
-  call state.actions().invokeByKey('c', state)
+  let game.nextaction = function('Vimcastle_test_continue')
+  let game.event = vimcastle#eventgen#create('test').invoke(game)
+  call game.action('c')
 
 Then (next action is invoked):
-  AssertEqual 1, state.called
-  AssertEqual 'explore', state.screen
+  AssertEqual 1, game.called
+  AssertEqual 'explore', game.screen
 
 Execute (over level setup):
   let enemy = vimcastle#monstergen#create('Mon.', 'Monster')
   let enemy.xp = 4
-  let state.enemy = enemy
-  call state.enter('win')
+  let game.enemy = enemy
+  call game.enter('win')
 
 Then (has actions, log and xp):
-  AssertEqual ['You gained:', '  * 4 xp! (13/10 xp)'], state.log
-  AssertEqual [{'label': 'Level up!', 'key': 'u'}], state.actions().display
+  AssertEqual ['You gained:', '  * 4 xp! (13/10 xp)'], game.log
+  AssertEqual [{'label': 'Level up!', 'name': 'levelup', 'key': 'u'}], game.actions.bindings
   AssertEqual 13, player.xp
   AssertEqual 1, player.level, 'Player levels up in levelup screen'
 
 Execute (level up):
-  call state.actions().invokeByKey('u', state)
+  call game.action('u')
 
 Then (level up screen):
-  AssertEqual 'levelup', state.screen
+  AssertEqual 'levelup', game.screen

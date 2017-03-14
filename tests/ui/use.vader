@@ -1,21 +1,12 @@
 Execute (test setup):
   let screen = { 'width': 30 }
-  let state = vimcastle#states#create()
-  call state.actions().addNoop('b',  'Back')
+  let game = vimcastle#game#create()
+  call game.addlog('You feel better!')
+  call game.addlog('Select the item you want to use.')
+  call game.actions.add('noop', 'b',  'Back')
 
 Execute (draw):
-  call vimcastle#screens#use#draw(screen, state)
-
-Expect (use screen):
-  ------------- Use ------------
-  
-  Select the item you want to use.
-  
-  b) Back
-
-Execute (with log):
-  call state.addlog('You feel better!')
-  call vimcastle#screens#use#draw(screen, state)
+  call vimcastle#screens#use#draw(screen, game)
 
 Expect (use screen):
   ------------- Use ------------

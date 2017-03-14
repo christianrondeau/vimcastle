@@ -2,14 +2,14 @@ Execute (test setup):
   let screen = {
     \  'width': 30
     \}
-  let state = vimcastle#states#create()
-  let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 153)
-  let state.enemy = vimcastle#character#create({'long': 'Enemy', 'short': 'Enem.'}, 810)
-  call state.actions().addNoop('a',  'Attack with <f. staff>')
-  let state.enemy.health = 476
+  let game = vimcastle#game#create()
+  let game.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 153)
+  let game.enemy = vimcastle#character#create({'long': 'Enemy', 'short': 'Enem.'}, 810)
+  call game.actions.add('noop', 'a',  'Attack with <f. staff>')
+  let game.enemy.health = 476
 
 Execute (draw screen):
-  call vimcastle#screens#fight#draw(screen, state)
+  call vimcastle#screens#fight#draw(screen, game)
 
 Expect (fight screen):
   ----------- Fight! -----------
@@ -20,9 +20,9 @@ Expect (fight screen):
   a) Attack with <f. staff>
 
 Execute (add log):
-  let state.enemy.health = 12
-  let state.log = ['You poke the enemy!', 'The enemy laughs.']
-  call vimcastle#screens#fight#draw(screen, state)
+  let game.enemy.health = 12
+  let game.log = ['You poke the enemy!', 'The enemy laughs.']
+  call vimcastle#screens#fight#draw(screen, game)
 
 Expect (fight screen with log):
   ----------- Fight! -----------

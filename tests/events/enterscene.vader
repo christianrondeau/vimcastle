@@ -1,14 +1,20 @@
 Execute (create event):
-  let state = vimcastle#states#create()
-  let state.scene = vimcastle#scene#loadintro('main')
-  call state.scene.enter.invoke(state)
-  let event = vimcastle#event#create('test')
+  let game = vimcastle#game#create()
+  let game.scene = vimcastle#scene#loadintro('main')
+  let game.event = game.scene.enter.invoke(game)
+  let eventgen = vimcastle#eventgen#create('test')
     \.text('change scene')
     \.enterscene('Enter Plains', 'plains')
 
 Execute (event executes):
-  call event.invoke(state)
+  let event = eventgen.invoke(game)
 
-Then (state is updated):
-  AssertEqual ['change scene'], state.log
-  AssertEqual [{'label': 'Enter Plains (level 1)', 'key': 'e'}, {'label': 'Inventory', 'key': 'i'}, {'label': 'Character Sheet', 'key': 's'}], state.actions().display
+Then (result):
+  AssertEqual ['change scene'], event.log
+  AssertEqual [
+  \  {'label': 'Enter Plains (level 1)', 'name': 'enterscene', 'key': 'e'},
+  \  {'label': 'Inventory', 'name': 'inventory', 'key': 'i'},
+  \  {'label': 'Character Sheet', 'name': 'character', 'key': 's'}
+  \], event.actions.bindings
+
+

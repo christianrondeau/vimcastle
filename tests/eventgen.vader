@@ -1,0 +1,8 @@
+Execute (game mock):
+  let game = vimcastle#game#create()
+
+Execute (create simple event):
+  let event = vimcastle#eventgen#create('test')
+
+Then (event is created):
+  AssertEqual 'test', event.name

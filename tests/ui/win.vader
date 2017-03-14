@@ -1,11 +1,11 @@
 Execute (test setup):
   let screen = { 'width': 30 }
-  let state = vimcastle#states#create()
-  let state.log = ['Details on what you won...']
-  call state.actions().addNoop('c',  'Continue')
+  let game = vimcastle#game#create()
+  let game.log = ['Details on what you won...']
+  call game.actions.add('noop', 'c',  'Continue')
 
 Execute (draw):
-  call vimcastle#screens#win#draw(screen, state)
+  call vimcastle#screens#win#draw(screen, game)
 
 Expect (win screen):
   ---------- You win! ----------

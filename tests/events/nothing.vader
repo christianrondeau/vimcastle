@@ -1,27 +1,27 @@
 Execute (create event):
-  let state = vimcastle#states#create()
-  let event = vimcastle#event#create('test')
+  let game = vimcastle#game#create()
+  let eventgen = vimcastle#eventgen#create('test')
     \.text('text')
     \.explore('Continue')
 
 Execute (event executes):
-  call event.invoke(state)
+  let event = eventgen.invoke(game)
 
 Then (result):
-  AssertEqual ['text'], state.log
-  AssertEqual [{'label': 'Continue', 'key': 'c'}, {'label': 'Inventory', 'key': 'i'}, {'label': 'Character Sheet', 'key': 's'}], state.actions().display
+  AssertEqual ['text'], event.log
+  AssertEqual [
+  \  {'label': 'Continue', 'name': 'explore', 'key': 'c'},
+  \  {'label': 'Inventory', 'name': 'inventory', 'key': 'i'},
+  \  {'label': 'Character Sheet', 'name': 'character', 'key': 's'}
+  \], event.actions.bindings
 
 Execute (access inventory):
-  call state.enter('explore')
-  call event.invoke(state)
-  let result = state.actions().invokeByKey('i', state)
-  Assert result, 'Action was not called'
-  AssertEqual 'inventory', state.screen
+  let event = eventgen.invoke(game)
+  let result = event.action('inventory', game)
+  AssertEqual 'inventory', game.screen
 
 Execute (access character sheet):
-  call state.enter('explore')
-  call event.invoke(state)
-  let result = state.actions().invokeByKey('s', state)
-  Assert result, 'Action was not called'
-  AssertEqual 'sheet', state.screen
+  call eventgen.invoke(game)
+  let result = event.action('character', game)
+  AssertEqual 'sheet', game.screen
 

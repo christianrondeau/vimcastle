@@ -67,7 +67,6 @@ function! s:EventgenClass.invoke(game) dict abort
 	if(exists('self.monsters'))
 		let a:game.enemy = self.monsters.rnd().invoke()
 	endif
-
 	" TODO: On event instead
 	if(exists('self.items'))
 		let a:game.ground_item = self.items.rnd()
@@ -89,7 +88,9 @@ function! s:EventgenClass.invoke(game) dict abort
 
 	if(exists('self.effect_name'))
 		let effect_value = exists('self.effect_value') ? self.effect_value : 0
-		execute 'call vimcastle#effects#' . self.effect_name . '(a:game, effect_value)'
+		let effect_result = []
+		execute 'let effect_result = vimcastle#effects#' . self.effect_name . '(a:game, effect_value)'
+		call add(event.log, effect_result[1])
 	endif
 
 	" Backup to reload
@@ -99,7 +100,7 @@ function! s:EventgenClass.invoke(game) dict abort
 endfunction
 
 function! s:EventgenClass.createactions(game) abort dict
-	let actions = vimcastle#bindings#create()
+	let actions = vimcastle#actions#create()
 
 	if(exists('self.action_fight_text') && exists('a:game.enemy'))
 	call actions.add('fight', 'f', self.action_fight_text . ' (level ' . a:game.enemy.level . ')')
@@ -113,11 +114,11 @@ function! s:EventgenClass.createactions(game) abort dict
 	endif
 
 	if(exists('a:game.ground_item'))
-		call actions.add('pickup_item', 'p', 'Pick up')
+		call actions.add('pickup', 'p', 'Pick up')
 	endif
 
 	if(exists('a:game.ground_equippable'))
-		call actions.add('equip_equippable', 'e', 'Equip')
+		call actions.add('equip', 'e', 'Equip')
 	endif
 
 	if(exists('self.action_explore_text'))

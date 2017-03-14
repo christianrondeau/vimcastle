@@ -2,12 +2,12 @@ After (clean random):
   call vimcastle#utils#resetrnd()
 
 Execute (setup):
-  let state = vimcastle#states#create()
+  let game = vimcastle#game#create()
   let playerweapon = vimcastle#equippablegen#weapon('Weap.', 'Weapon', 4, 4)
   let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
     \.setstat('spd', 5)
     \.equip(playerweapon.invoke())
-  let state.player = player
+  let game.player = player
   let enemyweapon = vimcastle#equippablegen#weapon('Tent.', 'Tentacle', 3, 3)
   let enemy = vimcastle#monstergen#create('Mon.', 'Monster')
     \.description('This monster is a monsterly monster who monsters a lot.')
@@ -15,78 +15,78 @@ Execute (setup):
     \.stat('spd', 2)
     \.invoke()
     \.equip(enemyweapon.invoke())
-  let state.enemy = enemy
+  let game.enemy = enemy
 
 Execute (enter):
-  call state.enter('fight')
+  call game.enter('fight')
 
-Then (state is):
-  Log state.log
-  AssertEqual [{'label': 'Attack with <Weap.>', 'key': 'a'}, {'label': 'Look at <Mon.>', 'key': 'l'}, {'label': 'Use an item', 'key': 'u'}], state.actions().display
+Then (game is):
+  Log game.log
+  AssertEqual [{'label': 'Attack with <Weap.>', 'name': 'hit', 'key': 'a'}, {'label': 'Look at <Mon.>', 'name': 'look', 'key': 'l'}, {'label': 'Use an item', 'name': 'use', 'key': 'u'}], game.actions.bindings
 
 Execute (look):
   call vimcastle#utils#setnextrnd([0])
-  call state.actions().invokeByKey('l', state)
+  call game.action('l')
 
 Then (enemy counterattacks):
-  AssertEqual 'You look at <Monster>', state.log[0]
-  AssertEqual ['* This monster is a monsterly monster who monsters a lot.', '* Health: 200/200', '* Weapon: <Tentacle> (3-3 dmg)'], state.log[1]
-  AssertEqual '<Monster> hits you with <Tentacle> for <6 critical> damage!', state.log[2]
+  AssertEqual 'You look at <Monster>', game.log[0]
+  AssertEqual ['* This monster is a monsterly monster who monsters a lot.', '* Health: 200/200', '* Weapon: <Tentacle> (3-3 dmg)'], game.log[1]
+  AssertEqual '<Monster> hits you with <Tentacle> for <6 critical> damage!', game.log[2]
   AssertEqual 97, player.health
   AssertEqual 200, enemy.health
 
 Execute (attack):
   call vimcastle#utils#setnextrnd([0, 0, 0])
-  call state.actions().invokeByKey('a', state)
+  call game.action('a')
 
 Then (both exchange a hit):
-  Log state.log
+  Log game.log
   AssertEqual 94, player.health
   AssertEqual 196, enemy.health
 
 Execute (use item):
-  call state.actions().invokeByKey('u', state)
+  call game.action('u')
 
 Then (open use item screen):
-  AssertEqual 'use', state.screen
+  AssertEqual 'use', game.screen
 
 Execute (come back):
-  call state.addlog('item used')
-  call state.enter('fight')
+  call game.addlog('item used')
+  call game.enter('fight')
 
 Then (enemy hits):
-  Log state.log
+  Log game.log
   AssertEqual 91, player.health
   AssertEqual 196, enemy.health
 
 Execute (given enemy kills player):
   let player.health = 1
   let enemy.health = 100
-  call state.enter('fight')
-  call state.actions().invokeByKey('a', state)
+  call game.enter('fight')
+  call game.action('a')
 
 Then (you are dead):
-  Log state.log
-  AssertEqual [{'label': 'Continue', 'key': 'c'}], state.actions().display
+  Log game.log
+  AssertEqual [{'label': 'Continue', 'name': 'gameover', 'key': 'c'}], game.actions.bindings
 
 Execute (continue to gameover):
-  call state.actions().invokeByKey('c', state)
+  call game.action('c')
 
 Then (screen is gameover):
-  AssertEqual 'gameover', state.screen
+  AssertEqual 'gameover', game.screen
 
 Execute (given player kills enemy):
   let player.health = 100
   let enemy.health = 0
-  call state.enter('fight')
-  call state.actions().invokeByKey('a', state)
+  call game.enter('fight')
+  call game.action('a')
 
 Then (you win):
-  Log state.log
-  AssertEqual [{'label': 'Continue', 'key': 'c'}], state.actions().display
+  Log game.log
+  AssertEqual [{'label': 'Continue', 'name': 'win', 'key': 'c'}], game.actions.bindings
 
 Execute (continue to win):
-  call state.actions().invokeByKey('c', state)
+  call game.action('c')
 
 Then (screen is win):
-  AssertEqual 'win', state.screen
+  AssertEqual 'win', game.screen

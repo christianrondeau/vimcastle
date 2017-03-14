@@ -9,18 +9,25 @@ function! vimcastle#game#create() abort
 	let game.addlogrnd = function('s:addlogrnd')
 	let game.addlog = function('s:addlog')
 	let game.msg = function('s:msg')
-	let game.actions = vimcastle#bindings#create()
+	let game.actions = vimcastle#actions#create()
 	call game.reset()
 	return game
 endfunction
 
 function! s:enter(name) dict abort
 	execute 'let self.state = vimcastle#states#' . a:name . '#create()'
+	call s:validatestate(a:name, self.state)
 	"TODO: Let the state decide which screen to use
 	let self.screen = a:name
 	call self.actions.clear()
 	call self.clearlog()
 	return self.state.enter(self)
+endfunction
+
+function! s:validatestate(name, state) abort
+	if(!exists('a:state.enter'))
+		throw 'State "' . a:name . '" does not define an enter event'
+	endif
 endfunction
 
 function! s:action(key) dict abort

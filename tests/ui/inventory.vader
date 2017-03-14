@@ -1,14 +1,14 @@
 Execute (test setup):
   let screen = { 'width': 30 }
-  let state = vimcastle#states#create()
-  let state.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
-  call state.player.equip(vimcastle#equippablegen#weapon('.', 'Swooord', 5, 127).stat('def', 3).invoke())
-  call state.player.equip(vimcastle#equippablegen#armor('.', 'Armooor', 4).invoke())
-  let state.log = ['current scene text']
-  call state.actions().addNoop('b',  'Back')
+  let game = vimcastle#game#create()
+  let game.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  call game.player.equip(vimcastle#equippablegen#weapon('.', 'Swooord', 5, 127).stat('def', 3).invoke())
+  call game.player.equip(vimcastle#equippablegen#armor('.', 'Armooor', 4).invoke())
+  let game.log = ['current scene text']
+  call game.actions.add('noop', 'b',  'Back')
 
 Execute (draw):
-  call vimcastle#screens#inventory#draw(screen, state)
+  call vimcastle#screens#inventory#draw(screen, game)
 
 Expect (inventory screen):
   ---------- Inventory ---------
@@ -22,13 +22,13 @@ Expect (inventory screen):
   b) Back
 
 Execute (scene text is not modified):
-  AssertEqual ['current scene text'], state.log
+  AssertEqual ['current scene text'], game.log
 
 Execute (items):
-  let state.player.items = [
+  let game.player.items = [
   \  { 'label': 'Potion of BANG' }
   \]
-  call vimcastle#screens#inventory#draw(screen, state)
+  call vimcastle#screens#inventory#draw(screen, game)
 
 Expect (inventory screen with items):
   ---------- Inventory ---------

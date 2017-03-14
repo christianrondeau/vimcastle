@@ -5,41 +5,41 @@ After (restore vimcastle folder):
   call vimcastle#io#after()
 
 Execute (setup):
-  let state = vimcastle#states#create()
+  let game = vimcastle#game#create()
 
 Execute (no high scores):
   let highscoresfile = vimcastle#io#path('highscores.csv')
   if(filereadable(highscoresfile))
     call delete(highscoresfile)
   endif
-  call state.enter('highscores')
+  call game.enter('highscores')
 
 Then (no high scores are shown):
   AssertEqual
   \ 'Score     Events    Fights    Scenes',
-  \state.log[0]
+  \game.log[0]
   AssertEqual [
   \ '-          -          -          -'
-  \], state.log[1]
+  \], game.log[1]
 
 Execute (some high scores):
   call writefile([
       \'24311,24,2,17',
       \'1,1,1,1'
       \], highscoresfile)
-  call state.enter('highscores')
+  call game.enter('highscores')
 
 Then (high scores are shown):
   AssertEqual
   \ 'Score     Events    Fights    Scenes',
-  \state.log[0]
+  \game.log[0]
   AssertEqual [
   \ '24311     24        2         17        ',
   \ '1         1         1         1         '
-  \], state.log[1]
+  \], game.log[1]
 
 Execute (menu):
-  call state.actions().invokeByKey('b', state)
+  call game.action('b')
 
 Then (restarts game):
-  AssertEqual 'menu', state.screen
+  AssertEqual 'menu', game.screen

@@ -1,17 +1,22 @@
 Execute (setup):
-  let state = vimcastle#states#create()
-  call state.enter('sheet')
+  let game = vimcastle#game#create()
+  call game.enter('sheet')
 
 Then (has actions):
-  AssertEqual [{'label': 'Inventory', 'key': 'i'}, {'label': 'Back', 'key': 'b'}], state.actions().display
+  AssertEqual [
+  \  {'label': 'Inventory', 'name': 'inventory', 'key': 'i'},
+  \  {'label': 'Back', 'name': 'back', 'key': 'b'}
+  \], game.actions.bindings
 
 Execute (go back):
-  call state.actions().invokeByKey('b', state)
-  AssertEqual 'explore', state.screen
+  let game.event = vimcastle#eventgen#create('test').invoke(game)
+  call game.action('b')
+  AssertEqual 'explore', game.screen
 
 Execute (setup):
-  call state.enter('sheet')
+  call game.enter('sheet')
 
 Execute (access inventory):
-  call state.actions().invokeByKey('i', state)
-  AssertEqual 'inventory', state.screen
+  call game.action('i')
+  AssertEqual 'inventory', game.screen
+

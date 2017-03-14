@@ -1,4 +1,5 @@
 Execute (setup):
-  let state = vimcastle#states#create()
-  call state.enter('explore')
+  let game = vimcastle#game#create()
+  let game.event = vimcastle#event#create()
+  call game.enter('explore')
 
