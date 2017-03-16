@@ -29,7 +29,7 @@ function! s:setupactions(game) abort
 	if(exists('a:game.player.equipment.weapon'))
 		call a:game.actions.add('hit', 'a', 'Attack with <' . a:game.player.equipment.weapon.name.short . '>')
 	endif
-	call a:game.actions.add('look', 'l', 'Look at <' . a:game.enemy.name.short . '>')
+	call a:game.actions.add('look', 'l', 'Look at <' . a:game.enemy.name . '>')
 	call a:game.actions.add('use', 'u', 'Use an item')
 endfunction
 

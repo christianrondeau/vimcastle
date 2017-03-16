@@ -1,6 +1,6 @@
 Execute (setup):
   let game = vimcastle#game#create()
-  let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 50)
+  let player = vimcastle#character#create('Player', 50)
     \.setstat('con', 2)
     \.setstat('str', 3)
     \.setstat('spd', 4)

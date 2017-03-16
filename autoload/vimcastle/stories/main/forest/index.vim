@@ -54,7 +54,7 @@ function! s:event_heal() abort
 endfunction
 
 function! s:event_boss() abort
-	let boss = vimcastle#monstergen#create('Troll Boss', 'Troll Boss')
+	let boss = vimcastle#monstergen#create('Troll Boss')
 				\.health(250)
 				\.level(15)
 				\.xp(60)

@@ -2,8 +2,8 @@ After (clean random):
   call vimcastle#utils#resetrnd()
 
 Execute (setup):
-  let attacker = vimcastle#character#create({ 'short': 'A.', 'long': 'Attacker' }, 100)
-  let defender = vimcastle#character#create({ 'short': 'D.', 'long': 'Defender' }, 100)
+  let attacker = vimcastle#character#create('Attacker', 100)
+  let defender = vimcastle#character#create('Defender', 100)
 
 Execute (simple resolution):
   let dmg = vimcastle#resolver#hit(attacker, defender)

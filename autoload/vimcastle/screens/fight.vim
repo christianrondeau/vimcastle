@@ -1,7 +1,7 @@
 function! vimcastle#screens#fight#draw(screen, game) abort
 	call vimcastle#screens#common#drawtitle(a:screen, 'Fight!')
 
-	call s:drawsides(a:screen, a:game.player.name.short,a:game.enemy.name.short)
+	call s:drawsides(a:screen, a:game.player.name, a:game.enemy.name)
 	call s:drawbars(a:screen, a:game.player.health, a:game.player.getmaxhealth(), a:game.enemy.health, a:game.enemy.getmaxhealth(), '-')
 	call append(line('$'), '')
 

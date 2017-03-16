@@ -10,7 +10,7 @@ Execute (go back):
   AssertEqual 'inventory', game.screen
 
 Execute (setup with items):
-  let game.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  let game.player = vimcastle#character#create('Player', 100)
   let game.player.items = [
   \  {'label': 'Potion of DOOM', 'effect': 'heal', 'value': 5}, 
   \  {'label': 'Scroll of zoom', 'effect': 'none'}
@@ -40,7 +40,7 @@ Execute (use item removes if usable):
   AssertEqual ['Use: <Potion of DOOM>', 'You gain <+5> health.', 'Select an item to use:'], game.log
 
 Execute (item returns to fight if enemy):
-  let game.enemy = vimcastle#monstergen#create('Mon.', 'Monster').invoke()
+  let game.enemy = vimcastle#monstergen#create('Monster').invoke()
   call game.action('1')
   AssertEqual [
   \  {'name': 'back', 'label': 'Return to fight', 'key': 'b'}

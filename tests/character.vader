@@ -1,5 +1,5 @@
 Execute (empty character):
-  let player = vimcastle#character#create({ 'short': '', 'long': 'Player' }, 100)
+  let player = vimcastle#character#create('Player', 100)
 
 Then (character has default stats):
   AssertEqual 0, player.getstat('con', 0)

@@ -124,7 +124,7 @@ function! s:event_encounter_opt() abort
 endfunction
 
 function! s:event_boss() abort
-	let boss = vimcastle#monstergen#create('Sl. Joe', 'Sloppy Joe')
+	let boss = vimcastle#monstergen#create('Sloppy Joe')
 				\.description('He''s sloppy, but don''t underestimate his strength. You might get a bruise, or you might lose an arm.')
 				\.health(100)
 				\.level(5)

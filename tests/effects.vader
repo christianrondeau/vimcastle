@@ -1,6 +1,6 @@
 Execute (create event):
   let game = vimcastle#game#create()
-  let game.player = vimcastle#character#create({'short':'', 'long':''}, 100)
+  let game.player = vimcastle#character#create('', 100)
   let game.player.health = 50
 
 Execute (heal - partial):

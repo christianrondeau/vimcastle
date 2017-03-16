@@ -1,7 +1,7 @@
 Execute (test setup):
   let screen = { 'width': 30 }
   let game = vimcastle#game#create()
-  let game.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 70)
+  let game.player = vimcastle#character#create('Player', 70)
   let game.player.level = 3
   let game.player.xp = 26
   let game.player.health = 80

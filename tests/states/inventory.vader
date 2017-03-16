@@ -18,7 +18,7 @@ Execute (access character sheet):
   AssertEqual 'sheet', game.screen
 
 Execute (with items):
-  let game.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  let game.player = vimcastle#character#create('Player', 100)
   let game.player.items = [{'label': ''}]
   call game.enter('inventory')
 

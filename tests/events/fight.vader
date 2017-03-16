@@ -1,9 +1,9 @@
 Execute (create event):
   let game = vimcastle#game#create()
   let game.story = ''
-  let game.player = vimcastle#character#create({'short':'', 'long':''}, 1)
+  let game.player = vimcastle#character#create('', 1)
   let monsters = vimcastle#repository#create()
-  call monsters.add(1, vimcastle#monstergen#create('Imp', 'Imp'))
+  call monsters.add(1, vimcastle#monstergen#create('Imp'))
   let eventgen = vimcastle#eventgen#create('test')
     \.text('There is a %<enemy.name> before you!')
     \.fight('Fight', monsters)
@@ -21,6 +21,7 @@ Execute (fight):
   call event.action('fight', game)
 
 Then (change to fight screen):
-  AssertEqual 'Imp', game.enemy.name.short
+  AssertEqual 'Imp', game.enemy.name
   AssertEqual 1, game.stats.fights
   AssertEqual 'fight', game.screen
+

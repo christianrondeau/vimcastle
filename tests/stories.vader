@@ -58,7 +58,7 @@ Execute (invoke all events):
         let tempgame = testutils.givengame(storyname, scene.info.level)
         let stats = testutils.autofight(tempgame, monster)
         if(tempgame.player.health <= 0)
-          throw 'Scene "' . storyname . '/' . scenename . '" has a monster that is too difficult: ' . monster.name.long
+          throw 'Scene "' . storyname . '/' . scenename . '" has a monster that is too difficult: ' . monster.name
         endif
         let difficulty = 100 - (tempgame.player.health * 100 / tempgame.player.getmaxhealth())
         let difficultyname = ''
@@ -71,7 +71,7 @@ Execute (invoke all events):
         else
           let difficultyname = 'EXTREME'
         endif
-        Log '  Monster: ' . monster.name.long . ' (lvl ' . monster.level . ') - turns: ' . len(stats.log) . ', hp: ' . tempgame.player.health . '/' . tempgame.player.getmaxhealth() . ' - Difficulty: ' . difficulty . '% (' . difficultyname . ')'
+        Log '  Monster: ' . monster.name . ' (lvl ' . monster.level . ') - turns: ' . len(stats.log) . ', hp: ' . tempgame.player.health . '/' . tempgame.player.getmaxhealth() . ' - Difficulty: ' . difficulty . '% (' . difficultyname . ')'
       endfor
     catch
       throw 'Scene "' . storyname . '/' . scenename . '" has an erroneous monsters: ' . v:exception

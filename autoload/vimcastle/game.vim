@@ -88,8 +88,8 @@ endfunction
 function! s:msg(text) dict abort
 	let text = a:text
 
-	if(exists('self.enemy.name.long'))
-		let text = substitute(text, '%<enemy.name>', '<' . self.enemy.name.long . '>', 'ge')
+	if(exists('self.enemy.name'))
+		let text = substitute(text, '%<enemy.name>', '<' . self.enemy.name . '>', 'ge')
 	endif
 
 	if(exists('self.enemy.equipment.weapon.name.long'))
@@ -106,8 +106,8 @@ endfunction
 function! s:msgevent(text, event) dict abort
 	let text = self.msg(a:text)
 
-	if(exists('a:event.enemy.name.long'))
-		let text = substitute(text, '%<enemy.name>', '<' . a:event.enemy.name.long . '>', 'ge')
+	if(exists('a:event.enemy.name'))
+		let text = substitute(text, '%<enemy.name>', '<' . a:event.enemy.name . '>', 'ge')
 	endif
 
 	if(exists('a:event.item'))
@@ -130,7 +130,7 @@ endfunction
 function! s:load(datastr) abort dict
 	let data = {}
 	execute 'let data = ' . a:datastr
-  let player = vimcastle#character#create({'long': '', 'short': ''}, 100)
+  let player = vimcastle#character#create('', 100)
 	let player.health = data.health
 	let self.player = player
 endfunction

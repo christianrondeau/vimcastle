@@ -1,7 +1,7 @@
 Execute (test setup):
   let screen = { 'width': 30 }
   let game = vimcastle#game#create()
-  let game.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  let game.player = vimcastle#character#create('Player', 100)
   let game.player.level = 6
   let game.log = ['Woot!']
   call game.actions.add('noop', '1',  'Increase str 5 -> 6')

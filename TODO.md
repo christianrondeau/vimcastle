@@ -15,6 +15,7 @@
 
 ## Refactors
 
+* [ ] Auto shorten (vowels, cut first word, etc)
 * [ ] Remove line/col indicators in bash-invoked vim
 * [ ] Confusion between the game.screen that represents which state, and screens which are ui renderers
 * [ ] Create a log utility to hide complexity away from game

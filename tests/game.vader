@@ -18,7 +18,7 @@ Execute (properties than can be included in tests):
   let game.player = {}
   let game.player.equipment = {}
   let game.player.equipment.weapon = { 'name': { 'long': 'Sword' } }
-  let game.enemy = { 'name': { 'long': 'Blob' } }
+  let game.enemy = { 'name': 'Blob' }
   let game.enemy.equipment = {}
   let game.enemy.equipment.weapon = { 'name': { 'long': 'Glue' } }
   let msg = game.msg('Player Weapon: %<player.weapon>, Enemy: %<enemy.name>, Enemy Weapon: %<enemy.weapon>')

@@ -2,7 +2,7 @@ Execute (test setup):
   let screen = { 'width': 30 }
   let game = vimcastle#game#create()
   let game.scene = { 'info': { 'label': 'Plains' } }
-  let game.player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 153)
+  let game.player = vimcastle#character#create('Player', 153)
   call game.actions.add('noop', 'x',  'Action')
   let game.log = ['Stuff happens!']
 

@@ -1,7 +1,7 @@
 function! vimcastle#screens#sheet#draw(screen, game) abort
 	call vimcastle#screens#common#drawtitle(a:screen, 'Character Sheet')
 
-	call append(line('$'), '* Name: ' . a:game.player.name.long)
+	call append(line('$'), '* Name: ' . a:game.player.name)
 	call append(line('$'), '* Level: ' . a:game.player.level)
 	call append(line('$'), '* XP: ' . a:game.player.xp . ' (next level: ' . vimcastle#levelling#forxp(a:game.player.xp)[1] . ')')
 	call append(line('$'), '* Stats:')

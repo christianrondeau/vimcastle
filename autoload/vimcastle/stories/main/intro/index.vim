@@ -19,7 +19,7 @@ function! s:event_enter() abort
 endfunction
 
 function! s:setup(state) abort
-	let a:state.player = vimcastle#character#create({ 'short': 'Plr.', 'long': 'Player' }, 30)
+	let a:state.player = vimcastle#character#create('Player', 30)
 				\.setstat('con', vimcastle#utils#rnd(2) + 2)
 				\.setstat('str', vimcastle#utils#rnd(2) + 2)
 				\.setstat('spd', vimcastle#utils#rnd(2) + 2)

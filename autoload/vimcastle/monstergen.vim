@@ -1,8 +1,8 @@
 let s:MonstergenClass = {}
 
-function! vimcastle#monstergen#create(basenameshort, basenamelong) abort
+function! vimcastle#monstergen#create(basename) abort
 	let monstergen = copy(s:MonstergenClass)
-	let monstergen.basename = { 'short': a:basenameshort, 'long': a:basenamelong }
+	let monstergen.basename = a:basename
 	let monstergen.basehealth = 1
 	let monstergen.basexp = 1
 	let monstergen.baselevel = 1
@@ -35,11 +35,11 @@ function! s:MonstergenClass.description(description) dict abort
 	return self
 endfunction
 
-function! s:MonstergenClass.modifier(probabilities, prefixshort, prefixlong, healthmodifier) dict abort
+function! s:MonstergenClass.modifier(probabilities, prefix, healthmodifier) dict abort
 	if(!exists('self.modifiers'))
 		let self.modifiers = vimcastle#repository#create()
 	endif
-	call self.modifiers.add(a:probabilities, { 'short': a:prefixshort, 'long': a:prefixlong, 'health': a:healthmodifier })
+	call self.modifiers.add(a:probabilities, { 'prefix': a:prefix, 'health': a:healthmodifier })
 	return self
 endfunction
 
@@ -52,13 +52,12 @@ function! s:MonstergenClass.weapon(weapon) dict abort
 endfunction
 
 function! s:MonstergenClass.invoke() dict abort
-	let name = { 'short': self.basename.short, 'long': self.basename.long }
+	let name = self.basename
 	let health = self.basehealth
 	let stats = self.basestats
 	if(exists('self.modifiers'))
 		let modifier = self.modifiers.rnd()
-		let name.short = modifier.short . ' ' . name.short
-		let name.long = modifier.long . ' ' . name.long
+		let name = modifier.prefix . ' ' . name
 		let health += modifier.health
 	endif
 	let monster = vimcastle#character#create(name, health).setstats(stats)

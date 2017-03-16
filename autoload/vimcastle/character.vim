@@ -1,8 +1,6 @@
 let s:CharacterClass = {}
 
 function! vimcastle#character#create(name, health) abort
-	call vimcastle#utils#validate(a:name.short, 1)
-	call vimcastle#utils#validate(a:name.long, 1)
 	let character = copy(s:CharacterClass)
 	let character.name = a:name
 	let character.basehealth = a:health

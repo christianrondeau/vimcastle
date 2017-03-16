@@ -1,10 +1,10 @@
 Execute (under level setup):
   let game = vimcastle#game#create()
-  let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 100)
+  let player = vimcastle#character#create('Player', 100)
   let player.level = 1
   let player.xp = 5
   let game.player = player
-  let enemy = vimcastle#monstergen#create('Mon.', 'Monster')
+  let enemy = vimcastle#monstergen#create('Monster')
   let enemy.xp = 4
   let game.enemy = enemy
   call game.enter('win')
@@ -26,7 +26,7 @@ Then (next action is invoked):
   AssertEqual 'explore', game.screen
 
 Execute (over level setup):
-  let enemy = vimcastle#monstergen#create('Mon.', 'Monster')
+  let enemy = vimcastle#monstergen#create('Monster')
   let enemy.xp = 4
   let game.enemy = enemy
   call game.enter('win')
