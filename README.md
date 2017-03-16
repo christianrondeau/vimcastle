@@ -30,6 +30,8 @@ If you can't install a Vim plugin yet, you are not ready for Vim Castle!
 
 Because the basic game mechanisms are not yet in place, I cannot accept code (gameplay or story) contributions. Please create issues with your ideas and suggestions though, I'm not even sure where I'm going with this project so your opinion is welcome!:)
 
+For more information on the structure of the code, see [CONTRIBUTING.md](CONTRIBUTING.md)
+
 ## License
 
 Copyright Christian Rondeau 2017
