@@ -31,4 +31,5 @@ function! s:setup(state) abort
 	let a:state.player.items = [
 				\ vimcastle#stories#main#intro#items#get().rnd()
 				\]
+	let a:state.player.health = a:state.player.getmaxhealth()
 endfunction
