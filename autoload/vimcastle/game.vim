@@ -8,6 +8,8 @@ function! vimcastle#game#create() abort
 	let game.addlog = function('s:addlog')
 	let game.msg = function('s:msg')
 	let game.msgevent = function('s:msgevent')
+	let game.save = function('s:save')
+	let game.load = function('s:load')
 	let game.actions = vimcastle#actions#create()
 	call game.reset()
 	return game
@@ -117,4 +119,18 @@ function! s:msgevent(text, event) dict abort
 	endif
 
 	return text
+endfunction
+
+function! s:save() abort dict
+	let data = {}
+	let data.health = self.player.health
+	return string(data)
+endfunction
+
+function! s:load(datastr) abort dict
+	let data = {}
+	execute 'let data = ' . a:datastr
+  let player = vimcastle#character#create({'long': '', 'short': ''}, 100)
+	let player.health = data.health
+	let self.player = player
 endfunction

@@ -1,0 +1,21 @@
+Execute (setup game):
+  let game = vimcastle#game#create()
+  let playerweapon = vimcastle#equippablegen#weapon('Weap.', 'Weapon', 4, 4)
+  let player = vimcastle#character#create({'long': 'Player', 'short': 'You'}, 80)
+    \.setstat('spd', 5)
+    \.equip(playerweapon.invoke())
+  let player.health = 33
+  let game.player = player
+
+Execute (saving to a string):
+  let save = game.save()
+
+Then (save is created):
+  AssertEqual '{''health'': 33}', save
+
+Execute (loading from a string):
+  let loaded = vimcastle#game#create()
+  call loaded.load(save)
+
+Then (game is loaded):
+  AssertEqual loaded.player.health, 33
