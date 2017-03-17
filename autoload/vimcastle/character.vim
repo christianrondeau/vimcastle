@@ -9,6 +9,8 @@ function! vimcastle#character#create(name, health) abort
 	let character.level = 0
 	let character.xp = 0
 	let character.stats = {}
+	let character.save = function('s:save')
+	let character.load = function('s:load')
 	return character
 endfunction
 
@@ -60,6 +62,26 @@ function! s:CharacterClass.pickup(item) dict abort
 	endif
 	call add(self.items, a:item)
 	return self
+endfunction
+
+" }}}
+
+" Save {{{
+
+function! s:save() abort dict
+	let data = {}
+	for key in keys(self)
+		if(type(self[key]) != 2)
+			let data[key] = self[key]
+		endif
+	endfor
+	return data
+endfunction
+
+function! s:load(data) abort dict
+	for key in keys(a:data)
+		let self[key] = a:data[key]
+	endfor
 endfunction
 
 " }}}

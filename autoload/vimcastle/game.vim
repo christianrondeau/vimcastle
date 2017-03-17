@@ -123,14 +123,12 @@ endfunction
 
 function! s:save() abort dict
 	let data = {}
-	let data.health = self.player.health
-	return string(data)
+	let data.player = self.player.save()
+	return data
 endfunction
 
-function! s:load(datastr) abort dict
-	let data = {}
-	execute 'let data = ' . a:datastr
-  let player = vimcastle#character#create('', 100)
-	let player.health = data.health
+function! s:load(data) abort dict
+  let player = vimcastle#character#create('', 0)
+	call player.load(a:data.player)
 	let self.player = player
 endfunction

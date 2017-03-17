@@ -22,6 +22,15 @@ function! s:homedir() abort
 	return expand(s:folder)
 endfunction
 
+function! vimcastle#io#save(gamedata) abort
+	let data = {}
+	execute 'let data = ' . a:datastr
+endfunction
+
+function! vimcastle#io#load() abort
+	return string(data)
+endfunction
+
 " Test methods {{{
 
 function! vimcastle#io#before(path) abort

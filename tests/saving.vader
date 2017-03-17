@@ -11,7 +11,26 @@ Execute (saving to a string):
   let save = game.save()
 
 Then (save is created):
-  AssertEqual '{''health'': 33}', save
+  AssertEqual {
+    \  'player': {
+    \    'basehealth': 80,
+    \    'health': 33,
+    \    'name': 'Player',
+    \    'stats': {'spd': 5},
+    \    'xp': 0,
+    \    'level': 0,
+    \    'equipment': {
+    \      'weapon': {
+    \        'score': 4,
+    \        'slot': 'weapon',
+    \        'name': {'short': 'Weap.', 'long': 'Weapon' },
+    \        'stats': {},
+    \        'dmg': {'min': 4, 'max': 4 }
+    \      }
+    \    }
+    \  }
+    \},
+    \  save
 
 Execute (loading from a string):
   let loaded = vimcastle#game#create()

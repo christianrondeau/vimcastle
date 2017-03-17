@@ -1,0 +1,28 @@
+Before (test vimcastle folder):
+  call vimcastle#io#before(expand('~/.vimcastle_tests'))
+
+After (restore vimcastle folder):
+  call vimcastle#io#after()
+
+Execute (setup files):
+  let savefile = vimcastle#io#path('save.json')
+  if(filereadable(savefile))
+    call delete(savefile)
+  endif
+
+Execute (given a game):
+  let game = vimcastle#game#create()
+  let game.player = vimcastle#character#create('Player', 80)
+
+Execute (save game):
+  let save = game.save()
+
+Then (game is saved):
+  AssertEqual '{''health'': 33}', save
+
+Execute (load game):
+  let loaded = vimcastle#game#create()
+  call loaded.load(save)
+
+Then (game is loaded):
+  AssertEqual loaded.player.name, 'Player'
