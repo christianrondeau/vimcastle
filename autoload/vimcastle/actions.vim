@@ -2,6 +2,8 @@ let s:ActionsClass = {}
 
 function! vimcastle#actions#create() abort
 	let instance = copy(s:ActionsClass)
+	let instance.save = function('s:save')
+	let instance.load = function('s:load')
 	call instance.clear()
 	return instance
 endfunction
@@ -62,3 +64,15 @@ function! s:ActionsClass.keys() dict abort
 	endfor
 	return keys
 endfunction
+
+" Save {{{
+
+function! s:save() abort dict
+	return vimcastle#utils#copydatatodict(self)
+endfunction
+
+function! s:load(data) abort dict
+	call vimcastle#utils#copydatafromdict(self, a:data)
+endfunction
+
+" }}}

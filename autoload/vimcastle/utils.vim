@@ -37,28 +37,31 @@ function! vimcastle#utils#oneof(list) abort
 	return a:list[vimcastle#utils#rnd(len(a:list))]
 endfunction
 
-function! vimcastle#utils#validate(val, expectedtype) abort
-	let actualtype = type(a:val)
-	if(actualtype != a:expectedtype)
-		throw 'Expected an argument of type ' . a:expectedtype . ', received ' . actualtype
-	endif
-endfunction
-
 " Saving {{{
 
-function! vimcastle#utils#copydatatodict(obj) abort
+function! vimcastle#utils#copydatatodict(obj, ...) abort
+	let except = []
+	if(a:0 >= 1)
+		let except = a:1
+	endif
 	let data = {}
 	for key in keys(a:obj)
-		if(type(a:obj[key]) != 2)
+		if(index(except, key) == -1 && type(a:obj[key]) != 2)
 			let data[key] = a:obj[key]
 		endif
 	endfor
 	return data
 endfunction
 
-function! vimcastle#utils#copydatafromdict(obj, data) abort
+function! vimcastle#utils#copydatafromdict(obj, data, ...) abort
+	let except = []
+	if(a:0 >= 1)
+		let except = a:1
+	endif
 	for key in keys(a:data)
-		let a:obj[key] = a:data[key]
+		if(index(except, key == -1))
+			let a:obj[key] = a:data[key]
+		endif
 	endfor
 endfunction
 

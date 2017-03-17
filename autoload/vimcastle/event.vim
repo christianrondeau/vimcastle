@@ -12,6 +12,8 @@ function! vimcastle#event#create() abort
 	let instance.action_pickup = function('s:action_pickup')
 	let instance.action_equip = function('s:action_equip')
 	let instance.actions = vimcastle#actions#create()
+	let instance.save = function('s:save')
+	let instance.load = function('s:load')
 	let instance.log = []
 	return instance
 endfunction
@@ -61,3 +63,29 @@ function! s:action_equip(game) abort dict
 	call self.action_explore(a:game)
 endfunction
 
+" Save {{{
+
+function! s:save() abort dict
+	let data = vimcastle#utils#copydatatodict(self, ['actions, enemy'])
+	let data.actions = self.actions.save()
+	if(exists('self.enemy'))
+		let data.enemy = self.enemy.save()
+	endif
+	return data
+endfunction
+
+function! s:load(data) abort dict
+	call vimcastle#utils#copydatafromdict(self, a:data, ['actions, enemy'])
+
+	let actions = vimcastle#actions#create()
+	call actions.load(a:data.actions)
+	let self.actions = actions
+
+	if(exists('a:data.enemy'))
+		let enemy = vimcastle#enemy#create()
+		call enemy.load(a:data.enemy)
+		let self.enemy = enemy
+	endif
+endfunction
+
+" }}}

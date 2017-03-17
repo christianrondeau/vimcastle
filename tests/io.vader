@@ -12,6 +12,8 @@ Execute (setup files):
 
 Execute (given a game):
   let game = vimcastle#game#create()
+  let game.screen = 'explore'
+  let game.event = vimcastle#event#create()
   let game.player = vimcastle#character#create('Player', 80)
 
 Execute (save game):

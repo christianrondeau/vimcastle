@@ -6,35 +6,54 @@ Execute (setup game):
     \.equip(playerweapon.invoke())
   let player.health = 33
   let game.player = player
+  let event = vimcastle#eventgen#create('name').text('event text').explore('action text')
+  let game.event = event.invoke(game)
+  let game.screen = 'explore'
 
 Execute (saving to a dict):
   let save = game.save()
 
 Then (save is created):
+  AssertEqual ['event', 'player', 'screen'], sort(keys(save))
+  AssertEqual 'explore', save.screen
   AssertEqual {
-    \  'player': {
-    \    'basehealth': 80,
-    \    'health': 33,
-    \    'name': 'Player',
-    \    'stats': {'spd': 5},
-    \    'xp': 0,
-    \    'level': 0,
-    \    'equipment': {
-    \      'weapon': {
-    \        'score': 4,
-    \        'slot': 'weapon',
-    \        'name': {'short': 'Weap.', 'long': 'Weapon' },
-    \        'stats': {},
-    \        'dmg': {'min': 4, 'max': 4 }
-    \      }
-    \    }
-    \  }
-    \},
-    \  save
+  \  'name': 'Player',
+  \  'basehealth': 80,
+  \  'health': 33,
+  \  'xp': 0,
+  \  'level': 0,
+  \  'stats': {'spd': 5},
+  \  'equipment': {
+  \    'weapon': {
+  \      'score': 4,
+  \      'slot': 'weapon',
+  \      'name': {'short': 'Weap.', 'long': 'Weapon' },
+  \      'stats': {},
+  \      'dmg': {'min': 4, 'max': 4 }
+  \    }
+  \  }
+  \}, save.player
+  AssertEqual {
+  \  'log': ['event text'],
+  \  'actions': {
+  \    'default': 0,
+  \    'bindings': [
+  \      {'label': 'action text', 'name': 'explore', 'key': 'c'},
+  \      {'label': 'Inventory', 'name': 'inventory', 'key': 'i'},
+  \      {'label': 'Character Sheet', 'name': 'character', 'key': 's'}
+  \    ]
+  \  }
+  \}, save.event
 
 Execute (loading from a dict):
   let loaded = vimcastle#game#create()
   call loaded.load(save)
 
 Then (game is loaded):
+  AssertEqual loaded.screen, 'explore'
+  Assert type(loaded.enter) == 2, 'game should have functions'
   AssertEqual loaded.player.health, 33
+  Assert type(loaded.player.getstat) == 2, 'player should have functions'
+  AssertEqual loaded.event.log, ['event text']
+  Assert type(loaded.event.enter) == 2, 'event should have functions'
+  Assert type(loaded.event.actions.keyToName) == 2, 'event actions should have functions'
