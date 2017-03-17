@@ -7,7 +7,7 @@ Execute (setup game):
   let player.health = 33
   let game.player = player
 
-Execute (saving to a string):
+Execute (saving to a dict):
   let save = game.save()
 
 Then (save is created):
@@ -32,7 +32,7 @@ Then (save is created):
     \},
     \  save
 
-Execute (loading from a string):
+Execute (loading from a dict):
   let loaded = vimcastle#game#create()
   call loaded.load(save)
 

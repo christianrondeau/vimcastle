@@ -69,19 +69,11 @@ endfunction
 " Save {{{
 
 function! s:save() abort dict
-	let data = {}
-	for key in keys(self)
-		if(type(self[key]) != 2)
-			let data[key] = self[key]
-		endif
-	endfor
-	return data
+	return vimcastle#utils#copydatatodict(self)
 endfunction
 
 function! s:load(data) abort dict
-	for key in keys(a:data)
-		let self[key] = a:data[key]
-	endfor
+	call vimcastle#utils#copydatafromdict(self, a:data)
 endfunction
 
 " }}}

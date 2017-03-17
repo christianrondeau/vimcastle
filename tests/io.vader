@@ -17,9 +17,6 @@ Execute (given a game):
 Execute (save game):
   let save = game.save()
 
-Then (game is saved):
-  AssertEqual '{''health'': 33}', save
-
 Execute (load game):
   let loaded = vimcastle#game#create()
   call loaded.load(save)

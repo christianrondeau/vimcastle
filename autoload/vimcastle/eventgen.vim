@@ -40,7 +40,6 @@ function! s:EventgenClass.enterscene(text, scene) dict abort
 endfunction
 
 function! s:EventgenClass.before(fn) dict abort
-	call vimcastle#utils#validate(a:fn, 2)
 	let self.before_fn = a:fn
 	return self
 endfunction
