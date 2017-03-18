@@ -14,7 +14,6 @@ Then (has actions, log and xp):
   AssertEqual [{'label': 'Continue', 'name': 'continue', 'key': 'c'}], game.actions.bindings
   AssertEqual 9, player.xp
   AssertEqual 1, player.level
-  Assert !has_key(game, 'enemy')
 
 Execute (continue):
   let game.scene = {}
@@ -23,6 +22,7 @@ Execute (continue):
   call game.action('c')
 
 Then (next action is invoked):
+  Assert !has_key(game, 'enemy'), 'enemy removed'
   AssertEqual 'explore', game.screen
 
 Execute (over level setup):
@@ -41,4 +41,5 @@ Execute (level up):
   call game.action('u')
 
 Then (level up screen):
+  Assert !has_key(game, 'enemy'), 'enemy removed'
   AssertEqual 'levelup', game.screen
