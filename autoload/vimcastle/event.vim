@@ -23,9 +23,7 @@ function! s:enter(game) abort dict
 	let a:game.log = self.log
 endfunction
 
-function! s:action(name, game) abort dict
-	execute 'call self.action_' . a:name . '(a:game)'
-endfunction
+" Actions {{{
 
 function! s:action_explore(game) abort dict
 	let a:game.event = a:game.scene.events.rnd().invoke(a:game)
@@ -63,6 +61,8 @@ function! s:action_equip(game) abort dict
 	call self.action_explore(a:game)
 endfunction
 
+" }}}
+
 " Save {{{
 
 function! s:save() abort dict
@@ -82,7 +82,7 @@ function! s:load(data) abort dict
 	let self.actions = actions
 
 	if(exists('a:data.enemy'))
-		let enemy = vimcastle#enemy#create()
+		let enemy = vimcastle#character#create('', 0)
 		call enemy.load(a:data.enemy)
 		let self.enemy = enemy
 	endif
