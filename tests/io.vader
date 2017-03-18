@@ -16,8 +16,9 @@ Execute (no game):
 Execute (given a game):
   let game = vimcastle#game#create()
   let game.screen = 'explore'
-  let game.event = vimcastle#event#create()
   let game.player = vimcastle#character#create('Player', 80)
+  let game.scene = vimcastle#scene#load('main', 'plains')
+  let game.event = vimcastle#event#create()
 
 Execute (save game):
   call vimcastle#io#save(game.save())

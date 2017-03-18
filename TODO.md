@@ -15,6 +15,12 @@
 
 ## Refactors
 
+* [ ] Enter should not be used when loading (e.g. enemy hits first)
+* [ ] Save file is not a json
+* [ ] Handle corrupt save game
+* [ ] Continue should show scene/lvl/state
+* [ ] New game should confirm game will be deleted
+* [ ] Disable all io when g:vader_file
 * [ ] Do not attempt to save high scores if io is disabled
 * [ ] High scores should be read/write by io
 * [ ] High scores creation should use a highscores.vim file
@@ -31,6 +37,7 @@
 
 ## Backlog
 
+* [ ] Machine-encrypt/hash save game?
 * [ ] Auto combat (skip)
 * [ ] Show dmg, hit %, flee% in fight
 * [ ] Custom text per weapon (slash, crush, aim and fire...)

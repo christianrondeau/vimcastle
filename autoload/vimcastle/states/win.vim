@@ -11,7 +11,6 @@ function! s:enter(game) abort dict
 
 	let xp = a:game.enemy.xp
 	let a:game.player.xp += xp
-	unlet a:game.enemy
 
 	let [expectedlevel, ignored] = vimcastle#levelling#forxp(a:game.player.xp)
 
@@ -26,11 +25,13 @@ function! s:enter(game) abort dict
 endfunction
 
 function! s:action_levelup(game) abort
+	unlet a:game.enemy
 	call a:game.enter('levelup')
 	return 1
 endfunction
 
 function! s:action_continue(game) abort
+	unlet a:game.enemy
 	call a:game.enter('explore')
 	let a:game.event = a:game.scene.events.rnd().invoke(a:game)
 	call a:game.event.enter(a:game)

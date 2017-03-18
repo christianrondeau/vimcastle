@@ -27,6 +27,12 @@ function! vimcastle#io#hassave() abort
 	return filereadable(vimcastle#io#path(s:savefile))
 endfunction
 
+function! vimcastle#io#clearsave() abort
+  if(vimcastle#io#hassave())
+		return delete(vimcastle#io#path(s:savefile))
+  endif
+endfunction
+
 function! vimcastle#io#save(data) abort
 	call writefile([string(a:data)], vimcastle#io#path(s:savefile))
 endfunction

@@ -26,6 +26,9 @@ function! s:RepositoryClass.additem(probability, item, once) dict abort
 endfunction
 
 function! s:RepositoryClass.rnd() dict abort
+	if(!len(self.items))
+		throw 'No items in the repository'
+	endif
 	let roll = vimcastle#utils#rnd(self.totalprobabilities)
 	let i = 0
 	let probability = 0

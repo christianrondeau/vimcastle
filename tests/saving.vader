@@ -6,6 +6,7 @@ Execute (setup game):
     \.equip(playerweapon.invoke())
   let player.health = 33
   let game.player = player
+  let game.scene = vimcastle#scene#load('main', 'plains')
   let event = vimcastle#eventgen#create('name').text('event text').explore('action text')
   let game.event = event.invoke(game)
   let game.screen = 'explore'
@@ -14,8 +15,12 @@ Execute (saving to a dict):
   let save = game.save()
 
 Then (save is created):
-  AssertEqual ['event', 'player', 'screen'], sort(keys(save))
+  AssertEqual ['event', 'player', 'scene', 'screen'], sort(keys(save))
   AssertEqual 'explore', save.screen
+  AssertEqual {
+  \  'story': 'main',
+  \  'name': 'plains',
+  \}, save.scene
   AssertEqual {
   \  'name': 'Player',
   \  'basehealth': 80,

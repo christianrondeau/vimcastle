@@ -10,11 +10,9 @@ function! s:enter(game) abort dict
 		throw 'An event is required'
 	endif
 	return a:game.event.enter(a:game)
-	call vimcastle#io#save(a:game.save())
 endfunction
 
 function! s:action(name, game) abort
 	call a:game.event.action(a:name, a:game)
-	call vimcastle#io#save(a:game.save())
 endfunction
 

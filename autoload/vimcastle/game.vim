@@ -1,7 +1,9 @@
 function! vimcastle#game#create() abort
 	let game = {}
+	let game.autosave = !exists('g:vader_file')
 	let game.enter = function('s:enter')
 	let game.action = function('s:action')
+	let game.callstateaction = function('s:callstateaction')
 	let game.reset = function('s:reset')
 	let game.clearlog = function('s:clearlog')
 	let game.addlogrnd = function('s:addlogrnd')
@@ -34,17 +36,26 @@ function! s:action(key) dict abort
 	call self.actions.clear()
 	call self.clearlog()
 
-	if(exists('self.state.action_' . name))
-		execute 'call self.state.action_' . name . '(self)'
-		return 1
-	endif
-
-	if(exists('self.state.action'))
-		execute 'call self.state.action(name, self)'
+	if(self.callstateaction(name))
+		if(self.autosave && exists('self.scene') && exists('self.event.actions'))
+			call vimcastle#io#save(self.save())
+		endif
 		return 1
 	endif
 
 	throw 'No action_' . name . ' nor action on state ' . self.screen . ' but bound to ' . a:key
+endfunction
+
+function! s:callstateaction(name) dict abort
+	if(exists('self.state.action_' . a:name))
+		execute 'call self.state.action_' . a:name . '(self)'
+		return 1
+	endif
+
+	if(exists('self.state.action'))
+		execute 'call self.state.action(a:name, self)'
+		return 1
+	endif
 endfunction
 
 function! s:reset() dict abort
@@ -121,19 +132,31 @@ function! s:msgevent(text, event) dict abort
 	return text
 endfunction
 
+" Saving {{{
+
 function! s:save() abort dict
 	let data = {}
 	let data.screen = self.screen
+	let data.scene = self.scene.save()
+
 	if(exists('self.player'))
 		let data.player = self.player.save()
 	endif
+
 	if(exists('self.event'))
 		let data.event = self.event.save()
 	endif
+
+	if(exists('self.enemy'))
+		let data.enemy = self.enemy.save()
+	endif
+
 	return data
 endfunction
 
 function! s:load(data) abort dict
+	let self.scene = vimcastle#scene#load(a:data.scene.story, a:data.scene.name)
+
 	if(exists('a:data.player'))
 		let player = vimcastle#character#create('', 0)
 		call player.load(a:data.player)
@@ -146,5 +169,13 @@ function! s:load(data) abort dict
 		let self.event = event
 	endif
 
+	if(exists('a:data.enemy'))
+		let enemy = vimcastle#character#create('', 0)
+		call enemy.load(a:data.enemy)
+		let self.enemy = enemy
+	endif
+
 	call self.enter(a:data.screen)
 endfunction
+
+" }}}

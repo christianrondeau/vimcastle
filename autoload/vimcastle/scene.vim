@@ -1,7 +1,6 @@
-let s:SceneClass = {}
-
 function! vimcastle#scene#create() abort
-	let scene = copy(s:SceneClass)
+	let scene = {}
+	let scene.save = function('s:save')
 	let scene.events = vimcastle#repository#create()
 	return scene
 endfunction
@@ -23,3 +22,14 @@ function! vimcastle#scene#load(story, name) abort
 	endif
 	return scene
 endfunction
+
+" Saving {{{
+
+function! s:save() abort dict
+	return {
+	\  'story': self.story,
+	\  'name': self.name,
+	\}
+endfunction
+
+" }}}

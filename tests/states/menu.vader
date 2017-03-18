@@ -1,4 +1,11 @@
+Before (test vimcastle folder):
+  call vimcastle#io#before(expand('~/.vimcastle_tests'))
+
+After (restore vimcastle folder):
+  call vimcastle#io#after()
+
 Execute (setup):
+  call vimcastle#io#clearsave()
   let game = vimcastle#game#create()
   call game.enter('menu')
 
@@ -23,3 +30,16 @@ Execute (high scores):
 
 Then (enters high scores):
   AssertEqual 'highscores', game.screen
+
+Execute (saved game):
+  call vimcastle#io#save(game.save())
+  call game.enter('menu')
+
+Then (has actions):
+  AssertEqual [
+  \  {'label': 'New Game', 'name': 'newgame', 'key': 'n'},
+  \  {'label': 'Continue', 'name': 'continue', 'key': 'c'},
+  \  {'label': 'High Scores', 'name': 'highscores', 'key': 's'},
+  \  {'label': 'Help', 'name': '', 'key': 'h'},
+  \  {'label': 'Quit', 'name': '', 'key': 'q'}
+  \], game.actions.bindings

@@ -23,6 +23,10 @@ function! s:enter(game) abort dict
 	let a:game.log = self.log
 endfunction
 
+function! s:action(name, game) abort dict
+		execute 'call self.action_' . a:name . '(a:game)'
+endfunction
+
 " Actions {{{
 
 function! s:action_explore(game) abort dict
@@ -67,10 +71,13 @@ endfunction
 
 function! s:save() abort dict
 	let data = vimcastle#utils#copydatatodict(self, ['actions, enemy'])
+
 	let data.actions = self.actions.save()
+
 	if(exists('self.enemy'))
 		let data.enemy = self.enemy.save()
 	endif
+
 	return data
 endfunction
 

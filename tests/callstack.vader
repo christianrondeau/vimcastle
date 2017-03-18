@@ -19,7 +19,7 @@ Then (call stack is extracted):
 
 Execute (with script functions):
   call callstack#init()
-  function s:private() abort
+  function! s:private() abort
     throw 'test'
   endfunction
   try
@@ -38,7 +38,7 @@ Then (script name is extracted):
 Execute (with script dict):
   call callstack#init()
   let s:d = {}
-  function s:d.private() abort
+  function! s:d.private() abort
     throw 'test'
   endfunction
   try
