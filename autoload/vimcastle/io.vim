@@ -1,5 +1,6 @@
 let s:originalfolder =  '~/.vimcastle'
 let s:folder = s:originalfolder
+let s:savefile = 'save.json'
 
 function! vimcastle#io#setup() abort
 	let homedir = s:homedir()
@@ -22,13 +23,19 @@ function! s:homedir() abort
 	return expand(s:folder)
 endfunction
 
-function! vimcastle#io#save(gamedata) abort
-	let data = {}
-	execute 'let data = ' . a:datastr
+function! vimcastle#io#hassave() abort
+	return filereadable(vimcastle#io#path(s:savefile))
+endfunction
+
+function! vimcastle#io#save(data) abort
+	call writefile([string(a:data)], vimcastle#io#path(s:savefile))
 endfunction
 
 function! vimcastle#io#load() abort
-	return string(data)
+	let str = readfile(vimcastle#io#path(s:savefile))
+	let data = {}
+	execute 'let data = ' . str[0]
+	return data
 endfunction
 
 " Test methods {{{

@@ -10,6 +10,9 @@ Execute (setup files):
     call delete(savefile)
   endif
 
+Execute (no game):
+  Assert !vimcastle#io#hassave(), 'There should be no save game'
+
 Execute (given a game):
   let game = vimcastle#game#create()
   let game.screen = 'explore'
@@ -17,11 +20,12 @@ Execute (given a game):
   let game.player = vimcastle#character#create('Player', 80)
 
 Execute (save game):
-  let save = game.save()
+  call vimcastle#io#save(game.save())
 
 Execute (load game):
+  Assert vimcastle#io#hassave(), 'There should be a save game'
   let loaded = vimcastle#game#create()
-  call loaded.load(save)
+  call loaded.load(vimcastle#io#load())
 
 Then (game is loaded):
   AssertEqual loaded.player.name, 'Player'

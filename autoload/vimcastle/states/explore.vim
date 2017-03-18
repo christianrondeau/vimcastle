@@ -6,6 +6,9 @@ function! vimcastle#states#explore#create() abort
 endfunction
 
 function! s:enter(game) abort dict
+	if(!exists('a:game.event'))
+		throw 'An event is required'
+	endif
 	return a:game.event.enter(a:game)
 endfunction
 

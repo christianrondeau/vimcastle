@@ -124,7 +124,9 @@ endfunction
 function! s:save() abort dict
 	let data = {}
 	let data.screen = self.screen
-	let data.player = self.player.save()
+	if(exists('self.player'))
+		let data.player = self.player.save()
+	endif
 	if(exists('self.event'))
 		let data.event = self.event.save()
 	endif
@@ -132,11 +134,13 @@ function! s:save() abort dict
 endfunction
 
 function! s:load(data) abort dict
-  let player = vimcastle#character#create('', 0)
-	call player.load(a:data.player)
-	let self.player = player
+	if(exists('a:data.player'))
+		let player = vimcastle#character#create('', 0)
+		call player.load(a:data.player)
+		let self.player = player
+	endif
 
-	if(exists('data.event'))
+	if(exists('a:data.event'))
 		let event = vimcastle#event#create()
 		call event.load(a:data.event)
 		let self.event = event

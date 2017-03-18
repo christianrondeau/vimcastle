@@ -15,6 +15,8 @@
 
 ## Refactors
 
+* [ ] High scores should be read/write by io
+* [ ] High scores creation should use a highscores.vim file
 * [ ] Auto shorten (vowels, cut first word, etc)
 * [ ] Remove line/col indicators in bash-invoked vim
 * [ ] Confusion between the game.screen that represents which state, and screens which are ui renderers
