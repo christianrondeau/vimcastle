@@ -1,5 +1,6 @@
 function! vimcastle#states#explore#create() abort
 	let instance = {}
+	let instance.cansave = 1
 	let instance.enter = function('s:enter')
 	let instance.action = function('s:action')
 	return instance

@@ -1,6 +1,7 @@
 let s:originalfolder =  '~/.vimcastle'
 let s:folder = s:originalfolder
-let s:savefile = 'save.json'
+let s:savefile = 'save.dat'
+let s:enabled = 0
 
 function! vimcastle#io#setup() abort
 	let homedir = s:homedir()
@@ -8,11 +9,12 @@ function! vimcastle#io#setup() abort
 		if(!isdirectory(homedir))
 			call mkdir(homedir, '')
 		endif
-		return 1
+		let s:enabled = 1
 	catch
 		echom 'Cannot access "' . homedir . '": ' . v:exception
-		return 0
+		let s:enabled = 0
 	endtry
+	return s:enabled
 endfunction
 
 function! vimcastle#io#path(fname) abort
@@ -24,20 +26,36 @@ function! s:homedir() abort
 endfunction
 
 function! vimcastle#io#hassave() abort
+	if(!s:enabled)
+		return 0
+	endif
+
 	return filereadable(vimcastle#io#path(s:savefile))
 endfunction
 
 function! vimcastle#io#clearsave() abort
+	if(!s:enabled)
+		return 0
+	endif
+
   if(vimcastle#io#hassave())
 		return delete(vimcastle#io#path(s:savefile))
   endif
 endfunction
 
 function! vimcastle#io#save(data) abort
+	if(!s:enabled)
+		return 0
+	endif
+
 	call writefile([string(a:data)], vimcastle#io#path(s:savefile))
 endfunction
 
 function! vimcastle#io#load() abort
+	if(!s:enabled)
+		throw 'io is disabled'
+	endif
+
 	let str = readfile(vimcastle#io#path(s:savefile))
 	let data = {}
 	execute 'let data = ' . str[0]

@@ -37,7 +37,7 @@ function! s:action(key) dict abort
 	call self.clearlog()
 
 	if(self.callstateaction(name))
-		if(self.autosave && exists('self.scene') && exists('self.event.actions'))
+		if(self.autosave && self.state.cansave && exists('self.scene') && exists('self.event.actions'))
 			call vimcastle#io#save(self.save())
 		endif
 		return 1

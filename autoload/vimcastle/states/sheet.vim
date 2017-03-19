@@ -1,5 +1,6 @@
 function! vimcastle#states#sheet#create() abort
 	let instance = {}
+	let instance.cansave = 1
 	let instance.enter = function('s:enter')
 	let instance.action_inventory = function('s:action_inventory')
 	let instance.action_back = function('s:action_back')

@@ -1,5 +1,6 @@
 function! vimcastle#states#levelup#create() abort
 	let instance = {}
+	let instance.cansave = 1
 	let instance.enter = function('s:enter')
 	let instance.action_incr_con = function('s:action_incr_con')
 	let instance.action_incr_str = function('s:action_incr_str')

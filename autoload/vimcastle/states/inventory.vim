@@ -1,5 +1,6 @@
 function! vimcastle#states#inventory#create() abort
 	let instance = {}
+	let instance.cansave = 1
 	let instance.enter = function('s:enter')
 	let instance.action_use = function('s:action_use')
 	let instance.action_character = function('s:action_character')

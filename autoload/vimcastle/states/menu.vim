@@ -1,5 +1,6 @@
 function! vimcastle#states#menu#create() abort
 	let instance = {}
+	let instance.cansave = 0
 	let instance.enter = function('s:enter')
 	let instance.action_newgame = function('s:action_newgame')
 	let instance.action_continue = function('s:action_continue')
@@ -27,7 +28,7 @@ function! s:enter(game) abort dict
 			call a:game.actions.add('continue', 'c', 'Continue')
 		endif
 	else
-		"TODO: Actually avoid saving every turn
+		let a:game.autosave = 0
 		call a:game.addlog('ERROR: Cannot access "' . vimcastle#io#path('') . '". Your game will not be saved.')
 	endif
 
@@ -46,7 +47,6 @@ endfunction
 
 function! s:action_continue(game) abort
 	call a:game.reset()
-	"TODO: Remove this an load the scene
 	let a:game.scene = vimcastle#scene#loadintro('main')
 	call a:game.load(vimcastle#io#load())
 endfunction

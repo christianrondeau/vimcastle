@@ -5,7 +5,7 @@ After (restore vimcastle folder):
   call vimcastle#io#after()
 
 Execute (setup files):
-  let savefile = vimcastle#io#path('save.json')
+  let savefile = vimcastle#io#path('save.dat')
   if(filereadable(savefile))
     call delete(savefile)
   endif
