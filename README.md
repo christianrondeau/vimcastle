@@ -10,7 +10,11 @@ Discover and conquer the lands, dongeons and mysteries of Vim Castle!
 
 ## Installation
 
-If you can't install a Vim plugin yet, you are not ready for Vim Castle!
+Use your favorite plugin manager.
+
+Using [vim-plug](https://github.com/junegunn/vim-plug):
+
+    Plug 'christianrondeau/vimcastle'
 
 ## Usage
 
@@ -24,6 +28,7 @@ If you can't install a Vim plugin yet, you are not ready for Vim Castle!
 * Find weapons, armor, items along your way
 * Special events that may increase your health, your strength
 * Fight, use items, gain XP and level up
+* Roguelike, but keeps your sessions when you quit
 * High scores
 
 ## Contributions
