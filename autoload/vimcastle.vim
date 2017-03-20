@@ -26,7 +26,7 @@ function! vimcastle#start(dedicated) abort
 		execute 'nnoremap <silent> <buffer> q :call vimcastle#quit(' . a:dedicated . ')<CR>'
 		execute 'nnoremap <silent> <buffer> h :call vimcastle#help()<CR>'
 	catch
-		throw callstack#rethrow(v:exception, v:throwpoint)
+		call s:handleerr(v:exception, v:throwpoint)
 	endtry
 endfunction
 
@@ -36,7 +36,7 @@ function! vimcastle#action(key) abort
 			call vimcastle#ui#draw(s:game)
 		endif
 	catch
-		throw callstack#rethrow(v:exception, v:throwpoint)
+		call s:handleerr(v:exception, v:throwpoint)
 	endtry
 endfunction
 
@@ -60,3 +60,12 @@ function! vimcastle#quit(dedicated) abort
 	call vimcastle#ui#quit(a:dedicated)
 endfunction
 
+function! s:handleerr(exception, throwpoint) abort
+	let callstack = callstack#parse(a:throwpoint)
+	call vimcastle#io#savecrashlog(s:game, a:exception, callstack)
+	echom 'ERR: ' . a:exception
+	for line in callstack
+		echom '  ' . line
+	endfor
+	throw a:exception
+endfunction

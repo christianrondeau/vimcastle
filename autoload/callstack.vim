@@ -4,28 +4,24 @@ function! callstack#init() abort
 	let s:scriptnames = s:getscriptnames()
 endfunction
 
-function! callstack#rethrow(exception, throwpoint) abort
-	echom 'ERR: ' . a:exception
-	for line in callstack#parse(a:exception, a:throwpoint)
-		echom '  ' . line
-	endfor
-	return 'ERR: ' . a:exception
-endfunction
-
-function! callstack#parse(exception, throwpoint) abort
-	let originalstack = split(a:throwpoint, '\.\.')
-	if(!has('patch-7.4.1685'))
-		return originalstack
-	endif
-	let result = []
-	for originalline in originalstack
-		if(s:tryparsesnr(result, originalline))
-		elseif(s:tryparsedictfunc(result, originalline))
-		else
-			call add(result, originalline)
+function! callstack#parse(throwpoint) abort
+	try
+		let originalstack = split(a:throwpoint, '\.\.')
+		if(!has('patch-7.4.1685'))
+			return originalstack
 		endif
-	endfor
-	return result
+		let result = []
+		for originalline in originalstack
+			if(s:tryparsesnr(result, originalline))
+			elseif(s:tryparsedictfunc(result, originalline))
+			else
+				call add(result, originalline)
+			endif
+		endfor
+		return result
+	catch
+		return ['could not parse callstack: ' . v:exception, a:throwpoint]
+	endtry
 endfunction
 
 function! s:getscriptnames()

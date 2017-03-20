@@ -8,7 +8,7 @@ Execute (simple stack trace):
     throw 'error'
   catch
     Log 'Original: ' . v:exception . ' in ' . v:throwpoint
-    let result = callstack#parse(v:exception, v:throwpoint)
+    let result = callstack#parse(v:throwpoint)
   endtry
 
 Then (call stack is extracted):
@@ -26,7 +26,7 @@ Execute (with script functions):
     call s:private()
   catch
     Log 'Original: ' . v:exception . ' in ' . v:throwpoint
-    let result = callstack#parse(v:exception, v:throwpoint)
+    let result = callstack#parse(v:throwpoint)
   endtry
 
 Then (script name is extracted):
@@ -45,7 +45,7 @@ Execute (with script dict):
     call s:d.private()
   catch
     Log 'Original: ' . v:exception . ' in ' . v:throwpoint
-    let result = callstack#parse(v:exception, v:throwpoint)
+    let result = callstack#parse(v:throwpoint)
   endtry
 
 Then (call stack is extracted):

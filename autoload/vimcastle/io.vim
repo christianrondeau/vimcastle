@@ -2,6 +2,7 @@ let s:originalfolder =  '~/.vimcastle'
 let s:folder = s:originalfolder
 let s:savefile = 'save.dat'
 let s:configfile = 'config.vim'
+let s:crashfile = 'crash.log'
 let s:enabled = 0
 
 function! vimcastle#io#setup() abort
@@ -68,6 +69,20 @@ function! vimcastle#io#load() abort
 	let data = {}
 	execute 'let data = ' . str[0]
 	return data
+endfunction
+
+function! vimcastle#io#savecrashlog(game, exception, callstack)
+	try
+		let crashfile = vimcastle#io#path(s:crashfile)
+		let crashdata = []
+		call add(crashdata, 'Error: ' . a:exception)
+		call add(crashdata, 'Game: ' . string(a:game.save()))
+		call add(crashdata, 'Callstack: ')
+		let crashdata += a:callstack
+		call writefile(crashdata, crashfile)
+	catch
+		echom 'Could not save crash log: ' . v:exception
+	endtry
 endfunction
 
 " Test methods {{{
