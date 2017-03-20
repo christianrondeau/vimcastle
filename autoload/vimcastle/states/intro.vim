@@ -7,7 +7,11 @@ function! vimcastle#states#intro#create() abort
 endfunction
 
 function! s:enter(game) abort dict
-	call a:game.actions.addDefault()
+	if(exists('g:vimcastle_skipintro') && g:vimcastle_skipintro == 1)
+		return a:game.enter('menu')
+	else
+		call a:game.actions.addDefault()
+	endif
 endfunction
 
 function! s:action_default(game) abort dict

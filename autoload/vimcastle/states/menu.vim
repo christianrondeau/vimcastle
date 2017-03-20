@@ -23,13 +23,8 @@ function! s:enter(game) abort dict
 	
 	call a:game.actions.add('newgame', 'n', 'New Game')
 
-	if(vimcastle#io#setup())
-		if(vimcastle#io#hassave())
-			call a:game.actions.add('continue', 'c', 'Continue')
-		endif
-	else
-		let a:game.autosave = 0
-		call a:game.addlog('ERROR: Cannot access "' . vimcastle#io#path('') . '". Your game will not be saved.')
+	if(vimcastle#io#hassave())
+		call a:game.actions.add('continue', 'c', 'Continue')
 	endif
 
 	call a:game.actions

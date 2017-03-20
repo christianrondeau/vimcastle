@@ -1,6 +1,7 @@
 let s:originalfolder =  '~/.vimcastle'
 let s:folder = s:originalfolder
 let s:savefile = 'save.dat'
+let s:configfile = 'config.vim'
 let s:enabled = 0
 
 function! vimcastle#io#setup() abort
@@ -23,6 +24,13 @@ endfunction
 
 function! s:homedir() abort
 	return expand(s:folder)
+endfunction
+
+function! vimcastle#io#config() abort
+	let configfile = vimcastle#io#path(s:configfile)
+	if(filereadable(configfile))
+		execute 'source ' . configfile
+	endif
 endfunction
 
 function! vimcastle#io#hassave() abort

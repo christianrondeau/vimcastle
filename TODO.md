@@ -15,9 +15,6 @@
 
 ## Refactors
 
-* [ ] If the home folder exists and there is a config.vim file, run it
-* [ ] Enter should not be used when loading (e.g. enemy hits first)
-* [ ] Save file is not a json
 * [ ] Handle corrupt save game
 * [ ] Continue should show scene/lvl/state
 * [ ] New game should confirm game will be deleted

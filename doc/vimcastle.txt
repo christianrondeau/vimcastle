@@ -17,7 +17,8 @@ CONTENTS                                                    *vimcastle-contents*
     2. Controls ......................... |vimcastle-controls|
         2.1 Application-wide controls.... |vimcastle-controls-common|
         2.2 Explore Screen Controls ..... |vimcastle-controls-explore|
-    3. About ............................ |vimcastle-about|
+    3. Config .......................... |vimcastle-config|
+    4. About ............................ |vimcastle-about|
 
 --------------------------------------------------------------------------------
 
@@ -62,6 +63,22 @@ Anywhere in the application, you can use these keys:
 
   * <i> Shows the inventory
   * <s> Shows the character sheet
+
+
+--------------------------------------------------------------------------------
+
+3. Config                                                   *vimcastle-controls*
+
+You can configure vimcastle by creating a file ~/.vimcastle/config.vim.
+
+This file will be sourced when the game is launched, from inside the game's
+buffer (e.g. if you want to override buffer display settings).
+
+Here is a list of vimcastle settings (note that you could also simply use your
+vimrc file for this):
+
+    " Skips the intro animation
+    let g:vimcastle_skipintro = 1
 
 --------------------------------------------------------------------------------
 

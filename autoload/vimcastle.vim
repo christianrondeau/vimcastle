@@ -5,11 +5,16 @@ function! vimcastle#start(dedicated) abort
 		throw 'Requires at least vim 7.4.849'
 	endif
 
+	if(!vimcastle#io#setup())
+		echom 'WARNING: Could not initialize home folder. Your game will not be saved.'
+	endif
+
 	call callstack#init()
 	try
 		let s:game = vimcastle#game#create()
 		call vimcastle#ui#init(a:dedicated)
 		call vimcastle#mappings#init()
+		call vimcastle#io#config()
 		call s:game.enter('intro')
 		call vimcastle#ui#draw(s:game)
 

@@ -65,12 +65,11 @@ function! s:EventgenClass.invoke(game) dict abort
 	if(exists('self.monsters'))
 		let event.enemy = self.monsters.rnd().invoke()
 	endif
-	" TODO: On event instead
+
 	if(exists('self.items'))
 		let event.item = self.items.rnd()
 	endif
 
-	" TODO: On event instead
 	if(exists('self.equippables'))
 		let event.equippable = self.equippables.rnd().invoke()
 	endif
@@ -91,7 +90,6 @@ function! s:EventgenClass.invoke(game) dict abort
 		call add(event.log, effect_result[1])
 	endif
 
-	" Backup to reload
 	let event.actions = self.createactions(event, a:game)
 
 	return event
