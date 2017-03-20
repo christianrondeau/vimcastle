@@ -13,10 +13,12 @@ endfunction
 function! s:enter(game) abort dict
 	call s:setupactions(a:game)
 
-	if(exists('a:game.enemy.fighting'))
+	if(a:game.enemy.health <= 0)
+		call s:win(a:game)
+	elseif(exists('a:game.event.fighting'))
 		call s:hit_receive(a:game, self)
 	else
-		let a:game.enemy.fighting = 1
+		let a:game.event.fighting = 1
 		if(a:game.player.getstat('spd', 1) >= a:game.enemy.getstat('spd', 1))
 			call a:game.addlogrnd(['You attack first!', 'You have the opportunity!', 'You got the first strike!'])
 		else

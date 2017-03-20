@@ -9,16 +9,16 @@ Execute (create event):
     \.fight('Fight', monsters)
 
 Execute (event executes):
-  let event = eventgen.invoke(game)
+  let game.event = eventgen.invoke(game)
 
 Then (result):
   AssertEqual [
   \  {'label': 'Fight (level 1)', 'name': 'fight', 'key': 'f'}
-  \], event.actions.bindings
-  AssertEqual ['There is a <Imp> before you!'], event.log
+  \], game.event.actions.bindings
+  AssertEqual ['There is a <Imp> before you!'], game.event.log
 
 Execute (fight):
-  call event.action('fight', game)
+  call game.event.action('fight', game)
 
 Then (change to fight screen):
   AssertEqual 'Imp', game.enemy.name

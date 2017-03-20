@@ -1,5 +1,6 @@
 Execute (setup):
   let game = vimcastle#game#create()
+  let game.event = vimcastle#event#create()
   call game.enter('use')
 
 Then (has actions):

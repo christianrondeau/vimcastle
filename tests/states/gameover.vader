@@ -25,6 +25,7 @@ Then (score is calculated and high score is saved):
   endif
 
 Execute (restart):
+  let g:vimcastle_skipintro = 0
   call game.action('default')
 
 Then (restarts game):

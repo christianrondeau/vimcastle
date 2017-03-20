@@ -1,5 +1,5 @@
 function! vimcastle#effects#none(game, value) abort
-	return [0, 'This has no effect']
+	return [1, 'This has no effect']
 endfunction
 
 function! vimcastle#effects#heal(game, value) abort

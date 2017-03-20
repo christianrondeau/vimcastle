@@ -3,6 +3,7 @@ After (clean random):
 
 Execute (setup):
   let game = vimcastle#game#create()
+  let game.event = vimcastle#event#create()
   let playerweapon = vimcastle#equippablegen#weapon('Weap.', 'Weapon', 4, 4)
   let player = vimcastle#character#create('Player', 100)
     \.setstat('spd', 5)

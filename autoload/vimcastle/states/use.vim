@@ -43,15 +43,16 @@ function! s:use(game, index) abort
 	call a:game.addlog('Use: <' . item.label . '>')
 
 	let effect_value = exists('item.value') ? item.value : 0
-	let effect_result = []
-	execute 'let effect_result = vimcastle#effects#' . item.effect . '(a:game, effect_value)'
-	call a:game.addlog(effect_result[1])
+	let effect_result = 0
+	let effect_msg = ''
+	execute 'let [effect_result, effect_msg] = vimcastle#effects#' . item.effect . '(a:game, effect_value)'
+	call a:game.addlog(effect_msg)
 
-	if(effect_result[0])
+	if(effect_result)
 		call remove(a:game.player.items, a:index - 1)
 	endif
 
-	if(exists('a:game.enemy'))
+	if(effect_result && exists('a:game.enemy'))
 		call a:game.actions.add('back', 'b', 'Return to fight')
 	else
 		call s:generate_menu(a:game)
