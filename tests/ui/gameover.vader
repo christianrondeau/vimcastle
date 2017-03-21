@@ -1,0 +1,45 @@
+Execute (test setup):
+  let screen = { 'width': 30, 'height': 12 }
+  let game = vimcastle#game#create()
+  let game.stats = {
+    \ 'score': 456,
+    \ 'events': 1,
+    \ 'fights': 2,
+    \ 'scenes': 3,
+    \ 'best': 0,
+    \}
+  call game.actions.addDefault()
+
+Execute (draw):
+  call vimcastle#screens#gameover#draw(screen, game)
+
+Expect (gameover screen):
+  
+  
+        G A M E    O V E R
+        
+        Events: 1
+        Fights: 2
+        Scenes: 3
+        Score:  456
+        
+             <restart>    
+  
+
+Execute (new high score):
+  let game.stats.best = 1
+  call vimcastle#screens#gameover#draw(screen, game)
+
+Expect (gameover screen with high score):
+  
+        G A M E    O V E R
+        
+        Events: 1
+        Fights: 2
+        Scenes: 3
+        Score:  456
+        
+        * NEW BEST SCORE *
+        
+             <restart>    
+  

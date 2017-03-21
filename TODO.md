@@ -2,7 +2,6 @@
 
 ## Game
 
-* [ ] Show when new high score
 * [ ] Animations: Fight (hurt), action
 * [ ] Increase probabilities over time
 * [ ] Max inventory / drop items

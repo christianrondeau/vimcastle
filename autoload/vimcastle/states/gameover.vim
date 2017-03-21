@@ -9,7 +9,7 @@ endfunction
 function! s:enter(game) abort
 	let a:game.stats.score = s:computescore(a:game.stats)
 
-	call s:writehighscore(a:game.stats)
+	let besthighscore = s:writehighscore(a:game.stats)
 
 	call a:game.actions.addDefault()
 endfunction
@@ -36,11 +36,13 @@ function! s:writehighscore(stats) abort
 		return
 	endif
 	let highscores = vimcastle#io#loadhighscores()
+	let curhighscore = len(highscores) ? highscores[0] : ''
 	call add(highscores, s:tocsv(a:stats))
 	if(has('patch-7.4.341'))
 		call reverse(sort(highscores, 'N'))
 	endif
 	call vimcastle#io#savehighscores(highscores[0:9])
+	let a:stats.best = highscores[0] !=# curhighscore
 endfunction
 
 function! s:tocsv(stats) abort

@@ -18,6 +18,7 @@ Then (score is calculated and high score is saved):
   AssertEqual 82, game.stats.score
   if(has('patch-7.4.341'))
     AssertEqual ['82,1,2,3', '1,1,1,1'], vimcastle#io#loadhighscores()
+  Assert game.stats.best, 'best score'
   endif
 
 Execute (restart):
