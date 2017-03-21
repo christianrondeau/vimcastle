@@ -17,12 +17,12 @@ function! s:enter(game) abort dict
 endfunction
 
 function! s:loadhighscores() abort
-	let highscoresfile = vimcastle#io#path('highscores.csv')
-	if(!filereadable(highscoresfile))
+	let highscores= vimcastle#io#loadhighscores()
+	if(len(highscores) == 0)
 		return ['-          -          -          -']
 	endif
 	let rows = []
-	for line in readfile(highscoresfile)
+	for line in highscores
 		let row = ''
 		for item in split(line, ',')
 			let col = item

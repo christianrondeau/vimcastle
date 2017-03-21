@@ -5,11 +5,7 @@ After (restore vimcastle folder):
   call vimcastle#io#after()
 
 Execute (setup):
-  let highscoresfile = vimcastle#io#path('highscores.csv')
-  if(filereadable(highscoresfile))
-    call delete(highscoresfile)
-    call writefile(['1,1,1,1'], highscoresfile)
-  endif
+  call vimcastle#io#savehighscores(['1,1,1,1'])
   let game = vimcastle#game#create()
   let game.stats = {
     \ 'events': 1,
@@ -21,7 +17,7 @@ Execute (setup):
 Then (score is calculated and high score is saved):
   AssertEqual 82, game.stats.score
   if(has('patch-7.4.341'))
-    AssertEqual ['82,1,2,3', '1,1,1,1'], readfile(highscoresfile)
+    AssertEqual ['82,1,2,3', '1,1,1,1'], vimcastle#io#loadhighscores()
   endif
 
 Execute (restart):

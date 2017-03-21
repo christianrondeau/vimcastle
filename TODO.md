@@ -15,8 +15,6 @@
 
 * [ ] New game should confirm game will be deleted
 * [ ] Disable all io when g:vader_file
-* [ ] Do not attempt to save high scores if io is disabled
-* [ ] High scores should be read/write by io
 * [ ] High scores creation should use a highscores.vim file
 * [ ] Auto shorten (vowels, cut first word, etc)
 * [ ] Remove line/col indicators in bash-invoked vim

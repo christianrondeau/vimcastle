@@ -1,9 +1,12 @@
 let s:originalfolder =  '~/.vimcastle'
 let s:folder = s:originalfolder
 let s:savefile = 'save.dat'
+let s:highscoresfile = 'highscores.csv'
 let s:configfile = 'config.vim'
 let s:crashfile = 'crash.log'
 let s:enabled = 0
+
+" Setup {{{
 
 function! vimcastle#io#setup() abort
 	let homedir = s:homedir()
@@ -19,6 +22,14 @@ function! vimcastle#io#setup() abort
 	return s:enabled
 endfunction
 
+" }}}
+
+" General {{{
+
+function! vimcastle#io#enabled() abort
+	return s:enabled
+endfunction
+
 function! vimcastle#io#path(fname) abort
 	return s:homedir() . '/' . a:fname
 endfunction
@@ -27,12 +38,20 @@ function! s:homedir() abort
 	return expand(s:folder)
 endfunction
 
+" }}}
+
+" Config {{{
+
 function! vimcastle#io#config() abort
 	let configfile = vimcastle#io#path(s:configfile)
 	if(filereadable(configfile))
 		execute 'source ' . configfile
 	endif
 endfunction
+
+" }}}
+
+" Save {{{
 
 function! vimcastle#io#hassave() abort
 	if(!s:enabled)
@@ -71,6 +90,52 @@ function! vimcastle#io#load() abort
 	return data
 endfunction
 
+" }}}
+
+" High Scores {{{
+
+function! vimcastle#io#hashighscores() abort
+	if(!s:enabled)
+		return 0
+	endif
+
+	return filereadable(vimcastle#io#path(s:highscoresfile))
+endfunction
+
+function! vimcastle#io#clearhighscores() abort
+	if(!s:enabled)
+		return 0
+	endif
+
+  if(vimcastle#io#hashighscores())
+		return delete(vimcastle#io#path(s:highscoresfile))
+  endif
+endfunction
+
+function! vimcastle#io#savehighscores(data) abort
+	if(!s:enabled)
+		return 0
+	endif
+
+	call writefile(a:data, vimcastle#io#path(s:highscoresfile))
+endfunction
+
+function! vimcastle#io#loadhighscores() abort
+	if(!s:enabled)
+		throw 'io is disabled'
+	endif
+
+	if(!vimcastle#io#hashighscores())
+		return []
+	endif
+
+	return readfile(vimcastle#io#path(s:highscoresfile))
+endfunction
+
+" }}}
+
+" Crash {{{
+
 function! vimcastle#io#savecrashlog(game, exception, callstack)
 	try
 		let crashfile = vimcastle#io#path(s:crashfile)
@@ -84,6 +149,8 @@ function! vimcastle#io#savecrashlog(game, exception, callstack)
 		echom 'Could not save crash log: ' . v:exception
 	endtry
 endfunction
+
+" }}}
 
 " Test methods {{{
 

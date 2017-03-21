@@ -32,18 +32,15 @@ function! s:computescore(stats) abort
 endfunction
 
 function! s:writehighscore(stats) abort
-	if(vimcastle#io#setup())
-		let highscoresfile = vimcastle#io#path('highscores.csv')
-		let highscores = []
-		if(filereadable(highscoresfile))
-			let highscores = readfile(highscoresfile)
-		endif
-		call add(highscores, s:tocsv(a:stats))
-		if(has('patch-7.4.341'))
-			call reverse(sort(highscores, 'N'))
-		endif
-		call writefile(highscores[0:9], highscoresfile)
+	if(!vimcastle#io#enabled())
+		return
 	endif
+	let highscores = vimcastle#io#loadhighscores()
+	call add(highscores, s:tocsv(a:stats))
+	if(has('patch-7.4.341'))
+		call reverse(sort(highscores, 'N'))
+	endif
+	call vimcastle#io#savehighscores(highscores[0:9])
 endfunction
 
 function! s:tocsv(stats) abort

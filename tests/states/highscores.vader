@@ -8,10 +8,7 @@ Execute (setup):
   let game = vimcastle#game#create()
 
 Execute (no high scores):
-  let highscoresfile = vimcastle#io#path('highscores.csv')
-  if(filereadable(highscoresfile))
-    call delete(highscoresfile)
-  endif
+  call vimcastle#io#clearhighscores()
   call game.enter('highscores')
 
 Then (no high scores are shown):
@@ -23,10 +20,10 @@ Then (no high scores are shown):
   \], game.log[1]
 
 Execute (some high scores):
-  call writefile([
+  call vimcastle#io#savehighscores([
       \'24311,24,2,17',
       \'1,1,1,1'
-      \], highscoresfile)
+      \])
   call game.enter('highscores')
 
 Then (high scores are shown):
