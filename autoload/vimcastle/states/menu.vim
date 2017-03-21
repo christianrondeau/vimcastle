@@ -24,7 +24,12 @@ function! s:enter(game) abort dict
 	call a:game.actions.add('newgame', 'n', 'New Game')
 
 	if(vimcastle#io#hassave())
-		call a:game.actions.add('continue', 'c', 'Continue')
+		try
+			let save = vimcastle#io#load()
+			call a:game.actions.add('continue', 'c', 'Continue (' . save.scene.name . ', ' . save.screen . ', level ' . save.player.level . ')')
+		catch
+			call a:game.addlog('ERROR: Corrupt save game (' . v:exception . ')')
+		endtry
 	endif
 
 	call a:game.actions

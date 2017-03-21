@@ -32,13 +32,14 @@ Then (enters high scores):
   AssertEqual 'highscores', game.screen
 
 Execute (saved game):
+  let game.screen = 'explore'
   call vimcastle#io#save(game.save())
   call game.enter('menu')
 
 Then (has actions):
   AssertEqual [
   \  {'label': 'New Game', 'name': 'newgame', 'key': 'n'},
-  \  {'label': 'Continue', 'name': 'continue', 'key': 'c'},
+  \  {'label': 'Continue (intro, explore, level 1)', 'name': 'continue', 'key': 'c'},
   \  {'label': 'High Scores', 'name': 'highscores', 'key': 's'},
   \  {'label': 'Help', 'name': '', 'key': 'h'},
   \  {'label': 'Quit', 'name': '', 'key': 'q'}

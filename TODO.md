@@ -13,8 +13,6 @@
 
 ## Refactors
 
-* [ ] Handle corrupt save game
-* [ ] Continue should show scene/lvl/state
 * [ ] New game should confirm game will be deleted
 * [ ] Disable all io when g:vader_file
 * [ ] Do not attempt to save high scores if io is disabled
