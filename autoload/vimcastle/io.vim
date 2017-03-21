@@ -136,7 +136,7 @@ endfunction
 
 " Crash {{{
 
-function! vimcastle#io#savecrashlog(game, exception, callstack)
+function! vimcastle#io#savecrashlog(game, exception, callstack) abort
 	try
 		let crashfile = vimcastle#io#path(s:crashfile)
 		let crashdata = []

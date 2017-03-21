@@ -24,22 +24,22 @@ function! callstack#parse(throwpoint) abort
 	endtry
 endfunction
 
-function! s:getscriptnames()
+function! s:getscriptnames() abort
 	redir => l:scriptnames
 	silent! scriptnames
 	redir END
 	
 	let l:scriptspersnr = {}
 	for l:scriptname in split(l:scriptnames, "\n")
-		let l:scriptsnr = split(l:scriptname, ":")
+		let l:scriptsnr = split(l:scriptname, ':')
 		let l:scriptspersnr[l:scriptsnr[0]] = substitute(l:scriptsnr[1], '\v^ ', '', 'e')
 	endfor
 	return l:scriptspersnr
 endfunction
 
-function! s:tryparsesnr(result, throwline)
+function! s:tryparsesnr(result, throwline) abort
 	let snr = matchstrpos(a:throwline, '\v\<SNR\>[0-9]+')
-	if(snr[0] != '')
+	if(snr[0] !=# '')
 		let snrval = snr[0][5:]
 		let line = has_key(s:scriptnames, snrval) ? s:scriptnames[snrval] : ('(unknown script: ' . snrval . ')')
 		let line .= ' s:' . a:throwline[snr[2]+1:]
@@ -48,24 +48,24 @@ function! s:tryparsesnr(result, throwline)
 	endif
 endfunction
 
-function! s:tryparsedictfunc(result, throwline)
+function! s:tryparsedictfunc(result, throwline) abort
 	let l:fnid = ''
 
-	if(l:fnid == '')
+	if(l:fnid ==# '')
 		let num = matchstrpos(a:throwline, '\vfunction [0-9]+')
-		if(num[0] != '')
+		if(num[0] !=# '')
 			let l:fnid = str2nr(num[0][9:])
 		endif
 	endif
 
-	if(l:fnid == '')
+	if(l:fnid ==# '')
 		let num = matchstrpos(a:throwline, '\v^[0-9]+')
-		if(num[0] != '')
+		if(num[0] !=# '')
 			let l:fnid = str2nr(num[0])
 		endif
 	endif
 
-	if(l:fnid == '')
+	if(l:fnid ==# '')
 		return 0
 	endif
 

@@ -30,7 +30,7 @@ endfunction
 
 function! s:action(key) dict abort
 	let name = self.actions.keyToName(a:key)
-	if(name == '')
+	if(name ==# '')
 		return 0
 	endif
 	call self.actions.clear()
@@ -77,7 +77,7 @@ endfunction
 
 function! s:addlogrnd(texts) dict abort
 	if(type(a:texts) != 3)
-		throw 'Randomized logs must be arrays: ' . string(texts)
+		throw 'Randomized logs must be arrays: ' . string(a:texts)
 	endif
 	call add(self.log, self.msg(vimcastle#utils#oneof(a:texts)))
 endfunction
