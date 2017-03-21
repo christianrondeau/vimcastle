@@ -32,8 +32,11 @@ function! s:enter(game) abort dict
 		endtry
 	endif
 
+	if(vimcastle#io#hashighscores())
+		call a:game.actions.add('highscores', 's', 'High Scores')
+	endif
+
 	call a:game.actions
-				\.add('highscores', 's', 'High Scores')
 				\.add('', 'h', 'Help')
 				\.add('', 'q', 'Quit')
 endfunction

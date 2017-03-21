@@ -6,13 +6,13 @@ After (restore vimcastle folder):
 
 Execute (setup):
   call vimcastle#io#clearsave()
+  call vimcastle#io#clearhighscores()
   let game = vimcastle#game#create()
   call game.enter('menu')
 
 Then (has actions):
   AssertEqual [
   \  {'label': 'New Game', 'name': 'newgame', 'key': 'n'},
-  \  {'label': 'High Scores', 'name': 'highscores', 'key': 's'},
   \  {'label': 'Help', 'name': '', 'key': 'h'},
   \  {'label': 'Quit', 'name': '', 'key': 'q'}
   \], game.actions.bindings
@@ -24,16 +24,10 @@ Then (enters main story):
   AssertEqual 'explore', game.screen
   AssertEqual 'main', game.scene.story
 
-Execute (high scores):
-  call game.enter('menu')
-  call game.action('s')
-
-Then (enters high scores):
-  AssertEqual 'highscores', game.screen
-
-Execute (saved game):
+Execute (saved game and high scores):
   let game.screen = 'explore'
   call vimcastle#io#save(game.save())
+  call vimcastle#io#savehighscores(['1,2,3,4'])
   call game.enter('menu')
 
 Then (has actions):
@@ -44,3 +38,10 @@ Then (has actions):
   \  {'label': 'Help', 'name': '', 'key': 'h'},
   \  {'label': 'Quit', 'name': '', 'key': 'q'}
   \], game.actions.bindings
+
+Execute (high scores):
+  call game.enter('menu')
+  call game.action('s')
+
+Then (enters high scores):
+  AssertEqual 'highscores', game.screen
