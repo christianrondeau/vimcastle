@@ -1,3 +1,9 @@
+Before (test vimcastle folder):
+  call vimcastle#io#before('')
+
+After (restore vimcastle folder):
+  call vimcastle#io#after()
+
 After (clean random):
   call vimcastle#utils#resetrnd()
 

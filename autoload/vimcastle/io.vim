@@ -155,12 +155,17 @@ endfunction
 " Test methods {{{
 
 function! vimcastle#io#before(path) abort
-	let s:folder = a:path
-	call vimcastle#io#setup()
+	if(a:path ==# '')
+		let s:enabled = 0
+	else
+		let s:folder = a:path
+		call vimcastle#io#setup()
+	endif
 endfunction
 
 function! vimcastle#io#after() abort
 	let s:folder = s:originalfolder
+	let s:enabled = 0
 endfunction
 
 " }}}
