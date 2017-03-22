@@ -12,7 +12,6 @@
 
 ## Refactors
 
-* [ ] New game should confirm game will be deleted
 * [ ] Disable all io when g:vader_file
 * [ ] High scores creation should use a highscores.vim file
 * [ ] Auto shorten (vowels, cut first word, etc)

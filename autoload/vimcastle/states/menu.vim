@@ -42,6 +42,12 @@ function! s:enter(game) abort dict
 endfunction
 
 function! s:action_newgame(game) abort
+	if(vimcastle#io#hassave())
+		if(!confirm('This will overwrite your saved game. Are you sure?'))
+			return a:game.enter('menu')
+		endif
+	endif
+
 	call a:game.reset()
 	let a:game.scene = vimcastle#scene#loadintro('main')
 	let a:game.event = a:game.scene.enter.invoke(a:game)
