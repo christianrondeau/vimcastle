@@ -33,3 +33,20 @@ endfunction
 function! s:incrstat(game, stat, value) abort
 	call a:game.player.setstat(a:stat, a:game.player.getstat(a:stat, 0) + a:value)
 endfunction
+
+function! vimcastle#effects#damage(game, value) abort
+	if(!exists('a:game.enemy'))
+		return [0, 'No enemy to target!']
+	endif
+
+	if(a:game.enemy.health <= 0)
+		return [0, 'Enemy already dead']
+	endif
+
+	let a:game.enemy.health -= a:value
+	if(a:game.enemy.health < 0)
+		let a:game.enemy.health = 0
+	endif
+
+	return [1, 'You hurt <' . a:game.enemy.name . '> for <' . a:value . '> damage.']
+endfunction

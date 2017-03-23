@@ -33,7 +33,7 @@ Execute (saved game and high scores):
 Then (has actions):
   AssertEqual [
   \  {'label': 'New Game', 'name': 'newgame', 'key': 'n'},
-  \  {'label': 'Continue (intro, explore, level 1)', 'name': 'continue', 'key': 'c'},
+  \  {'label': 'Continue (intro, level 1)', 'name': 'continue', 'key': 'c'},
   \  {'label': 'High Scores', 'name': 'highscores', 'key': 's'},
   \  {'label': 'Help', 'name': '', 'key': 'h'},
   \  {'label': 'Quit', 'name': '', 'key': 'q'}

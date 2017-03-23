@@ -30,3 +30,13 @@ Execute (gainstr):
   let result = vimcastle#effects#gainstr(game, 2)
   AssertEqual [1, 'You feel stronger! gain <+2> to your strength permanently.'], result
   AssertEqual 5, game.player.getstat('str', 0)
+
+Execute (damage - no enemy):
+  let result = vimcastle#effects#damage(game, 20)
+  AssertEqual [0, 'No enemy to target!'], result
+
+Execute (damage - enemy):
+  let game.enemy = vimcastle#monstergen#create('blob').health(30).invoke()
+  let result = vimcastle#effects#damage(game, 20)
+  AssertEqual [1, 'You hurt <blob> for <20> damage.'], result
+  AssertEqual 10, game.enemy.health

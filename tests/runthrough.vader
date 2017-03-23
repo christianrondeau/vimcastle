@@ -1,5 +1,5 @@
 Before (test vimcastle folder):
-  call vimcastle#io#before(expand('~/.vimcastle_tests'))
+  call vimcastle#io#before('')
 
 After (restore vimcastle folder):
   call vimcastle#io#after()

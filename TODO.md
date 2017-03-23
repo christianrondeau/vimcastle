@@ -5,25 +5,18 @@
 * [ ] Animations: Fight (hurt), action
 * [ ] Increase probabilities over time
 * [ ] Max inventory / drop items
-* [ ] Usable items (hurt enemy)
-* [ ] More effects (hurt and potentially die, win XP and potentially level up, gain stats e.g. +def, +dex, +con)
 * [ ] Allow specifying a 'next event' (e.g. after a boss, or logical sequence)
 * [ ] Create some content
 
 ## Refactors
 
-* [ ] Disable all io when g:vader_file
-* [ ] High scores creation should use a highscores.vim file
 * [ ] Auto shorten (vowels, cut first word, etc)
 * [ ] Remove line/col indicators in bash-invoked vim
-* [ ] Confusion between the game.screen that represents which state, and screens which are ui renderers
-* [ ] Create a log utility to hide complexity away from game
 * [ ] Are event name useful?
 * [ ] Avoid duplicating short names
 * [ ] Increase probability of repo every turn, reset on hit
 * [ ] Provide a color scheme for numbers (damage, stats, etc.) and review all colors
 * [ ] README for non-vim users?
-* [ ] Contributing guide explaining vader/vint, concepts, terminology etc.
 
 ## Backlog
 
