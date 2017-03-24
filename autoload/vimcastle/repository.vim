@@ -46,3 +46,13 @@ function! s:RepositoryClass.rnd() dict abort
 	endwhile
 	throw 'No items matched the given rnd. Roll: "' . roll . '", Total: ' . self.totalprobabilities
 endfunction
+
+function! s:RepositoryClass.findBy(key, value) dict abort
+	for item in self.items
+		if(has_key(item.value, a:key) && item.value[a:key] ==# a:value)
+			return item.value
+		endif
+	endfor
+
+	throw 'No item found with ' . a:key . ' = "' . a:value . '"'
+endfunction

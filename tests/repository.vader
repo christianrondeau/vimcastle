@@ -32,3 +32,10 @@ Then (once picked, is removed):
   AssertEqual 'value1', repo.rnd()
   call vimcastle#utils#setnextrnd(0)
   AssertEqual 'value2', repo.rnd()
+
+Execute (can get by key):
+  let repo = vimcastle#repository#create()
+  call repo.add(1, { 'test': '1', 'other': 'a' })
+  call repo.add(1, { 'test': '2', 'other': 'b' })
+  let result = repo.findBy('test', '1')
+  AssertEqual result.other, 'a'

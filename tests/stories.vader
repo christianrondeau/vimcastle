@@ -19,7 +19,10 @@ Execute (invoke all events):
     " EVENTS
     for event in scene.events.items
       try
-        call event.value.invoke(game)
+        let x = event.value.invoke(game)
+        if(exists('x.next'))
+          call scene.events.findBy('name', x.next)
+        endif
       catch
         throw 'Scene "' . storyname . '/' . scenename . '" has an error: ' . v:exception
       endtry
