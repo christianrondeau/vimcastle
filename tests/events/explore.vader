@@ -25,3 +25,14 @@ Execute (access character sheet):
   call event.action('character', game)
   AssertEqual 'sheet', game.screen
 
+Execute (given next event):
+  let game.scene = vimcastle#scene#create()
+  let nextevent = vimcastle#eventgen#create('test').text('Next!')
+  call game.scene.events.named('next', nextevent)
+  call game.clearlog()
+
+Execute (go to next event):
+  let event = vimcastle#eventgen#create('test').explore('Next...').next('next').invoke(game)
+  call event.action('explore', game)
+  AssertEqual ['Next!'], game.log
+

@@ -33,8 +33,6 @@ endfunction
 
 function! s:action_continue(game) abort
 	unlet a:game.enemy
-	call a:game.enter('explore')
-	let a:game.event = a:game.scene.events.rnd().invoke(a:game)
-	call a:game.event.enter(a:game)
-	return 1
+	call a:game.event.enternext(a:game)
+	return a:game.enter('explore')
 endfunction

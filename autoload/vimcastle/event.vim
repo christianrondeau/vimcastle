@@ -5,6 +5,7 @@ function! vimcastle#event#create() abort
 	let instance.enter = function('s:enter')
 	let instance.action = function('s:action')
 	let instance.action_explore = function('s:action_explore')
+	let instance.enternext = function('s:enternext')
 	let instance.action_fight = function('s:action_fight')
 	let instance.action_enterscene = function('s:action_enterscene')
 	let instance.action_inventory = function('s:action_inventory')
@@ -27,11 +28,19 @@ function! s:action(name, game) abort dict
 		execute 'call self.action_' . a:name . '(a:game)'
 endfunction
 
+function! s:enternext(game) abort dict
+	if(exists('self.next'))
+		let a:game.event = a:game.scene.events.getNamed(self.next).invoke(a:game)
+	else
+		let a:game.event = a:game.scene.events.rnd().invoke(a:game)
+	endif
+	call a:game.event.enter(a:game)
+endfunction
+
 " Actions {{{
 
 function! s:action_explore(game) abort dict
-	let a:game.event = a:game.scene.events.rnd().invoke(a:game)
-	call a:game.event.enter(a:game)
+	call self.enternext(a:game)
 endfunction
 
 function! s:action_fight(game) abort dict
@@ -57,12 +66,12 @@ endfunction
 
 function! s:action_pickup(game) abort dict
 	call a:game.player.pickup(self.item)
-	call self.action_explore(a:game)
+	call self.enternext(a:game)
 endfunction
 
 function! s:action_equip(game) abort dict
 	call a:game.player.equip(self.equippable)
-	call self.action_explore(a:game)
+	call self.enternext(a:game)
 endfunction
 
 " }}}

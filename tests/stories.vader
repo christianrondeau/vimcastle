@@ -20,13 +20,20 @@ Execute (invoke all events):
     for event in scene.events.items
       try
         let x = event.value.invoke(game)
-        if(exists('x.next'))
-          call scene.events.findBy('name', x.next)
-        endif
       catch
         throw 'Scene "' . storyname . '/' . scenename . '" has an error: ' . v:exception
       endtry
+
+      if(exists('x.next'))
+        try
+          let nextevent = scene.events.getNamed(x.next)
+          call nextevent.invoke(game)
+        catch
+          throw 'Scene "' . storyname . '/' . scenename . '" named event "' . x.next . '" has an error: ' . v:exception
+        endtry
+      endif
     endfor
+    Log '  Events: ' . len(scene.events.items)
     " EQUIPPABLES
     try
       let equippables = []

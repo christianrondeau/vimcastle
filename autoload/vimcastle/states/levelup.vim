@@ -64,8 +64,7 @@ function! s:continue(game) abort
 	if(a:game.player.level < expectedlevel)
 		return a:game.enter('levelup')
 	else
-		let a:game.event = a:game.scene.events.rnd().invoke(a:game)
-		call a:game.event.enter(a:game)
+		call a:game.event.enternext(a:game)
 		return a:game.enter('explore')
 	endif
 endfunction

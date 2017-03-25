@@ -4,6 +4,7 @@ function! vimcastle#repository#create() abort
 	let repository = copy(s:RepositoryClass)
 	let repository.totalprobabilities = 0
 	let repository.items = []
+	let repository.namedItems = {}
 	return repository
 endfunction
 
@@ -17,6 +18,11 @@ endfunction
 
 function! s:RepositoryClass.once(probability, item) dict abort
 	return self.additem(a:probability, a:item, 1)
+endfunction
+
+function! s:RepositoryClass.named(name, item) dict abort
+	let self.namedItems[a:name] = a:item
+	return self
 endfunction
 
 function! s:RepositoryClass.additem(probability, item, once) dict abort
@@ -47,12 +53,10 @@ function! s:RepositoryClass.rnd() dict abort
 	throw 'No items matched the given rnd. Roll: "' . roll . '", Total: ' . self.totalprobabilities
 endfunction
 
-function! s:RepositoryClass.findBy(key, value) dict abort
-	for item in self.items
-		if(has_key(item.value, a:key) && item.value[a:key] ==# a:value)
-			return item.value
-		endif
-	endfor
+function! s:RepositoryClass.getNamed(name) dict abort
+	if(!has_key(self.namedItems, a:name))
+		throw 'No item found with name  "' . a:name . '"'
+	endif
 
-	throw 'No item found with ' . a:key . ' = "' . a:value . '"'
+	return self.namedItems[a:name]
 endfunction

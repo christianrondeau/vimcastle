@@ -22,6 +22,8 @@ function! vimcastle#stories#main#plains#index#load(scene) abort
 	call a:scene.events.once(1, s:event_gainhealth())
 	call a:scene.events.once(1, s:event_gainstr())
 	call a:scene.events.once(2, s:event_boss())
+	
+	call a:scene.events.named('sloppy_joe_win', s:event_boss_win())
 endfunction
 
 function! s:event_enter() abort
@@ -134,8 +136,18 @@ function! s:event_boss() abort
 	return vimcastle#eventgen#create('encounter')
 				\.text(['Oh no! It''s %<enemy.name>, brace yourself!'])
 				\.fight('Fight!', vimcastle#repository#single(boss))
+				\.next('sloppy_joe_win')
 endfunction
 
+function! s:event_boss_win() abort
+	let ring = vimcastle#repository#single(vimcastle#equippablegen#create('ring', 'Sl. Ring', 'Sloppy Ring').stat('def', 2))
+	return vimcastle#eventgen#create('boss_win')
+				\.text([
+				\ 'Sloppy Joe is dead. There is something shiny on his finger: a %<ground>! Will you take it from his body?',
+				\])
+				\.findequippable(ring)
+				\.explore('Leave it there and continue')
+endfunction
 
 function! s:event_forestentrance() abort
 	return vimcastle#eventgen#create('forestentrance')

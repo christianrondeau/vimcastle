@@ -50,6 +50,11 @@ function! s:EventgenClass.effect(name, value) dict abort
 	return self
 endfunction
 
+function! s:EventgenClass.next(nextevent) dict abort
+	let self.nextevent = a:nextevent
+	return self
+endfunction
+
 function! s:EventgenClass.invoke(game) dict abort
 	let a:game.stats.events += 1
 	let event = vimcastle#event#create()
@@ -72,6 +77,10 @@ function! s:EventgenClass.invoke(game) dict abort
 
 	if(exists('self.equippables'))
 		let event.equippable = self.equippables.rnd().invoke()
+	endif
+
+	if(exists('self.nextevent'))
+		let event.next = self.nextevent
 	endif
 
 	for lineoptions in self.texts
@@ -149,13 +158,16 @@ endfunction
 
 function! s:showequippablestats(log, game, current, ground) abort
 	let allstats = copy(a:ground.stats)
-	for curkey in keys(a:current.stats)
-		if(!has_key(allstats, curkey))
-			let allstats[curkey] = a:current.stats[curkey]
-		endif
-	endfor
+	let curhasstats = exists('a:current.stats')
+	if(curhasstats)
+		for curkey in keys(a:current.stats)
+			if(!has_key(allstats, curkey))
+				let allstats[curkey] = a:current.stats[curkey]
+			endif
+		endfor
+	endif
 	for name in sort(keys(allstats))
-		let currentval = has_key(a:current.stats, name) ? a:current.stats[name] : 0
+		let currentval = curhasstats ? (has_key(a:current.stats, name) ? a:current.stats[name] : 0) : 0
 		let groundval = has_key(a:ground.stats, name) ? a:ground.stats[name] : 0
 		let msg = '  * ' . name . ': ' . s:getdiff(currentval, groundval)
 	call add(a:log, msg)
