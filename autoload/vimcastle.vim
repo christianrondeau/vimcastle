@@ -67,5 +67,5 @@ function! s:handleerr(exception, throwpoint) abort
 	for line in callstack
 		echom '  ' . line
 	endfor
-	throw a:exception
+	throw 'ERR: ' . a:exception
 endfunction
