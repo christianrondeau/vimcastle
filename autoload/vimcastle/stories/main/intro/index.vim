@@ -11,7 +11,7 @@ function! vimcastle#stories#main#intro#index#load(scene) abort
 endfunction
 
 function! s:event_enter() abort
-	return vimcastle#eventgen#create('enter')
+	return vimcastle#eventgen#create()
 				\.before(function('s:setup'))
 				\.text(['You are a barber in a small village.', 'You are a bored kid who wants to do something important.', 'You are an old warrior looking for adventure.', 'You are lost and you don''t know who you are.'])
 				\.text('You pack up your stuff, pick up your %<player.weapon> and get ready for adventure!')

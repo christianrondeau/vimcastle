@@ -2,7 +2,7 @@ Execute (create event):
   let game = vimcastle#game#create()
   let game.player = vimcastle#character#create('', 100)
   let game.player.health = 50
-  let eventgen = vimcastle#eventgen#create('test')
+  let eventgen = vimcastle#eventgen#create()
     \.text('Heal!')
     \.effect('heal', 40)
 

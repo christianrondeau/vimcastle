@@ -10,7 +10,7 @@ Execute (create event):
     \.stat('new', 9)
     \.stat('chg', 7)
   call weapons.add(1, groundequippable)
-  let eventgen = vimcastle#eventgen#create('test')
+  let eventgen = vimcastle#eventgen#create()
     \.findequippable(weapons)
     \.text('You see a weapon rack with a %<ground>')
 

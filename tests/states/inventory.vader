@@ -6,7 +6,7 @@ Then (has actions):
   AssertEqual [{'label': 'Character Sheet', 'name': 'character', 'key': 's'}, {'label': 'Back', 'name': 'back', 'key': 'b'}], game.actions.bindings
 
 Execute (go back):
-  let game.event = vimcastle#eventgen#create('test').invoke(game)
+  let game.event = vimcastle#eventgen#create().invoke(game)
   call game.action('b')
   AssertEqual 'explore', game.screen
 

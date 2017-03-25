@@ -2,7 +2,7 @@ Execute (create event):
   let game = vimcastle#game#create()
   let game.scene = vimcastle#scene#loadintro('main')
   let game.event = game.scene.enter.invoke(game)
-  let eventgen = vimcastle#eventgen#create('test')
+  let eventgen = vimcastle#eventgen#create()
     \.text('change scene')
     \.enterscene('Enter Plains', 'plains')
 

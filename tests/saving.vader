@@ -7,7 +7,7 @@ Execute (setup game):
   let player.health = 33
   let game.player = player
   let game.scene = vimcastle#scene#load('main', 'plains')
-  let event = vimcastle#eventgen#create('name').text('event text').explore('action text')
+  let event = vimcastle#eventgen#create().text('event text').explore('action text')
   let game.event = event.invoke(game)
   let game.screen = 'explore'
 

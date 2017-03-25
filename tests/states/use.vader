@@ -51,7 +51,7 @@ Execute (item returns to fight if enemy):
 
 Execute (back returns to inventory if no enemy):
   unlet game.enemy
-  let game.event = vimcastle#eventgen#create('test').invoke(game)
+  let game.event = vimcastle#eventgen#create().invoke(game)
   call game.enter('use')
   call game.action('b')
   AssertEqual 'inventory', game.screen

@@ -13,7 +13,6 @@
 * [ ] Validate stat names
 * [ ] Auto shorten (vowels, cut first word, etc)
 * [ ] Remove line/col indicators in bash-invoked vim
-* [ ] Are event name useful?
 * [ ] Avoid duplicating short names
 * [ ] Increase probability of repo every turn, reset on hit
 * [ ] Provide a color scheme for numbers (damage, stats, etc.) and review all colors

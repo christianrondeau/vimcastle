@@ -1,6 +1,6 @@
 Execute (create event):
   let game = vimcastle#game#create()
-  let eventgen = vimcastle#eventgen#create('test')
+  let eventgen = vimcastle#eventgen#create()
     \.text('text')
     \.explore('Continue')
 
@@ -27,12 +27,12 @@ Execute (access character sheet):
 
 Execute (given next event):
   let game.scene = vimcastle#scene#create()
-  let nextevent = vimcastle#eventgen#create('test').text('Next!')
+  let nextevent = vimcastle#eventgen#create().text('Next!')
   call game.scene.events.named('next', nextevent)
   call game.clearlog()
 
 Execute (go to next event):
-  let event = vimcastle#eventgen#create('test').explore('Next...').next('next').invoke(game)
+  let event = vimcastle#eventgen#create().explore('Next...').next('next').invoke(game)
   call event.action('explore', game)
   AssertEqual ['Next!'], game.log
 

@@ -2,7 +2,7 @@ Execute (game mock):
   let game = vimcastle#game#create()
 
 Execute (create simple event):
-  let event = vimcastle#eventgen#create('test')
+  let event = vimcastle#eventgen#create().text('123').invoke(game)
 
 Then (event is created):
-  AssertEqual 'test', event.name
+  AssertEqual ['123'], event.log

@@ -17,8 +17,8 @@ Then (has actions, log and xp):
 
 Execute (continue):
   let game.scene = {}
-  let game.scene.events = vimcastle#repository#create().add(1, vimcastle#eventgen#create('empty'))
-  let game.event = vimcastle#eventgen#create('test').invoke(game)
+  let game.scene.events = vimcastle#repository#create().add(1, vimcastle#eventgen#create())
+  let game.event = vimcastle#eventgen#create().invoke(game)
   call game.action('c')
 
 Then (next action is invoked):

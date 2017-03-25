@@ -1,8 +1,7 @@
 let s:EventgenClass = {}
 
-function! vimcastle#eventgen#create(name) abort
+function! vimcastle#eventgen#create() abort
 	let eventgen = copy(s:EventgenClass)
-	let eventgen.name = a:name
 	let eventgen.texts = []
 	return eventgen
 endfunction
