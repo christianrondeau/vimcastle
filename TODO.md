@@ -10,7 +10,6 @@
 
 ## Refactors
 
-* Error detected while processing function vimcastle#action[6]..<SNR>206_handleerr:line 7:E608: Cannot :throw exceptions with 'Vim' prefix
 * [ ] Validate stat names
 * [ ] Auto shorten (vowels, cut first word, etc)
 * [ ] Remove line/col indicators in bash-invoked vim

@@ -8,11 +8,8 @@ function! vimcastle#screens#inventory#draw(screen, game) abort
 		call s:showitemstats(weapon)
 	endif
 
-	if(exists('a:game.player.equipment.armor'))
-		let armor = a:game.player.equipment.armor
-		call s:showitemname(armor)
-		call s:showitemstats(armor)
-	endif
+	call s:showitem(a:game, 'armor')
+	call s:showitem(a:game, 'ring')
 
 	if(exists('a:game.player.items') && len(a:game.player.items))
 		call append(line('$'), '* Items')
@@ -24,6 +21,14 @@ function! vimcastle#screens#inventory#draw(screen, game) abort
 	call append(line('$'), '')
 
 	call vimcastle#screens#actions#draw(a:game.actions)
+endfunction
+
+function! s:showitem(game, slot) abort
+	if(exists('a:game.player.equipment.' . a:slot))
+		let item = a:game.player.equipment[a:slot]
+		call s:showitemname(item)
+		call s:showitemstats(item)
+	endif
 endfunction
 
 function! s:showitemname(item) abort
