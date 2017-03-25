@@ -62,7 +62,7 @@ function! s:EventgenClass.invoke(game) dict abort
 		try
 			call self.before_fn(a:game)
 		catch
-			throw 'There was an error in before fn of ' . a:game.scene.story . '/' . a:game.scene.name . '/' . self.name . ': ' . v:exception
+			throw 'There was an error in before fn of ' . a:game.scene.story . '/' . a:game.scene.name . ' with text' . string(self.texts[0]) . ': ' . v:exception
 		endtry
 	endif
 
@@ -141,7 +141,7 @@ function! s:showequippablediff(log, game, event) abort
 	if(has_key(a:game.player.equipment, a:event.equippable.slot))
 		let current = a:game.player.equipment[a:event.equippable.slot]
 	else
-		let current = vimcastle#equippablegen#create(a:event.equippable.slot, 0, 0)
+		let current = vimcastle#equippablegen#create(a:event.equippable.slot, 'none')
 	endif
 
 	if(a:event.equippable.slot ==# 'weapon')

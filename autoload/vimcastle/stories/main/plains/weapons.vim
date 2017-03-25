@@ -5,21 +5,21 @@ function! vimcastle#stories#main#plains#weapons#get() abort
 endfunction
 
 function! s:sword() abort
-	return vimcastle#equippablegen#weapon('S. Swrd', 'Short Sword', 2, 5)
+	return vimcastle#equippablegen#weapon('Short Sword', 2, 5)
 				\.noprefix(10)
-				\.prefix(6, 'Rust.', 'Rusted', 'dmg', -1, 0)
-				\.prefix(4, 'Sh.', 'Shiny', 'dmg', 2, 1)
-				\.prefix(1, 'Brk.', 'Broken', 'dmg', -1, -3)
+				\.prefix(6, 'Rusted', 'dmg', -1, 0)
+				\.prefix(4, 'Shiny', 'dmg', 2, 1)
+				\.prefix(1, 'Broken', 'dmg', -1, -3)
 				\.nosuffix(10)
-				\.suffix(1, 'of Str.', 'of Strength', 'str', 1)
+				\.suffix(1, 'of Strength', 'str', 1)
 endfunction
 
 function! s:woodaxe() abort
-	return vimcastle#equippablegen#weapon('Wd. Axe', 'Wood Axe', 2, 5)
+	return vimcastle#equippablegen#weapon('Wood Axe', 2, 5)
 				\.noprefix(10)
-				\.prefix(6, 'Rust.', 'Rusted', 'dmg', -1, 0)
-				\.prefix(4, 'Sh.', 'Sharp', 'dmg', 2, 1)
-				\.prefix(1, 'Brk.', 'Broken', 'dmg', -1, -3)
+				\.prefix(6, 'Rusted', 'dmg', -1, 0)
+				\.prefix(4, 'Sharp', 'dmg', 2, 1)
+				\.prefix(1, 'Broken', 'dmg', -1, -3)
 				\.nosuffix(10)
-				\.suffix(1, 'of Def.', 'of Defense', 'def', 1)
+				\.suffix(1, 'of Defense', 'def', 1)
 endfunction

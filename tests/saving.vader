@@ -1,6 +1,6 @@
 Execute (setup game):
   let game = vimcastle#game#create()
-  let playerweapon = vimcastle#equippablegen#weapon('Weap.', 'Weapon', 4, 4)
+  let playerweapon = vimcastle#equippablegen#weapon('Weapon', 4, 4)
   let player = vimcastle#character#create('Player', 80)
     \.setstat('spd', 5)
     \.equip(playerweapon.invoke())
@@ -32,7 +32,7 @@ Then (save is created):
   \    'weapon': {
   \      'score': 4,
   \      'slot': 'weapon',
-  \      'name': {'short': 'Weap.', 'long': 'Weapon' },
+  \      'name': 'Weapon',
   \      'stats': {},
   \      'dmg': {'min': 4, 'max': 4 }
   \    }

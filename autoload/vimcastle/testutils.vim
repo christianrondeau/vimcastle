@@ -17,8 +17,8 @@ function! s:VimcastleTestutilsClass.givengame(story, level) dict abort
   let game.scene.events = vimcastle#repository#create().add(1, vimcastle#eventgen#create())
 	call game.enter('explore')
 	if(a:level > 1)
-		call game.player.equip(vimcastle#equippablegen#weapon('T. Weap.', 'Test Weapon', a:level * 5 / 3, a:level * 5 / 3).invoke())
-		call game.player.equip(vimcastle#equippablegen#armor('T. Arm.', 'Test Armor', a:level * 3 / 2).invoke())
+		call game.player.equip(vimcastle#equippablegen#weapon('Test Weapon', a:level * 5 / 3, a:level * 5 / 3).invoke())
+		call game.player.equip(vimcastle#equippablegen#armor('Test Armor', a:level * 3 / 2).invoke())
 		while(game.player.level < a:level)
 			let next = vimcastle#levelling#forxp(game.player.xp)
 			let game.player.xp = next[1]

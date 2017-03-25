@@ -6,16 +6,17 @@ function! vimcastle#stories#main#plains#armors#get() abort
 endfunction
 
 function! s:robe() abort
-	return vimcastle#equippablegen#armor('Robe', 'Robe', 2)
+	return vimcastle#equippablegen#armor('Robe', 2)
 				\.noprefix(10)
-				\.prefix(2, 'Tor.', 'Torn', 'def', -1)
-				\.prefix(2, 'Cl.', 'Clean', 'def', 1)
-				\.prefix(1, 'L.', 'Light', 'spd', 2)
+				\.prefix(2, 'Torn', 'def', -1)
+				\.prefix(2, 'Clean', 'def', 1)
+				\.prefix(1, 'Light', 'spd', 2)
 endfunction
 
 function! s:apprenticegear() abort
-	return vimcastle#equippablegen#armor('Appr. Gear', 'Apprentice Gear', 3)
+	return vimcastle#equippablegen#armor('Apprentice Gear', 3)
 				\.noprefix(10)
-				\.prefix(2, 'Us.', 'Used', 'def', -1)
-				\.prefix(2, 'New', 'New', 'def', 1)
+				\.prefix(2, 'Used', 'def', -1)
+				\.prefix(2, 'New', 'def', 1)
 endfunction
+

@@ -10,12 +10,12 @@ After (clean random):
 Execute (setup):
   let game = vimcastle#game#create()
   let game.event = vimcastle#event#create()
-  let playerweapon = vimcastle#equippablegen#weapon('Weap.', 'Weapon', 4, 4)
+  let playerweapon = vimcastle#equippablegen#weapon('Weapon', 4, 4)
   let player = vimcastle#character#create('Player', 100)
     \.setstat('spd', 5)
     \.equip(playerweapon.invoke())
   let game.player = player
-  let enemyweapon = vimcastle#equippablegen#weapon('Tent.', 'Tentacle', 3, 3)
+  let enemyweapon = vimcastle#equippablegen#weapon('Tentacle', 3, 3)
   let enemy = vimcastle#monstergen#create('Monster')
     \.description('This monster is a monsterly monster who monsters a lot.')
     \.health(200)
@@ -29,7 +29,11 @@ Execute (enter):
 
 Then (game is):
   Log game.log
-  AssertEqual [{'label': 'Attack with <Weap.>', 'name': 'hit', 'key': 'a'}, {'label': 'Look at <Monster>', 'name': 'look', 'key': 'l'}, {'label': 'Use an item', 'name': 'use', 'key': 'u'}], game.actions.bindings
+  AssertEqual [
+  \  {'label': 'Attack with <Weapon>', 'name': 'hit', 'key': 'a'},
+  \  {'label': 'Look at <Monster>', 'name': 'look', 'key': 'l'},
+  \  {'label': 'Use an item', 'name': 'use', 'key': 'u'}
+  \], game.actions.bindings
 
 Execute (look):
   call vimcastle#utils#setnextrnd([0])

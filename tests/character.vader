@@ -16,9 +16,9 @@ Then (character has updated stats):
   AssertEqual 125, player.getmaxhealth()
 
 Execute (character has equipment):
-  let weapon = vimcastle#equippablegen#weapon('', '', 7, 12).stat('wil', 5).invoke()
+  let weapon = vimcastle#equippablegen#weapon('', 7, 12).stat('wil', 5).invoke()
   call player.equip(weapon)
-  let armor = vimcastle#equippablegen#armor('', '', 35).stat('wil', 4).stat('con', 6).invoke()
+  let armor = vimcastle#equippablegen#armor('', 35).stat('wil', 4).stat('con', 6).invoke()
   call player.equip(armor)
 
 Then (character has aggregated stats):

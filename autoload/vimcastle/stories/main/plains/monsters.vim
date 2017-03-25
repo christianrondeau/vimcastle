@@ -17,7 +17,7 @@ function! s:monster_rat() abort
 				\.modifier(3, 'Small', -3)
 				\.modifier(5, 'Ordinary', -3)
 				\.modifier(2, 'Big', 6)
-				\.weapon(vimcastle#equippablegen#weapon('Claw', 'Claw', 2, 4))
+				\.weapon(vimcastle#equippablegen#weapon('Claw', 2, 4))
 endfunction
 
 function! s:monster_goblin() abort
@@ -31,7 +31,7 @@ function! s:monster_goblin() abort
 				\.modifier(3, 'Feeble', -5)
 				\.modifier(5, 'Bad', 0)
 				\.modifier(2, 'Evil', 12)
-				\.weapon(vimcastle#equippablegen#weapon('Claw', 'Claw', 1, 8))
+				\.weapon(vimcastle#equippablegen#weapon('Claw', 1, 8))
 endfunction
 
 function! s:monster_ogre() abort
@@ -42,5 +42,6 @@ function! s:monster_ogre() abort
 				\.xp(4)
 				\.stat('spd', 1)
 				\.stat('dex', 0)
-				\.weapon(vimcastle#equippablegen#weapon('Club', 'Club', 4, 8))
+				\.weapon(vimcastle#equippablegen#weapon('Club', 4, 8))
 endfunction
+

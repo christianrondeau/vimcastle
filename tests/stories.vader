@@ -53,7 +53,7 @@ Execute (invoke all events):
       endtry
       for equippablegen in equippables
         let equippable = equippablegen.value.invoke()
-        Log '  Equippable (' . equippable.slot . '): ' . equippable.name.long . ' - score: ' . equippable.score
+        Log '  Equippable (' . equippable.slot . '): ' . equippable.name . ' - score: ' . equippable.score
       endfor
     catch
       throw 'Scene "' . storyname . '/' . scenename . '" has an erroneous equippable: ' . v:exception

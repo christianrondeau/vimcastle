@@ -6,16 +6,17 @@ function! vimcastle#stories#main#intro#weapons#get() abort
 endfunction
 
 function! s:stick() abort
-	return vimcastle#equippablegen#weapon('Stick', 'Stick', 1, 2)
+	return vimcastle#equippablegen#weapon('Stick', 1, 2)
 				\.noprefix(10)
-				\.prefix(1, 'Brk.', 'Broken', 'dmg', 0, -1)
-				\.prefix(1, 'Pointy', 'Pointy', 'dmg', 1, 1)
+				\.prefix(1, 'Broken', 'dmg', 0, -1)
+				\.prefix(1, 'Pointy', 'dmg', 1, 1)
 endfunction
 
 function! s:sword() abort
-	return vimcastle#equippablegen#weapon('Wd. Swrd', 'Wooden Sword', 1, 3)
+	return vimcastle#equippablegen#weapon('Wooden Sword', 1, 3)
 				\.noprefix(10)
-				\.prefix(1, 'Brk.', 'Broken', 'dmg', 0, -1)
-				\.prefix(1, 'Nice', 'Nice', 'dmg', 1, 1)
+				\.prefix(1, 'Broken', 'dmg', 0, -1)
+				\.prefix(1, 'Nice', 'dmg', 1, 1)
 				\.nosuffix(10)
 endfunction
+

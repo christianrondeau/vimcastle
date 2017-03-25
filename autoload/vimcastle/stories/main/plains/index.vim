@@ -132,7 +132,7 @@ function! s:event_boss() abort
 				\.level(5)
 				\.xp(20)
 				\.stat('spd', 0)
-				\.weapon(vimcastle#equippablegen#weapon('Hammer', 'Hammer', 0, 8))
+				\.weapon(vimcastle#equippablegen#weapon('Hammer', 0, 8))
 	return vimcastle#eventgen#create()
 				\.text(['Oh no! It''s %<enemy.name>, brace yourself!'])
 				\.fight('Fight!', vimcastle#repository#single(boss))
@@ -140,12 +140,12 @@ function! s:event_boss() abort
 endfunction
 
 function! s:event_boss_win() abort
-	let ring = vimcastle#repository#single(vimcastle#equippablegen#create('ring', 'Sl. Ring', 'Sloppy Ring').stat('def', 2))
+	let ring = vimcastle#equippablegen#create('ring', 'Sloppy Ring').stat('def', 2)
 	return vimcastle#eventgen#create()
 				\.text([
 				\ 'Sloppy Joe is dead. There is something shiny on his finger: a %<ground>! Will you take it from his body?',
 				\])
-				\.findequippable(ring)
+				\.findequippable(vimcastle#repository#single(ring))
 				\.explore('Leave it there and continue')
 endfunction
 

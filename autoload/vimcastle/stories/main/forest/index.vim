@@ -59,7 +59,7 @@ function! s:event_boss() abort
 				\.level(15)
 				\.xp(60)
 				\.stat('spd', 2)
-				\.weapon(vimcastle#equippablegen#weapon('Rock Fist', 'Rock Fist', 6, 14))
+				\.weapon(vimcastle#equippablegen#weapon('Rock Fist', 6, 14))
 	return vimcastle#eventgen#create()
 				\.text([
 				\ 'You feel the earth shake, and out of the dark comes the infamous %<enemy.name>. Prepare yourself.'

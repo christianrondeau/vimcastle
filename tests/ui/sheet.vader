@@ -8,7 +8,7 @@ Execute (test setup):
   call game.player.setstat('con', 3)
   call game.player.setstat('str', 4)
   call game.player.setstat('spd', 2)
-  call game.player.equip(vimcastle#equippablegen#weapon('', '', 4, 7).stat('str', 2).invoke())
+  call game.player.equip(vimcastle#equippablegen#weapon('', 4, 7).stat('str', 2).invoke())
   let game.log = ['This should not be shown!']
   call game.actions.add('noop', 'b',  'Back')
 

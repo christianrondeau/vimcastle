@@ -33,7 +33,7 @@ endfunction
 
 function! s:showitemname(item) abort
 	let type = substitute(a:item.slot,'\(\<\w\+\>\)', '\u\1', 'g')
-	call append(line('$'), '* ' . type . ': <' . a:item.name.long . '>')
+	call append(line('$'), '* ' . type . ': <' . a:item.name . '>')
 endfunction
 
 function! s:showitemdmg(item) abort

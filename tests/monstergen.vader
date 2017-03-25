@@ -1,5 +1,5 @@
 Execute (create simple monster):
-  let monster = vimcastle#monstergen#create('Monster').health(100).level(3).xp(14).weapon(vimcastle#equippablegen#weapon('', '', 1, 2))
+  let monster = vimcastle#monstergen#create('Monster').health(100).level(3).xp(14).weapon(vimcastle#equippablegen#weapon('', 1, 2))
 
 Execute (invoke monster):
   let instance = monster.invoke()

@@ -2,8 +2,8 @@ Execute (test setup):
   let screen = { 'width': 30 }
   let game = vimcastle#game#create()
   let game.player = vimcastle#character#create('Player', 100)
-  call game.player.equip(vimcastle#equippablegen#weapon('.', 'Swooord', 5, 127).stat('def', 3).invoke())
-  call game.player.equip(vimcastle#equippablegen#armor('.', 'Armooor', 4).invoke())
+  call game.player.equip(vimcastle#equippablegen#weapon('Swooord', 5, 127).stat('def', 3).invoke())
+  call game.player.equip(vimcastle#equippablegen#armor('Armooor', 4).invoke())
   let game.log = ['current scene text']
   call game.actions.add('noop', 'b',  'Back')
 

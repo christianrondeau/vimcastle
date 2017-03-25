@@ -12,7 +12,7 @@ function! s:monster_wolf() abort
 				\.health(30)
 				\.level(6)
 				\.xp(12)
-				\.weapon(vimcastle#equippablegen#weapon('Paw', 'Paw', 8, 14))
+				\.weapon(vimcastle#equippablegen#weapon('Paw', 8, 14))
 endfunction
 
 function! s:monster_bear() abort
@@ -21,7 +21,7 @@ function! s:monster_bear() abort
 				\.health(120)
 				\.level(7)
 				\.xp(26)
-				\.weapon(vimcastle#equippablegen#weapon('Paw', 'Paw', 10, 28))
+				\.weapon(vimcastle#equippablegen#weapon('Paw', 10, 28))
 endfunction
 
 function! s:monster_foresttroll() abort
@@ -30,5 +30,6 @@ function! s:monster_foresttroll() abort
 				\.health(100)
 				\.level(8)
 				\.xp(40)
-				\.weapon(vimcastle#equippablegen#weapon('Fists', 'Fists', 14, 35))
+				\.weapon(vimcastle#equippablegen#weapon('Fists', 14, 35))
 endfunction
+

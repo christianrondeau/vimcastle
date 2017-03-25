@@ -1,12 +1,12 @@
 Execute (create event):
   let game = vimcastle#game#create()
-  let playerequippable = vimcastle#equippablegen#weapon('Stick', 'Stick', 5, 17)
+  let playerequippable = vimcastle#equippablegen#weapon('Stick', 5, 17)
     \.stat('old', 5)
     \.stat('chg', 4)
   let game.player = vimcastle#character#create('', 100)
     \.equip(playerequippable.invoke())
   let weapons = vimcastle#repository#create()
-  let groundequippable = vimcastle#equippablegen#weapon('Mace', 'Mace', 15, 16)
+  let groundequippable = vimcastle#equippablegen#weapon('Mace', 15, 16)
     \.stat('new', 9)
     \.stat('chg', 7)
   call weapons.add(1, groundequippable)
@@ -34,4 +34,5 @@ Execute (equip weapon):
   call event.action('equip', game)
 
 Then (weapon is equipped):
-  AssertEqual 'Mace', game.player.equipment.weapon.name.long
+  AssertEqual 'Mace', game.player.equipment.weapon.name
+

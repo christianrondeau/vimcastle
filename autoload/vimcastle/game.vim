@@ -103,12 +103,12 @@ function! s:msg(text) dict abort
 		let text = substitute(text, '%<enemy.name>', '<' . self.enemy.name . '>', 'ge')
 	endif
 
-	if(exists('self.enemy.equipment.weapon.name.long'))
-		let text = substitute(text, '%<enemy.weapon>', '<' . self.enemy.equipment.weapon.name.long . '>', 'ge')
+	if(exists('self.enemy.equipment.weapon.name'))
+		let text = substitute(text, '%<enemy.weapon>', '<' . self.enemy.equipment.weapon.name . '>', 'ge')
 	endif
 
-	if(exists('self.player.equipment.weapon.name.long'))
-		let text = substitute(text, '%<player.weapon>', '<' . self.player.equipment.weapon.name.long . '>', 'ge')
+	if(exists('self.player.equipment.weapon.name'))
+		let text = substitute(text, '%<player.weapon>', '<' . self.player.equipment.weapon.name . '>', 'ge')
 	endif
 
 	return text
@@ -126,7 +126,7 @@ function! s:msgevent(text, event) dict abort
 	endif
 
 	if(exists('a:event.equippable'))
-		let text = substitute(text, '%<ground>', '<' . a:event.equippable.name.long . '>', 'ge')
+		let text = substitute(text, '%<ground>', '<' . a:event.equippable.name . '>', 'ge')
 	endif
 
 	return text
