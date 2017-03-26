@@ -36,5 +36,4 @@ Then (once picked, is removed):
 Execute (can get by name):
   let repo = vimcastle#repository#create()
   call repo.named('test', 'value')
-  let result = repo.getNamed('test')
-  AssertEqual result, 'value'
+  AssertEqual 'value', repo.getNamed('test')
