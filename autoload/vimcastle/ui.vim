@@ -72,9 +72,10 @@ function! s:configuregamebuffer(dedicated) abort
 		" These settings are permanent
 		if(a:dedicated)
 			set laststatus=0
+			set noruler
 			set noshowcmd
 
-			if has('gui')
+			if(has('gui'))
 				set guioptions-=m  "remove menu bar
 				set guioptions-=T  "remove toolbar
 			endif
