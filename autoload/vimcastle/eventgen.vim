@@ -88,7 +88,9 @@ function! s:EventgenClass.invoke(game) dict abort
 	endfor
 
 	if(exists('event.equippable'))
-		call s:showequippablediff(event.log, a:game, event)
+		let difflog = []
+		call s:showequippablediff(difflog, a:game, event)
+		call add(event.log, difflog)
 	endif
 
 	if(exists('self.effect_name'))
