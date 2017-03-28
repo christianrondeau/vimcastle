@@ -20,11 +20,12 @@ Execute (event executes):
 Then (result):
   AssertEqual [
   \ 'You see a weapon rack with a <Mace>',
+  \ [
   \ '  * dmg: 15 (+10) - 16 (-1)',
   \ '  * chg: 7 (+3)',
   \ '  * new: 9 (+9)',
   \ '  * old: 0 (-5)',
-  \], event.log
+  \]], event.log
 
 Execute (setup follow-up event):
   let game.scene = vimcastle#scene#create()

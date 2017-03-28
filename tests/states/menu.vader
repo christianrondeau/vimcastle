@@ -13,6 +13,7 @@ Execute (setup):
 Then (has actions):
   AssertEqual [
   \  {'label': 'New Game', 'name': 'newgame', 'key': 'n'},
+  \  {'label': 'Tutorial', 'name': 'tutorial', 'key': 't'},
   \  {'label': 'Help', 'name': '', 'key': 'h'},
   \  {'label': 'Quit', 'name': '', 'key': 'q'}
   \], game.actions.bindings
@@ -35,6 +36,7 @@ Then (has actions):
   \  {'label': 'New Game', 'name': 'newgame', 'key': 'n'},
   \  {'label': 'Continue (intro, level 1)', 'name': 'continue', 'key': 'c'},
   \  {'label': 'High Scores', 'name': 'highscores', 'key': 's'},
+  \  {'label': 'Tutorial', 'name': 'tutorial', 'key': 't'},
   \  {'label': 'Help', 'name': '', 'key': 'h'},
   \  {'label': 'Quit', 'name': '', 'key': 'q'}
   \], game.actions.bindings
