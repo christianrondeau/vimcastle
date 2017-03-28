@@ -5,6 +5,7 @@ function! vimcastle#states#menu#create() abort
 	let instance.action_newgame = function('s:action_newgame')
 	let instance.action_continue = function('s:action_continue')
 	let instance.action_highscores = function('s:action_highscores')
+	let instance.action_tutorial = function('s:action_tutorial')
 	return instance
 endfunction
 
@@ -37,21 +38,17 @@ function! s:enter(game) abort dict
 	endif
 
 	call a:game.actions
+				\.add('tutorial', 't', 'Tutorial')
 				\.add('', 'h', 'Help')
 				\.add('', 'q', 'Quit')
 endfunction
 
 function! s:action_newgame(game) abort
-	if(vimcastle#io#hassave())
-		if(!confirm('This will overwrite your saved game. Are you sure?'))
-			return a:game.enter('menu')
-		endif
-	endif
+	return s:newgame(a:game, 'main')
+endfunction
 
-	call a:game.reset()
-	let a:game.scene = vimcastle#scene#loadintro('main')
-	let a:game.event = a:game.scene.enter.invoke(a:game)
-	return a:game.enter('explore')
+function! s:action_tutorial(game) abort
+	return s:newgame(a:game, 'tutorial')
 endfunction
 
 function! s:action_continue(game) abort
@@ -62,4 +59,17 @@ endfunction
 
 function! s:action_highscores(game) abort
 	return a:game.enter('highscores')
+endfunction
+
+function! s:newgame(game, story) abort
+	if(vimcastle#io#hassave())
+		if(!confirm('This will overwrite your saved game. Are you sure?'))
+			return a:game.enter('menu')
+		endif
+	endif
+
+	call a:game.reset()
+	let a:game.scene = vimcastle#scene#loadintro(a:story)
+	let a:game.event = a:game.scene.enter.invoke(a:game)
+	return a:game.enter('explore')
 endfunction

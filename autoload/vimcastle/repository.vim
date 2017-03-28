@@ -54,8 +54,11 @@ function! s:RepositoryClass.rnd() dict abort
 endfunction
 
 function! s:RepositoryClass.getNamed(name) dict abort
+	if(!len(keys(self.namedItems)))
+		throw 'No named items in this repository'
+	endif
 	if(!has_key(self.namedItems, a:name))
-		throw 'No item found with name  "' . a:name . '"'
+		throw 'No named item found with name  "' . a:name . '" in this repository'
 	endif
 
 	return self.namedItems[a:name]

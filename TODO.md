@@ -5,7 +5,7 @@
 * [ ] Animations: Fight (hurt), action
 * [ ] Increase probabilities over time
 * [ ] Max inventory / drop items
-* [ ] Allow specifying a 'next event' (e.g. after a boss, or logical sequence)
+* [ ] Dialogues / choices
 * [ ] Create some content
 
 ## Refactors
