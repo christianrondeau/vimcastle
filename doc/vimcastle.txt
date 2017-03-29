@@ -57,6 +57,7 @@ Anywhere in the application, you can use these keys:
 
   * <q> Exits the game - and quits vim if started with bang (!)
   * <h> Show this help screen
+  * <up>, <j>, <down>, <k> Scroll the screen
   * <:> The |command-mode| is still available to interact with VIM
 
 2.2 Explore Screen Controls                         *vimcastle-controls-explore*

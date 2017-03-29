@@ -55,7 +55,8 @@ endfunction
 function! s:event_intro2() abort
 	return vimcastle#eventgen#create()
 				\.text('On the top right, you can see your health. At the bottom, the list of actions you can do.')
-				\.text('For now, let''s get you some equipment.')
+				\.text('You can scroll usimg <j>/<k> or <up>/<down>.')
+				\.text('Now, let''s get you some equipment.')
 				\.explore('Oh yeah!')
 				\.next('weapon')
 endfunction
