@@ -36,3 +36,23 @@ Execute (go to next event):
   call event.action('explore', game)
   AssertEqual ['Next!'], game.log
 
+Execute (given choices):
+  let game.scene = vimcastle#scene#create()
+  let choice2event = vimcastle#eventgen#create().text('Choice 2!')
+  call game.scene.events.named('choice2', choice2event)
+  call game.clearlog()
+
+Execute (given a scene with choices):
+  let event = vimcastle#eventgen#create().choice('Choice 1').choice('Choice 2').invoke(game)
+  Ass
+  AssertEqual [
+  \  {'label': 'Choice 1', 'name': 'choice1', 'key': '1'},
+  \  {'label': 'Choice 2', 'name': 'choice2', 'key': '2'},
+  \  {'label': 'Inventory', 'name': 'inventory', 'key': 'i'},
+  \  {'label': 'Character Sheet', 'name': 'character', 'key': 's'}
+  \], event.actions.bindings
+
+Execute (go to choice 2 event):
+  call event.action('choice1', game)
+  AssertEqual ['Next!'], game.log
+

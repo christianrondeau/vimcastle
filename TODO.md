@@ -5,7 +5,6 @@
 * [ ] Animations: Fight (hurt), action
 * [ ] Increase probabilities over time
 * [ ] Max inventory / drop items
-* [ ] Dialogues / choices
 * [ ] Create some content
 
 ## Refactors
