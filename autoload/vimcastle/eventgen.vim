@@ -16,6 +16,17 @@ function! s:EventgenClass.explore(text) dict abort
 	return self
 endfunction
 
+function! s:EventgenClass.choice(text, next) dict abort
+	if(!exists('self.choices'))
+		let self.choices = []
+	endif
+	call add(self.choices, {
+				\  'text': a:text,
+				\  'next': a:next
+				\})
+	return self
+endfunction
+
 function! s:EventgenClass.fight(text, monsters) dict abort
 	let self.monsters = a:monsters
 	let self.action_fight_text = a:text
@@ -129,6 +140,14 @@ function! s:EventgenClass.createactions(event, game) abort dict
 
 	if(exists('self.action_explore_text'))
 		call actions.add('explore', 'c', self.action_explore_text)
+	endif
+
+	if(exists('self.choices'))
+		let choiceIdx = 1
+		for choice in self.choices
+			call actions.add('explore:' . choice.next, '' . choiceIdx, choice.text)
+			let choiceIdx += 1
+		endfor
 	endif
 
 	if(!exists('self.action_fight_text'))

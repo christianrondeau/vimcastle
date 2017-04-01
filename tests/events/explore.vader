@@ -43,11 +43,10 @@ Execute (given choices):
   call game.clearlog()
 
 Execute (given a scene with choices):
-  let event = vimcastle#eventgen#create().choice('Choice 1').choice('Choice 2').invoke(game)
-  Ass
+  let event = vimcastle#eventgen#create().choice('Choice 1', 'choice1').choice('Choice 2', 'choice2').invoke(game)
   AssertEqual [
-  \  {'label': 'Choice 1', 'name': 'choice1', 'key': '1'},
-  \  {'label': 'Choice 2', 'name': 'choice2', 'key': '2'},
+  \  {'label': 'Choice 1', 'name': 'explore:choice1', 'key': '1'},
+  \  {'label': 'Choice 2', 'name': 'explore:choice2', 'key': '2'},
   \  {'label': 'Inventory', 'name': 'inventory', 'key': 'i'},
   \  {'label': 'Character Sheet', 'name': 'character', 'key': 's'}
   \], event.actions.bindings
