@@ -25,7 +25,11 @@ function! s:enter(game) abort dict
 endfunction
 
 function! s:action(name, game) abort dict
+	if(a:name[0:7] == 'explore:')
+		call s:enterspecific(a:game, a:name[8:])
+	else
 		execute 'call self.action_' . a:name . '(a:game)'
+	endif
 endfunction
 
 function! s:enternext(game) abort dict
@@ -34,6 +38,11 @@ function! s:enternext(game) abort dict
 	else
 		let a:game.event = a:game.scene.events.rnd().invoke(a:game)
 	endif
+	call a:game.event.enter(a:game)
+endfunction
+
+function! s:enterspecific(game, next) abort
+		let a:game.event = a:game.scene.events.getNamed(a:next).invoke(a:game)
 	call a:game.event.enter(a:game)
 endfunction
 

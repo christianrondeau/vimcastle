@@ -52,6 +52,6 @@ Execute (given a scene with choices):
   \], event.actions.bindings
 
 Execute (go to choice 2 event):
-  call event.action('choice1', game)
-  AssertEqual ['Next!'], game.log
+  call event.action('explore:choice2', game)
+  AssertEqual ['Choice 2!'], game.log
 
