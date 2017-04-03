@@ -25,7 +25,7 @@ function! s:enter(game) abort dict
 endfunction
 
 function! s:action(name, game) abort dict
-	if(a:name[0:7] == 'explore:')
+	if(a:name[0:7] ==# 'explore:')
 		call s:enterspecific(a:game, a:name[8:])
 	else
 		execute 'call self.action_' . a:name . '(a:game)'
