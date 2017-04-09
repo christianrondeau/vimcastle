@@ -98,7 +98,7 @@ function! s:event_fight1() abort
 endfunction
 
 function! s:event_item() abort
-	let item = {'label': 'Glass of Eater (+30)', 'effect': 'heal', 'value': 30}
+	let item = {'label': 'Glass of Water (+30)', 'effect': 'heal', 'value': 30}
 	return vimcastle#eventgen#create()
 				\.text('Well done! Here''s a good %<ground>, if you are thirsty.')
 				\.text('You can only use items when there is no enemy in front of you, or when you''re in a fight.')

@@ -2,21 +2,19 @@
 
 ## Game
 
-* [ ] Animations: Fight (hurt), action
-* [ ] Increase probabilities over time
 * [ ] Max inventory / drop items
 * [ ] Create some content
 
 ## Refactors
 
-* [ ] Validate stat names
-* [ ] Auto shorten (vowels, cut first word, etc)
-* [ ] Increase probability of repo every turn, reset on hit
-* [ ] Provide a color scheme for numbers (damage, stats, etc.) and review all colors
 * [ ] README for non-vim users?
 
 ## Backlog
 
+* [ ] Animations: Fight (hurt), action
+* [ ] Increase probability of repo every turn, reset on hit
+* [ ] Auto shorten (vowels, cut first word, etc)
+* [ ] Int stat for traps
 * [ ] Remember strongest enemy and hardest scene for high scores snd events "I remember"
 * [ ] Machine-encrypt/hash save game?
 * [ ] Auto combat (skip)
@@ -39,7 +37,7 @@
 * [ ] Steal items (events, monsters)
 * [ ] Temp. effects (e.g. poison hurts, blind hides logs)
 * [ ] Temp. buffs (e.g. boost strength)
-* [ ] Special unique skills (block one hit, steal items  fastrr xp)
+* [ ] Special unique skills (block one hit, steal items  faster xp)
 * [ ] Map of discovered areas and links
 * [ ] Fast travel to previously discovered areas
 * [ ] Weapon 'of Light', 'of the King' etc w/ special bonuses like heal, dbl attack, etc
