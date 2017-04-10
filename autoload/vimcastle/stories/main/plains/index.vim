@@ -29,7 +29,7 @@ endfunction
 function! s:event_enter() abort
 	return vimcastle#eventgen#create()
 				\.text([
-				\ 'The sun is shining, and the plains are crawling with monsters. A perfect day to go outside!'
+				\ 'You breath the good, fresh smell of grass. Much, much better than sewers.'
 				\])
 				\.explore('Start walking forward')
 endfunction

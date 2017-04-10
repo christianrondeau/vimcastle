@@ -9,10 +9,11 @@ function! vimcastle#stories#main#village#index#load(scene) abort
 	let a:scene.info = vimcastle#stories#main#village#index#info()
 	let a:scene.enter = s:event_enter()
 
-	call a:scene.events.add(30, s:event_nothing())
-	call a:scene.events.add(20, s:event_encounter())
-	call a:scene.events.add(10, s:event_encounter_opt())
-	call a:scene.events.add(3, s:event_heal())
+	call a:scene.events.add(12, s:event_nothing())
+	call a:scene.events.add(6, s:event_encounter())
+	call a:scene.events.add(7, s:event_encounter_opt())
+	call a:scene.events.add(5, s:event_finditem())
+	call a:scene.events.add(4, s:event_heal())
 
 	call a:scene.events.add(2, s:event_plains())
 endfunction
