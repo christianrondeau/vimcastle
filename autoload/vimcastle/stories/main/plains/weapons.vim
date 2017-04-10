@@ -1,6 +1,7 @@
 function! vimcastle#stories#main#plains#weapons#get() abort
 	let repo = vimcastle#repository#create()
 	call repo.add(1, s:sword())
+	call repo.add(1, s:woodaxe())
 	return repo
 endfunction
 

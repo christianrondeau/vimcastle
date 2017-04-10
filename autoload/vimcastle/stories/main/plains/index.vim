@@ -1,7 +1,7 @@
 function! vimcastle#stories#main#plains#index#info() abort
 	return {
 				\  'label': 'Plains',
-				\  'level': 1
+				\  'level': 2
 				\}
 endfunction
 

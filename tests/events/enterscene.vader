@@ -12,7 +12,7 @@ Execute (event executes):
 Then (result):
   AssertEqual ['change scene'], event.log
   AssertEqual [
-  \  {'label': 'Enter Plains (level 1)', 'name': 'enterscene', 'key': 'e'},
+  \  {'label': 'Enter Plains (level 2)', 'name': 'enterscene', 'key': 'e'},
   \  {'label': 'Inventory', 'name': 'inventory', 'key': 'i'},
   \  {'label': 'Character Sheet', 'name': 'character', 'key': 's'}
   \], event.actions.bindings

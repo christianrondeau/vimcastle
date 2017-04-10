@@ -4,6 +4,7 @@ endfunction
 
 function! vimcastle#stories#main#index#scenes() abort
 	return [
+				\ 'village',
 				\ 'plains',
 				\ 'forest',
 				\]
