@@ -3,7 +3,13 @@
 ## Game
 
 * [ ] Max inventory / drop items
-* [ ] Create some content
+* [ ] Maximum viewport width (otherwise it's hard to read)
+* [ ] Create scenes:
+  * [ ] Village (initial exploring)
+  * [ ] Plains (wander, level up)
+  * [ ] Cavern (accessible from plains)
+  * [ ] Castle (multiple sequential levels)
+  * [ ] Forest (can lead anywhere)
 
 ## Refactors
 
