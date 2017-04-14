@@ -14,8 +14,10 @@ function! vimcastle#stories#main#village#index#load(scene) abort
 	call a:scene.events.add(7, s:event_encounter_opt())
 	call a:scene.events.add(5, s:event_finditem())
 	call a:scene.events.add(4, s:event_heal())
-
 	call a:scene.events.add(2, s:event_plains())
+	call a:scene.events.once(5, s:event_puzzle1())
+	call a:scene.events.named('puzzle1_correct', s:event_puzzle1_correct())
+	call a:scene.events.named('puzzle1_wrong', s:event_puzzle1_wrong())
 endfunction
 
 function! s:event_enter() abort
@@ -84,3 +86,26 @@ function! s:event_plains() abort
 				\.enterscene('Exit the village', 'plains')
 				\.explore('Continue exploring the village')
 endfunction
+
+function! s:event_puzzle1() abort
+	return vimcastle#eventgen#create()
+				\.text( 'An old man stops an holds you by the shoulder. He says:')
+				\.text( '- Do you know Samanth?')
+				\.choice('Yeah... Sure!', 'puzzle1_correct')
+				\.choice('Who?', 'puzzle1_wrong')
+endfunction
+
+function! s:event_puzzle1_correct() abort
+	let ring = vimcastle#equippablegen#create('ring', 'Samanth''s Ring').stat('def', 2)
+	return vimcastle#eventgen#create()
+				\.text('- Good! Can you give him his %<ground>? I''m not feeling like walking today.')
+				\.findequippable(vimcastle#repository#single(ring))
+				\.explore('No way!')
+endfunction
+
+function! s:event_puzzle1_wrong() abort
+	return vimcastle#eventgen#create()
+				\.text('The stranger scoffs and walks away.')
+				\.explore('Shrug and continue')
+endfunction
+
