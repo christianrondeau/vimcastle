@@ -1,6 +1,6 @@
 # Vim Castle
 
-_Still under development, the game is not even fun yet!_
+_Still under development, but it's starting to look like something!_
 
 [![Build Status](https://travis-ci.org/christianrondeau/vimcastle.svg?branch=master)](https://travis-ci.org/christianrondeau/vimcastle)
 
@@ -26,14 +26,14 @@ Using [vim-plug](https://github.com/junegunn/vim-plug):
 
 * Randomly generated enemies, events, characters and weapons
 * Find weapons, armor, items along your way
-* Special events that may increase your health, your strength
+* Special events that may increase your health, your strength, etc.
 * Fight, use items, gain XP and level up
-* Roguelike, but keeps your sessions when you quit
+* Roguelike, but keeps your game when you quit
 * High scores
 
 ## Contributions
 
-Because the basic game mechanisms are not yet in place, I cannot accept code (gameplay or story) contributions. Please create issues with your ideas and suggestions though, I'm not even sure where I'm going with this project so your opinion is welcome!:)
+The game is not fully stable, but your ideas and story elements are welcome! There are no clear guidelines yet, so let me know what you think by creating an issue, and we'll discuss it. Try to keep it clean, and look at other files to see how the game is structured before creating a pull request.
 
 For more information on the structure of the code, see [CONTRIBUTING.md](CONTRIBUTING.md)
 
