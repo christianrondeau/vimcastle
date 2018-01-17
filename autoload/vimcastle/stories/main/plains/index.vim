@@ -82,7 +82,7 @@ endfunction
 function! s:event_gainstr() abort
 	return vimcastle#eventgen#create()
 				\.text([
-				\ 'You stop by a small house with an elder cutting wood. You decide to help him.',
+				\ 'You stop by a small house with an old man cutting wood. You decide to help him.',
 				\])
 				\.effect('gainstr', 1)
 				\.explore('Say bye and leave')
@@ -91,7 +91,7 @@ endfunction
 function! s:event_findweapon() abort
 	return vimcastle#eventgen#create()
 				\.text([
-				\ 'You find a weapon rack with containing %<ground>!',
+				\ 'You find a weapon rack containing %<ground>!',
 				\])
 				\.findequippable(vimcastle#stories#main#plains#weapons#get())
 				\.explore('Leave it there and continue')
@@ -152,7 +152,7 @@ endfunction
 function! s:event_forestentrance() abort
 	return vimcastle#eventgen#create()
 				\.text([
-				\ 'You face a dense forest. you see movement in the dark.'
+				\ 'You face a dense forest. You see movement in the dark.'
 				\])
 				\.enterscene('Enter the forest', 'forest')
 				\.explore('Avoid the forest for now')

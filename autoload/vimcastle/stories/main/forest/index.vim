@@ -27,7 +27,7 @@ function! s:event_nothing() abort
 	return vimcastle#eventgen#create()
 				\.text([
 				\ 'It''s dark, your hear noises but nothing happens.',
-				\ 'You walk between huge roots, only to find... more huge roots.',
+				\ 'You walk among huge roots, only to find... more huge roots.',
 				\ 'The trees are gigantic, and sometimes you think you hear screaming, far away.'
 				\])
 				\.explore('Continue')
@@ -45,8 +45,8 @@ endfunction
 function! s:event_heal() abort
 	return vimcastle#eventgen#create()
 				\.text([
-				\ 'You see some herbs that you know can heal your wounds.',
-				\ 'There is a small, hidden cavern that seems easy to close using surrounding rocks. You sit down for a while.',
+				\ 'You see some herbs that can heal your wounds. You rub them on you.',
+				\ 'There is a small, hidden cavern that seems easy to barricade using surrounding rocks. You sit down and relax for a while.',
 				\ 'There is a small clearing. You decide to sit down and rest.'
 				\])
 				\.effect('heal', 10)
