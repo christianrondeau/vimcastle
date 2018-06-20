@@ -68,7 +68,7 @@ Anywhere in the application, you can use these keys:
 
 --------------------------------------------------------------------------------
 
-3. Config                                                   *vimcastle-controls*
+3. Config                                                   *vimcastle-config*
 
 You can configure vimcastle by creating a file ~/.vimcastle/config.vim.
 
